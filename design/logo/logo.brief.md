@@ -1,12 +1,16 @@
-# Logo exploration brief (2026-11-21)
+# Tabyl logo — final (variant А, «солнце в букве б»)
 
-Recraft MCP was not connected in this session, so these four concepts were hand-drawn as SVG
-(design-assets fallback lane). Wordmarks are set in Rubik Bold via web font; the chosen mark
-must be redrawn as outlines before launch.
+Built by `build_logo.py` from Rubik Bold (Google Fonts `Rubik[wght].ttf`, instanced at wght 700),
+then `export_png.cjs` for PNG sizes. Recraft MCP was not connected, so this is the
+design-assets fallback lane (hand-built vector), flagged here.
 
-Subject:     Tabyl («табыл», Kyrgyz "find"), classifieds marketplace for Kyrgyzstan
-Concepts:    А «б» with a sun bowl · Б price tag · В түндүк lattice in the sun · Г magnifier with sun lens
-Palette:     #FFD43B sun, #1D1A12 ink, #FBF7EE cream, #14120D dark, #F4EFE2 light ink
-Background:  shown on cream and dark; icons on both
-Output:      inline SVG; app icon 96 px, favicon 32/16 px, header context
-Recommendation: А
+Construction
+- Wordmark «табыл» set in Rubik Bold outlines, tracking −10 units, +24 after «б».
+- «б»: bowl = circle r 270 at (308, 260) matching Rubik's bowl; sun = circle r 175 shifted
+  95 right, cut from the bowl with a 28-unit gap, so the bowl becomes a crescent; the flag is
+  Rubik's ascender trimmed along the bowl circle.
+- Optical sizes: large (≥ 96 px) gap 28; medium (33–95 px) gap 36, +8 weight;
+  small (≤ 32 px) gap 46, +18 weight.
+
+Colours: sun #FFD43B · ink #1D1A12 · ink on dark #F4EFE2 · cream #FBF7EE · dark #14120D
+Files: kit/*.svg (wordmarks, marks, icons, favicon.svg with dark-mode), kit/png/*

@@ -3,46 +3,56 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tabyl logo ideas</title>
+<title>Tabyl logo</title>
+<link rel="icon" href="kit/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#FBF7EE;--fg:#1D1A12;--mut:#77705F;--line:#E9E1CF;--sun:#FFD43B;--ink:#1D1A12;--dark:#14120D;--darkfg:#F4EFE2;--field:#F1EBDD}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14120D;--fg:#F4EFE2;--mut:#A29B88;--line:#2B271D;--field:#221F17}}
-:root[data-theme="dark"]{--bg:#14120D;--fg:#F4EFE2;--mut:#A29B88;--line:#2B271D;--field:#221F17}
+:root{--bg:#FBF7EE;--fg:#1D1A12;--mut:#77705F;--line:#E9E1CF;--tile:#F1EBDD}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14120D;--fg:#F4EFE2;--mut:#A29B88;--line:#2B271D;--tile:#1E1B14}}
+:root[data-theme="dark"]{--bg:#14120D;--fg:#F4EFE2;--mut:#A29B88;--line:#2B271D;--tile:#1E1B14}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--fg);font:16px/1.5 "Rubik",system-ui,sans-serif;overflow-x:hidden}
-.page{max-width:1240px;margin:0 auto;padding:40px 16px 80px}
-h1{font-size:clamp(28px,4vw,42px);font-weight:700;letter-spacing:-.02em;line-height:1.1}
-.lead{color:var(--mut);max-width:62ch;margin-top:10px}
-.concept{border-top:1px solid var(--line);margin-top:48px;padding-top:24px;display:grid;gap:20px}
-.concept header{display:grid;gap:6px 32px;grid-template-columns:1fr}
-@media(min-width:880px){.concept header{grid-template-columns:260px 1fr}}
-.concept h2{font-size:26px;letter-spacing:-.02em;line-height:1.15}
-.concept h2 small{display:block;font-size:13px;font-weight:400;color:var(--mut);letter-spacing:0}
-.concept p{color:var(--mut);max-width:66ch}
-.concept p b{color:var(--fg);font-weight:500}
-.boards{display:grid;gap:12px;grid-template-columns:1fr}
-@media(min-width:880px){.boards{grid-template-columns:1.4fr 1.4fr 1fr}}
-.board{border-radius:12px;min-height:200px;display:grid;place-items:center;padding:28px 16px;position:relative}
-.board.l{background:#FBF7EE;color:#1D1A12;box-shadow:inset 0 0 0 1px #E9E1CF}
-.board.d{background:#14120D;color:#F4EFE2}
-.board.i{background:#E9E4D8;gap:16px;align-content:center}
-:root[data-theme="dark"] .board.i,.board.i.dk{background:#26231A}
-.board .cap{position:absolute;left:12px;bottom:8px;font-size:12px;opacity:.55}
-.wm{font-weight:700;font-size:72px;letter-spacing:-.03em;line-height:1;display:inline-flex;align-items:baseline;white-space:nowrap}
-.wm svg{height:.8em;width:auto;overflow:visible}
-.icons{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;justify-content:center}
-.icons figure{display:grid;justify-items:center;gap:6px;font-size:11px;color:var(--mut)}
-.app{width:96px;height:96px;border-radius:22px;overflow:hidden;display:block}
-.fav{display:block}
-.inuse{display:flex;align-items:center;gap:10px;background:#FBF7EE;color:#1D1A12;border-radius:12px;padding:10px 16px;box-shadow:inset 0 0 0 1px #E9E1CF;width:100%;max-width:340px}
-.inuse .wm{font-size:22px}
-.inuse .s{flex:1;height:36px;border-radius:9px;background:#F1EBDD}
-.pick{margin-top:56px;border-top:1px solid var(--line);padding-top:24px;max-width:70ch}
-.pick h2{font-size:22px;margin-bottom:8px}
-.pick p{color:var(--mut)}
+img{display:block;max-width:100%}
+.page{max-width:1200px;margin:0 auto;padding:40px 16px 80px}
+h1{font-size:clamp(26px,3.6vw,38px);font-weight:700;letter-spacing:-.02em;line-height:1.1}
+h2{font-size:20px;font-weight:500;letter-spacing:-.01em;margin-bottom:12px}
+.lead{color:var(--mut);max-width:64ch;margin-top:10px;text-wrap:pretty}
+section{border-top:1px solid var(--line);margin-top:44px;padding-top:22px}
+.hero{display:grid;gap:12px;grid-template-columns:1fr;margin-top:28px}
+@media(min-width:860px){.hero{grid-template-columns:1fr 1fr}}
+.board{border-radius:12px;display:grid;place-items:center;padding:56px 24px;min-height:260px}
+.board.l{background:#FBF7EE;box-shadow:inset 0 0 0 1px #E9E1CF}
+.board.d{background:#14120D}
+.board img{width:min(420px,80%)}
+.how{display:grid;gap:24px;grid-template-columns:1fr;align-items:center}
+@media(min-width:860px){.how{grid-template-columns:320px 1fr}}
+.how .big{background:var(--tile);border-radius:12px;padding:28px;display:grid;place-items:center}
+.how .big img{width:200px}
+.how ol{padding-left:20px;color:var(--mut);display:grid;gap:8px;max-width:60ch}
+.how ol b{color:var(--fg);font-weight:500}
+.sizes{display:grid;gap:12px}
+.row{display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap;padding:20px;border-radius:12px}
+.row.l{background:#FBF7EE;box-shadow:inset 0 0 0 1px #E9E1CF;color:#77705F}
+.row.d{background:#14120D;color:#A29B88}
+.row figure{display:grid;justify-items:center;gap:6px;font-size:12px}
+.row img{border-radius:22%}
+.inuse{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:860px){.inuse{grid-template-columns:1fr 1fr}}
+.bar{border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:14px}
+.bar.l{background:#FBF7EE;box-shadow:inset 0 0 0 1px #E9E1CF}
+.bar.d{background:#14120D}
+.bar img{height:26px;width:auto}
+.bar .s{flex:1;height:44px;border-radius:12px}
+.bar.l .s{background:#F1EBDD}.bar.d .s{background:#221F17}
+.tab{display:flex;align-items:center;gap:8px;border-radius:10px 10px 0 0;padding:8px 14px;font:13px system-ui,sans-serif;width:max-content;max-width:100%}
+.tab.l{background:#fff;color:#1D1A12;box-shadow:inset 0 0 0 1px #E9E1CF}
+.tab.d{background:#2A2A2A;color:#eee}
+.files{columns:2;column-gap:28px;font-size:14px;color:var(--mut)}
+@media(max-width:600px){.files{columns:1}}
+.files li{list-style:none;break-inside:avoid;padding:3px 0}
+.files code{color:var(--fg);font:13px ui-monospace,monospace}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;margin-top:18px}
 .seg button{font:inherit;font-size:14px;padding:7px 14px;border-radius:999px;border:0;background:none;color:var(--fg);cursor:pointer;min-height:38px}
 .seg button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
@@ -50,74 +60,82 @@ h1{font-size:clamp(28px,4vw,42px);font-weight:700;letter-spacing:-.02em;line-hei
 </head>
 <body>
 <div class="page">
-  <h1>Табыл: идеи логотипа</h1>
-  <p class="lead">Четыре направления в&nbsp;шрифте и&nbsp;цветах выбранного интерфейса: Rubik, сливочный фон, солнечный жёлтый #FFD43B, почти чёрный #1D1A12. Каждое показано на&nbsp;светлом и&nbsp;тёмном фоне, как иконка приложения, как фавикон в&nbsp;настоящем размере и&nbsp;в&nbsp;шапке сайта. Это эскизы: буквы набраны шрифтом, перед запуском выбранный знак перерисуем в&nbsp;кривые и&nbsp;выверим.</p>
-  <div class="seg" role="group" aria-label="Тема страницы">
-    <button data-t="light" aria-pressed="true">Светлая</button><button data-t="dark" aria-pressed="false">Тёмная</button>
+  <h1>Логотип Табыла</h1>
+  <p class="lead">Буква «б», в чашечке которой встаёт солнце. Вся надпись собрана из настоящих контуров шрифта Rubik Bold, а «б» нарисована заново по его пропорциям. Для мелких размеров есть отдельные версии: в 16 и 32 пикселя солнце не сливается с буквой ни на светлом, ни на тёмном фоне.</p>
+  <div class="seg" role="group" aria-label="Тема страницы"><button data-t="light" aria-pressed="true">Светлая</button><button data-t="dark" aria-pressed="false">Тёмная</button></div>
+
+  <div class="hero">
+    <div class="board l"><img src="kit/tabyl-wordmark.svg" alt="табыл"></div>
+    <div class="board d"><img src="kit/tabyl-wordmark-on-dark.svg" alt="табыл"></div>
   </div>
-  <div id="concepts"></div>
 
-  <section class="pick">
-    <h2>Что советую</h2>
-    <p>Вариант А, «Солнце в&nbsp;букве&nbsp;б». Он&nbsp;держится на&nbsp;нашей собственной букве&nbsp;— «б» есть только в&nbsp;кириллице,&nbsp;— поэтому его не&nbsp;спутать с&nbsp;латинскими досками объявлений. Жёлтый круг уже живёт в&nbsp;интерфейсе в&nbsp;ценниках, а&nbsp;иконка приложения узнаётся даже размером с&nbsp;ноготь. Знак работает и&nbsp;без надписи: одна жёлтая «б» на&nbsp;сливочном квадрате.</p>
+  <section>
+    <h2>Как устроена «б»</h2>
+    <div class="how">
+      <div class="big"><img src="kit/tabyl-mark-large.svg" alt="Знак: буква «б» с солнцем"></div>
+      <ol>
+        <li><b>Чашечка — круг</b> того же размера, что у «б» в Rubik, поэтому буква стоит в строке как родная.</li>
+        <li><b>Солнце сдвинуто вправо</b> и вырезано из чашечки с ровным зазором. Тёмная часть становится полумесяцем: слева толщиной как обычный штрих, справа сходит на нет.</li>
+        <li><b>Флажок сверху</b> — родной выносной элемент Rubik, подрезанный точно по кругу, без ступенек.</li>
+        <li><b>Три оптических размера.</b> Чем меньше значок, тем шире зазор и плотнее полумесяц — иначе в 16 пикселях солнце слипается с буквой.</li>
+      </ol>
+    </div>
   </section>
-</div>
 
-<script>
-const SUN = "#FFD43B";
-/* --- А: «б» whose bowl is the sun. viewBox units: baseline at y=80, x-height ≈ 53, ascender top ≈ 10 --- */
-const bSun = (ink) => `<svg viewBox="0 0 64 80" aria-hidden="true"><circle cx="33" cy="54" r="26" fill="${SUN}"/><path d="M13 58V40C13 20 24 11.5 54 11.5" fill="none" stroke="${ink}" stroke-width="14"/></svg>`;
-const wmA = (ink) => `<span class="wm" style="color:${ink}">та${bSun(ink)}ыл</span>`;
-const iconA = (bg, ink) => `<svg class="app" viewBox="0 0 96 96"><rect width="96" height="96" fill="${bg}"/><g transform="translate(18 12) scale(.95)"><circle cx="33" cy="54" r="26" fill="${SUN}"/><path d="M13 58V40C13 20 24 11.5 54 11.5" fill="none" stroke="${ink}" stroke-width="14"/></g></svg>`;
-const favA = (s, bg, ink) => `<svg class="fav" width="${s}" height="${s}" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="${bg}"/><circle cx="17" cy="19.5" r="8.5" fill="${SUN}"/><path d="M10.5 21V15C10.5 8.5 14 5.8 24 5.8" fill="none" stroke="${ink}" stroke-width="4.2"/></svg>`;
-
-/* --- Б: the price tag from the interface --- */
-const tag = (w, h, fill, hole) => `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" aria-hidden="true"><path d="M${h*.42} 0H${w-8}a8 8 0 0 1 8 8V${h-8}a8 8 0 0 1-8 8H${h*.42}L0 ${h/2}Z" fill="${fill}"/><circle cx="${h*.42}" cy="${h/2}" r="${h*.09}" fill="${hole}"/></svg>`;
-const wmB = (ink, bg) => `<span style="position:relative;display:inline-grid;place-items:center">${tag(300,96,SUN,bg)}<span class="wm" style="position:absolute;left:62px;top:50%;transform:translateY(-52%);font-size:58px;color:#1D1A12">табыл</span></span>`;
-const iconB = (bg, ink) => `<svg class="app" viewBox="0 0 96 96"><rect width="96" height="96" fill="${bg}"/><path d="M34 22H74a6 6 0 0 1 6 6V68a6 6 0 0 1-6 6H34L14 48Z" fill="${SUN}"/><circle cx="31" cy="48" r="4.5" fill="${bg}"/><text x="58" y="61" text-anchor="middle" font-family="Rubik" font-weight="700" font-size="38" fill="#1D1A12">т</text></svg>`;
-const favB = (s, bg, ink) => `<svg class="fav" width="${s}" height="${s}" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="${bg}"/><path d="M12 7H26a2 2 0 0 1 2 2V23a2 2 0 0 1-2 2H12L4 16Z" fill="${SUN}"/><circle cx="11" cy="16" r="2" fill="${bg}"/></svg>`;
-
-/* --- В: түндүк-like lattice inside the sun (an echo, not a copy of the flag emblem) --- */
-const tund = (r, ink, sw) => { const d=r*.42, k=r*.62, L=r*1.05; const lines=[`M0 ${-L}V${L}`,`M${-d} ${-L}Q${-k-d*.2} 0 ${-d} ${L}`,`M${d} ${-L}Q${k+d*.2} 0 ${d} ${L}`]; return `<defs><clipPath id="cl${r}"><circle r="${r}"/></clipPath></defs><circle r="${r}" fill="${SUN}"/><g clip-path="url(#cl${r})" fill="none" stroke="${ink}" stroke-width="${sw}"><g>${lines.map(l=>`<path d="${l}"/>`).join("")}</g><g transform="rotate(90)">${lines.map(l=>`<path d="${l}"/>`).join("")}</g></g>`; };
-const wmC = (ink) => `<span class="wm" style="color:${ink};gap:16px;align-items:center"><svg viewBox="-40 -40 80 80" style="height:.9em">${tund(36,ink,3.6)}</svg>табыл</span>`;
-const iconC = (bg, ink) => `<svg class="app" viewBox="-48 -48 96 96"><rect x="-48" y="-48" width="96" height="96" fill="${bg}"/>${tund(30,ink,3.2)}</svg>`;
-const favC = (s, bg, ink) => `<svg class="fav" width="${s}" height="${s}" viewBox="-16 -16 32 32"><rect x="-16" y="-16" width="32" height="32" rx="7" fill="${bg}"/>${tund(12,ink,1.7)}</svg>`;
-
-/* --- Г: magnifier with the sun as its lens --- */
-const glass = (ink, sw) => `<circle cx="34" cy="34" r="22" fill="${SUN}" stroke="${ink}" stroke-width="${sw}"/><path d="M51 51 70 70" stroke="${ink}" stroke-width="${sw*1.4}" stroke-linecap="round"/>`;
-const wmD = (ink) => `<span class="wm" style="color:${ink};gap:14px;align-items:center"><svg viewBox="0 0 76 76" style="height:.85em">${glass(ink,7)}</svg>табыл</span>`;
-const iconD = (bg, ink) => `<svg class="app" viewBox="-12 -12 100 100"><rect x="-12" y="-12" width="100" height="100" fill="${bg}"/>${glass(ink,6)}</svg>`;
-const favD = (s, bg, ink) => `<svg class="fav" width="${s}" height="${s}" viewBox="-8 -8 92 92"><rect x="-8" y="-8" width="92" height="92" rx="20" fill="${bg}"/>${glass(ink,9)}</svg>`;
-
-const C = [
-  {k:"А", name:"Солнце в букве «б»", text:"Чашечка буквы «б» — жёлтое солнце, остальное — обычный набор Rubik. <b>Плюсы:</b> держится на кириллице, его не спутать с латинскими сервисами, знак работает отдельно от надписи. <b>Минус:</b> букву нужно аккуратно перерисовать, чтобы она стояла в строке как родная.", wm:wmA, icon:iconA, fav:favA},
-  {k:"Б", name:"Ценник", text:"Слово «табыл» на жёлтой бирке — той же, что висит на ценах в ленте. <b>Плюсы:</b> сразу говорит «здесь продают», логотип и интерфейс — одна система. <b>Минус:</b> ценник как символ используют многие магазины, нужна точная форма, чтобы не было похоже на скидочную наклейку.", wm:wmB, icon:iconB, fav:favB},
-  {k:"В", name:"Солнце-түндүк", text:"Жёлтый круг с перекрещенными дугами — отсылка к түндүку, своду юрты. <b>Плюсы:</b> самый «кыргызский», красиво в иконке. <b>Минусы:</b> в мелком размере похож на глобус, а түндүк есть на государственном флаге — коммерческому сервису стоит обойтись намёком, а не копией. Перед выбором сверьте с юристом.", wm:wmC, icon:iconC, fav:favC},
-  {k:"Г", name:"Лупа-солнце", text:"Лупа, в которой линза — солнце. <b>Плюсы:</b> понятен любому за секунду: «табыл» — найти. <b>Минус:</b> лупу использует половина поисковых сервисов, своего характера мало. Показываю для сравнения.", wm:wmD, icon:iconD, fav:favD},
-];
-document.getElementById("concepts").innerHTML = C.map(c => `
-  <section class="concept">
-    <header><h2><small>Вариант ${c.k}</small>${c.name}</h2><p>${c.text}</p></header>
-    <div class="boards">
-      <div class="board l">${c.k==="Б"?c.wm("#1D1A12","#FBF7EE"):c.wm("#1D1A12")}<span class="cap">светлый фон</span></div>
-      <div class="board d">${c.k==="Б"?c.wm("#F4EFE2","#14120D"):c.wm("#F4EFE2")}<span class="cap">тёмный фон</span></div>
-      <div class="board i">
-        <div class="icons">
-          <figure>${c.icon("#FBF7EE","#1D1A12")}<figcaption>иконка</figcaption></figure>
-          <figure>${c.icon("#14120D","#F4EFE2")}<figcaption>тёмная</figcaption></figure>
-          <figure>${c.fav(32,"#FBF7EE","#1D1A12")}<figcaption>32 px</figcaption></figure>
-          <figure>${c.fav(16,"#FBF7EE","#1D1A12")}<figcaption>16 px</figcaption></figure>
-        </div>
-        <div class="inuse">${c.k==="Б"?`<span style="transform:scale(.3);transform-origin:left center;width:92px;height:30px;display:inline-block">${c.wm("#1D1A12","#FBF7EE")}</span>`:c.wm("#1D1A12")}<span class="s"></span></div>
+  <section>
+    <h2>Иконки в настоящем размере</h2>
+    <div class="sizes">
+      <div class="row l">
+        <figure><img src="kit/icon-small-light.svg" width="16" height="16" alt=""><figcaption>16</figcaption></figure>
+        <figure><img src="kit/icon-small-light.svg" width="24" height="24" alt=""><figcaption>24</figcaption></figure>
+        <figure><img src="kit/icon-small-light.svg" width="32" height="32" alt=""><figcaption>32</figcaption></figure>
+        <figure><img src="kit/icon-medium-light.svg" width="48" height="48" alt=""><figcaption>48</figcaption></figure>
+        <figure><img src="kit/icon-medium-light.svg" width="64" height="64" alt=""><figcaption>64</figcaption></figure>
+        <figure><img src="kit/icon-light.svg" width="96" height="96" alt=""><figcaption>96</figcaption></figure>
+        <figure><img src="kit/icon-light.svg" width="128" height="128" alt=""><figcaption>128</figcaption></figure>
+        <figure><img src="kit/icon-light.svg" width="180" height="180" alt=""><figcaption>180</figcaption></figure>
+      </div>
+      <div class="row d">
+        <figure><img src="kit/icon-small-dark.svg" width="16" height="16" alt=""><figcaption>16</figcaption></figure>
+        <figure><img src="kit/icon-small-dark.svg" width="24" height="24" alt=""><figcaption>24</figcaption></figure>
+        <figure><img src="kit/icon-small-dark.svg" width="32" height="32" alt=""><figcaption>32</figcaption></figure>
+        <figure><img src="kit/icon-medium-dark.svg" width="48" height="48" alt=""><figcaption>48</figcaption></figure>
+        <figure><img src="kit/icon-medium-dark.svg" width="64" height="64" alt=""><figcaption>64</figcaption></figure>
+        <figure><img src="kit/icon-dark.svg" width="96" height="96" alt=""><figcaption>96</figcaption></figure>
+        <figure><img src="kit/icon-dark.svg" width="128" height="128" alt=""><figcaption>128</figcaption></figure>
+        <figure><img src="kit/icon-dark.svg" width="180" height="180" alt=""><figcaption>180</figcaption></figure>
       </div>
     </div>
-  </section>`).join("");
+  </section>
 
-let t = "light";
-try { t = new URLSearchParams(location.search).get("mode") || "light"; } catch (e) {}
-function setT(v){ document.documentElement.dataset.theme = v; document.querySelectorAll(".seg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.t === v)); }
-document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => setT(b.dataset.t)));
-setT(t);
+  <section>
+    <h2>В деле</h2>
+    <div class="inuse">
+      <div class="bar l"><img src="kit/tabyl-wordmark.svg" alt="табыл"><span class="s"></span></div>
+      <div class="bar d"><img src="kit/tabyl-wordmark-on-dark.svg" alt="табыл"><span class="s"></span></div>
+      <div class="tab l"><img src="kit/icon-small-light.svg" width="16" height="16" alt="">Табыл — объявления в Кыргызстане</div>
+      <div class="tab d"><img src="kit/icon-small-dark.svg" width="16" height="16" alt="">Табыл — объявления в Кыргызстане</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Файлы</h2>
+    <ul class="files">
+      <li><code>tabyl-wordmark.svg</code> — надпись для светлого фона</li>
+      <li><code>tabyl-wordmark-on-dark.svg</code> — для тёмного</li>
+      <li><code>tabyl-wordmark-mono.svg</code> — одним цветом (currentColor)</li>
+      <li><code>tabyl-mark-large / medium / small.svg</code> — знак в трёх размерах</li>
+      <li><code>icon-*.svg</code> — иконки приложения, светлые и тёмные</li>
+      <li><code>icon-maskable.svg</code> — для Android с безопасной зоной</li>
+      <li><code>favicon.svg</code> — сам переключается под тёмную тему браузера</li>
+      <li><code>png/</code> — favicon 16, 32, 48; apple-touch-icon 180; 192; 512</li>
+    </ul>
+  </section>
+</div>
+<script>
+let t="light"; try{t=new URLSearchParams(location.search).get("mode")||"light"}catch(e){}
+function setT(v){document.documentElement.dataset.theme=v;document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.t===v))}
+document.querySelectorAll(".seg button").forEach(b=>b.addEventListener("click",()=>setT(b.dataset.t)));setT(t);
 </script>
 </body>
 </html>
