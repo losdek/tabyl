@@ -54,25 +54,30 @@ a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-und
 /* =====================================================================
    M — «Мягкое 2»: Rubik, cream, calm header, masonry feed, stickers
    ===================================================================== */
-.M{--bg:#FBF7EE;--fg:#1D1A12;--mut:#77705F;--sun:#FFD43B;--on-sun:#1D1A12;--field:#F1EBDD;--line:#E9E1CF;--ink:#1D1A12;--on-ink:#FBF7EE;--card:#FFFFFF;font-family:"Rubik",sans-serif;background:var(--bg);color:var(--fg)}
-.dark .M,.M.dark{--bg:#14120D;--fg:#F4EFE2;--mut:#A29B88;--field:#221F17;--line:#2B271D;--ink:#F4EFE2;--on-ink:#14120D;--card:#1C1A13}
+.M{--bg:#FBF7EE;--fg:#1D1A12;--mut:#77705F;--sun:#FFD43B;--on-sun:#1D1A12;--field:#F1EBDD;--line:#E9E1CF;--ink:#1D1A12;--on-ink:#FBF7EE;--card:#FFFFFF;--mine:#FFEDA6;font-family:"Rubik",sans-serif;background:var(--bg);color:var(--fg)}
+.dark .M,.M.dark{--bg:#14120D;--fg:#F4EFE2;--mut:#A29B88;--field:#221F17;--line:#2B271D;--ink:#F4EFE2;--on-ink:#14120D;--card:#1C1A13;--mine:#3B3317}
 /* header */
 .M .hdr{background:var(--bg);flex:0 0 auto;padding-bottom:10px;border-bottom:1px solid transparent}
 .M .hdr.stuck{border-bottom-color:var(--line)}
 .M .hrow{display:flex;align-items:center;gap:4px;padding:2px 6px 6px 16px}
 .M .logo{display:flex;align-items:center;gap:7px;font-weight:700;font-size:21px;letter-spacing:-.02em;margin-right:auto}
-.M .sun{width:18px;height:18px;border-radius:50%;background:var(--sun);box-shadow:0 0 0 3px color-mix(in srgb,var(--sun) 35%,transparent)}
+.M .sun{width:18px;height:18px;border-radius:50%;background:var(--sun);}
 .M .city{display:flex;align-items:center;gap:2px;font-size:14px;min-height:44px;padding:0 8px;color:var(--fg)}
 .M .city .ico{width:16px;height:16px;color:var(--mut)}
 .M .bell{position:relative}
 .M .bell::after{content:"";position:absolute;top:11px;right:11px;width:7px;height:7px;border-radius:50%;background:#E0562B;box-shadow:0 0 0 2px var(--bg)}
-.M .search{margin:0 12px;height:48px;border-radius:16px;background:var(--field);display:flex;align-items:center;gap:10px;padding:0 14px;font-size:16px;color:var(--mut)}
+.M .search{margin:0 12px;height:48px;border-radius:12px;background:var(--field);display:flex;align-items:center;gap:10px;padding:0 14px;font-size:16px;color:var(--mut)}
 .M .search .ico{color:var(--fg)}
 .M .search .q{color:var(--fg);flex:1}
 .M .search .fb{margin-left:auto;margin-right:-8px;color:var(--fg);position:relative}
 .M .search .fb b{position:absolute;top:6px;right:6px;background:var(--sun);color:var(--on-sun);font-size:10px;width:16px;height:16px;border-radius:50%;display:grid;place-items:center}
 /* categories */
-.M .cats{display:flex;gap:6px;padding:12px 12px 4px;overflow:hidden;white-space:nowrap}
+.M .cats{display:flex;gap:18px;padding:10px 16px 2px;overflow:hidden;white-space:nowrap;font-size:15px}
+.M .cats span{min-height:36px;display:inline-flex;align-items:center}
+.M .cats .all{color:var(--mut)}
+.M .filters{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 16px 0;font-size:14px}
+.M .filters span{color:var(--fg)}
+.M .filters button{color:var(--fg);min-height:36px}
 .M .pill{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:0 14px;border-radius:999px;font-size:14px;background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
 .M .pill.on{background:var(--ink);color:var(--on-ink);box-shadow:none}
 .M .pill.more{color:var(--mut)}
@@ -84,8 +89,8 @@ a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-und
 .M .mas{columns:2;column-gap:10px;padding:0 12px 16px}
 .M .card{break-inside:avoid;margin-bottom:16px}
 .M .ph{position:relative}
-.M .ph img{width:100%;object-fit:cover;border-radius:16px}
-.M .stk{position:absolute;left:8px;bottom:8px;background:var(--sun);color:var(--on-sun);font-weight:500;font-size:14px;padding:4px 9px;border-radius:10px;transform:rotate(-2deg)}
+.M .ph img{width:100%;object-fit:cover;border-radius:10px}
+.M .stk{position:absolute;left:8px;bottom:8px;background:var(--sun);color:var(--on-sun);font-weight:500;font-size:14px;padding:3px 8px;border-radius:6px}
 .M .stk.free{background:#1D1A12;color:#FFD43B}
 .M .ttl{font-size:14px;line-height:1.3;margin-top:7px}
 .M .meta{font-size:12px;color:var(--mut);margin-top:3px;display:flex;justify-content:space-between;align-items:center;gap:4px}
@@ -95,7 +100,7 @@ a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-und
 .M .tabs{display:flex;justify-content:space-around;align-items:center;padding:4px 8px 20px;background:var(--bg);border-top:1px solid var(--line);flex:0 0 auto;color:var(--mut);font-size:11px}
 .M .tabs div{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:52px;min-height:46px;justify-content:center}
 .M .tabs .on{color:var(--fg);font-weight:500}
-.M .tabs .post{width:52px;height:42px;border-radius:14px;background:var(--sun);color:var(--on-sun);min-height:0}
+.M .tabs .post{width:52px;height:42px;border-radius:12px;background:var(--sun);color:var(--on-sun);min-height:0}
 /* search screen */
 .M .chips{display:flex;gap:6px;padding:10px 12px 0;overflow:hidden;white-space:nowrap}
 .M .count{display:flex;justify-content:space-between;padding:12px 16px 10px;font-size:13px;color:var(--mut)}
@@ -105,10 +110,10 @@ a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-und
 .M .gal{position:relative}
 .M .gal img{width:100%;height:320px;object-fit:cover}
 .M .gal .btns{position:absolute;inset:44px 12px auto;display:flex;justify-content:space-between}
-.M .gal .btns span{width:44px;height:44px;border-radius:14px;background:rgba(251,247,238,.94);color:#1D1A12;display:grid;place-items:center}
+.M .gal .btns span{width:44px;height:44px;border-radius:12px;background:rgba(251,247,238,.94);color:#1D1A12;display:grid;place-items:center}
 .M .gal .n{position:absolute;right:12px;bottom:32px;background:rgba(29,26,18,.7);color:#fff;font-size:12px;padding:3px 9px;border-radius:9px}
 .M .sheet{background:var(--bg);border-radius:24px 24px 0 0;margin-top:-20px;position:relative;padding:18px 18px 10px}
-.M .sheet .stk{position:static;display:inline-block;font-size:24px;font-weight:700;padding:5px 13px;border-radius:12px}
+.M .sheet .stk{position:static;display:inline-block;font-size:24px;font-weight:700;padding:3px 10px;border-radius:8px}
 .M .sheet h3{font-size:20px;margin-top:12px;line-height:1.25;font-weight:500}
 .M .sheet .meta{display:block;font-size:13px}
 .M dl.specs{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;margin:16px 0;padding:14px 0;border-block:1px solid var(--line)}
@@ -117,19 +122,32 @@ a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-und
 .M .seller{display:flex;gap:12px;align-items:center;padding:12px 0;font-size:13px}
 .M .ava{width:46px;height:46px;border-radius:50%;background:var(--field);display:grid;place-items:center;font-weight:500;font-size:17px}
 .M .cta{display:grid;grid-template-columns:52px 52px 1fr;gap:8px;padding:10px 12px 22px;background:var(--bg);border-top:1px solid var(--line);flex:0 0 auto}
-.M .btn{height:52px;border-radius:16px;display:grid;place-items:center;font-weight:500;font-size:16px;background:var(--field);color:var(--fg)}
+.M .btn{height:52px;border-radius:12px;display:grid;place-items:center;font-weight:500;font-size:16px;background:var(--field);color:var(--fg)}
 .M .btn.fill{background:var(--ink);color:var(--on-ink)}
 /* chat */
-.M .chat-h{display:flex;gap:8px;align-items:center;padding:2px 8px 10px 4px;border-bottom:1px solid var(--line)}
-.M .chat-h img{width:44px;height:44px;border-radius:12px;object-fit:cover}
-.M .msgs{display:flex;flex-direction:column;gap:8px;padding:12px}
-.M .day{align-self:center;font-size:12px;color:var(--mut)}
-.M .warn{display:flex;gap:10px;font-size:12.5px;line-height:1.4;color:var(--mut);padding:2px 4px 6px}
-.M .warn .ico{width:18px;height:18px;color:var(--fg)}
-.M .m{max-width:80%;padding:9px 13px;font-size:15px;line-height:1.4;background:var(--field);border-radius:18px 18px 18px 6px}
-.M .m.me{align-self:flex-end;background:var(--ink);color:var(--on-ink);border-radius:18px 18px 6px 18px}
-.M .m small{display:block;font-size:11px;opacity:.55;margin-top:2px;text-align:right}
-.M .quick{display:flex;gap:6px;padding:0 12px 8px;overflow:hidden;white-space:nowrap}
+.M .chat-h{display:flex;gap:10px;align-items:center;padding:2px 6px 8px 4px}
+.M .chat-h .ava{width:38px;height:38px;font-size:15px}
+.M .chat-h small{display:block;font-size:12px;color:var(--mut)}
+.M .adline{display:flex;align-items:center;gap:10px;padding:8px 16px;border-block:1px solid var(--line);font-size:13px;text-decoration:none;color:var(--fg)}
+.M .adline img{width:32px;height:32px;border-radius:6px;object-fit:cover}
+.M .adline span{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.M .adline b{font-weight:500}
+.M .thread{display:flex;flex-direction:column;gap:14px;padding:14px 12px 10px}
+.M .sys{align-self:center;text-align:center;font-size:12px;color:var(--mut);max-width:30ch;line-height:1.4}
+.M .grp{display:flex;flex-direction:column;align-items:flex-start;gap:3px;max-width:82%}
+.M .grp.me{align-self:flex-end;align-items:flex-end}
+.M .b{background:var(--field);padding:8px 12px;border-radius:6px 18px 18px 6px;font-size:15px;line-height:1.38}
+.M .grp .b:first-child{border-top-left-radius:18px}
+.M .grp .b:last-of-type{border-bottom-left-radius:18px}
+.M .grp.me .b{background:var(--mine);border-radius:18px 6px 6px 18px}
+.M .grp.me .b:first-child{border-top-right-radius:18px}
+.M .grp.me .b:last-of-type{border-bottom-right-radius:18px}
+.M .b.photo{padding:0;overflow:hidden;width:200px}
+.M .b.photo img{width:200px;aspect-ratio:4/3;object-fit:cover}
+.M .b.place{display:flex;flex-direction:column;gap:1px;width:220px}
+.M .b.place span{font-size:13px;color:var(--mut)}
+.M .b.place a{font-size:14px;margin-top:6px;align-self:flex-start}
+.M .tm{font-size:11px;color:var(--mut);padding:2px 4px 0}
 .M .input{display:flex;gap:6px;align-items:center;padding:6px 10px 22px;border-top:1px solid var(--line)}
 .M .input div.f{flex:1;background:var(--field);border-radius:16px;height:46px;display:flex;align-items:center;padding:0 14px;color:var(--mut);font-size:16px}
 .M .send{width:46px;height:46px;border-radius:14px;background:var(--sun);color:var(--on-sun);display:grid;place-items:center}
@@ -140,7 +158,7 @@ a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-und
 .M .l-top .search{flex:1;margin:0;height:50px;max-width:640px}
 .M .l-top nav{display:flex;gap:4px;align-items:center;margin-left:auto;font-size:14px}
 .M .l-top nav span{display:flex;align-items:center;gap:6px;padding:0 12px;min-height:44px}
-.M .l-top .post{background:var(--sun);color:var(--on-sun);border-radius:14px;font-weight:500;padding:0 18px}
+.M .l-top .post{background:var(--sun);color:var(--on-sun);border-radius:12px;font-weight:500;padding:0 18px}
 .M .l-cats{display:flex;gap:6px;padding:16px 40px 2px}
 .M .l-body{padding:0 28px;overflow:hidden}
 .M .l-body .sec{padding:18px 12px 12px}
@@ -151,8 +169,8 @@ a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-und
 <div class="page">
   <header class="intro">
     <div>
-      <h1>Табыл: «Мягкое», вторая версия</h1>
-      <p style="margin-top:10px">Основа&nbsp;— вариант В2, но&nbsp;спокойнее и&nbsp;дальше от&nbsp;Лалафо. Экраны те&nbsp;же: главная, поиск, объявление, чат и&nbsp;главная на&nbsp;ноутбуке. Телефоны листаются внутри.</p>
+      <h1>Табыл, «Мягкое»&nbsp;— третья версия</h1>
+      <p style="margin-top:10px">Убрали наклон ценников, свечение у&nbsp;логотипа и&nbsp;лишние «таблетки». Категории и&nbsp;фильтры теперь обычным текстом. Чат собран заново: сообщения сгруппированы, адрес встречи приходит карточкой с&nbsp;переходом в&nbsp;2ГИС.</p>
     </div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <span style="font-size:13px;color:var(--mut)">Тема макетов</span>
@@ -162,16 +180,6 @@ a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-und
       </div>
     </div>
   </header>
-
-  <ul class="changes">
-    <h3>Что изменилось по&nbsp;сравнению с&nbsp;В2</h3>
-    <li><b>Шапка.</b> Вместо большого жёлтого блока со&nbsp;слоганом&nbsp;— тихая строка: логотип с&nbsp;солнцем, город, уведомления и&nbsp;поиск. Экран сразу начинается с&nbsp;объявлений.</li>
-    <li><b>Не&nbsp;как у&nbsp;Лалафо.</b> У&nbsp;них&nbsp;— одинаковые квадратные карточки в&nbsp;белых рамках и&nbsp;категории картинками. Здесь&nbsp;— лента «кирпичиками»: фото в&nbsp;своих пропорциях, без рамок, прямо на&nbsp;сливочном фоне.</li>
-    <li><b>Меньше жёлтого.</b> Он&nbsp;остался только в&nbsp;солнце логотипа, ценниках и&nbsp;кнопке «+». Главные кнопки&nbsp;— тёмные, спокойные.</li>
-    <li><b>Категории&nbsp;— словами.</b> Короткие «таблетки» без фото: меньше шума, быстрее грузится.</li>
-    <li><b>Фильтр&nbsp;— внутри поиска.</b> Одна строка вместо двух, число активных фильтров&nbsp;— на&nbsp;значке.</li>
-    <li><b>Чат.</b> Предупреждение о&nbsp;предоплате&nbsp;— одной тихой строкой, а&nbsp;не&nbsp;плашкой.</li>
-  </ul>
 
   <div class="phones" id="phones"></div>
   <div class="laptop-cap">Главная на&nbsp;ноутбуке</div>
@@ -241,16 +249,16 @@ const DESC = ty("Один хозяин, обслуживание у официа
 const M = {
   tabs(on){const t=[["home","Главная"],["heart","Избранное"],["plus",""],["chat","Чаты"],["user","Профиль"]];
     return `<nav class="tabs">${t.map(([i,l])=>i==='plus'?`<div class="post" aria-label="Подать объявление">${ic(i)}</div>`:`<div class="${i===on?'on':''}">${ic(i)}${l}</div>`).join("")}</nav>`},
-  card(k,o={}){const x=it(k,o);return `<article class="card"><div class="ph"><img src="${img(k)}" alt="" loading="lazy" style="aspect-ratio:${x.r}"><span class="stk num ${x.p==='Даром'?'free':''}">${x.p}</span></div>${o.promo?'<div class="ad-mark">Продвигается</div>':''}<div class="ttl clamp2" style="${o.promo?'margin-top:2px':''}">${x.t}</div><div class="meta"><span>${x.c} · ${x.tm}</span>${ic("heart")}</div></article>`},
+  card(k,o={}){const x=it(k,o);return `<article class="card"><div class="ph"><img src="${img(k)}" alt="" loading="lazy" style="aspect-ratio:${x.r}"><span class="stk num ${x.p==='Даром'?'free':''}">${x.p}</span></div>${o.promo?'<div class="ad-mark">Реклама</div>':''}<div class="ttl clamp2" style="${o.promo?'margin-top:2px':''}">${x.t}</div><div class="meta"><span>${x.c} · ${x.tm}</span>${ic("heart")}</div></article>`},
   header(q){return `<div class="hdr">${sb()}
     <div class="hrow"><span class="logo"><span class="sun" aria-hidden="true"></span>табыл</span><span class="city"><span class="dash">Бишкек</span></span><span class="t44 bell">${ic("bell")}</span></div>
     <div class="search">${ic("search")}${q?`<span class="q">${q}</span>`:'Что ищете?'}<span class="t44 fb">${ic("filter")}${q?'<b>3</b>':''}</span></div></div>`},
   home(){return `${this.header()}<div class="scroll">
-    <div class="cats">${CATS.slice(0,4).map((n,i)=>`<span class="pill">${n}</span>`).join("")}</div>
-    <div class="sec"><h4>Свежее<span>1${N}240 за${N}сегодня</span></h4><a href="#">Все</a></div>
+    <nav class="cats">${CATS.slice(0,5).map(n=>`<span>${n}</span>`).join("")}</nav>
+    <div class="sec"><h4>Новые<span>сегодня 1${N}240</span></h4><a href="#">Все</a></div>
     <div class="mas">${FEED.map(k=>this.card(k)).join("")}</div></div>${this.tabs("home")}`},
   search(){return `${this.header("айфон 15 про")}
-    <div class="cats" style="padding-top:2px"><span class="pill on">Бишкек</span><span class="pill on">до${N}100${N}000 сом</span><span class="pill on">Б/у</span><span class="pill more">Ещё</span></div>
+    <div class="filters"><span>Бишкек · до${N}100${N}000 сом · б/у</span><button class="dash">изменить</button></div>
     <div class="count"><span><b>348</b> объявлений</span><button class="dash">сначала новые</button></div>
     <div class="scroll"><div class="mas">${[
       this.card("iphone",{promo:true}),
@@ -265,14 +273,19 @@ const M = {
     <p style="font-size:15px">${DESC}</p>
     <div class="seller"><div class="ava">Н</div><div style="flex:1"><b style="font-weight:500">Нурлан</b><div style="color:var(--mut);font-size:12.5px">★${N}4,9 · <a href="#">37 отзывов</a> · отвечает за${N}час</div></div></div></div></div>
     <div class="cta"><div class="btn" aria-label="Позвонить">${ic("phone")}</div><div class="btn" aria-label="WhatsApp">${ic("wa")}</div><div class="btn fill">Написать</div></div>`},
-  chat(){return `${sb()}<div class="chat-h"><span class="t44">${ic("back")}</span><img src="${img("camry")}" alt=""><div style="flex:1;font-size:14px;line-height:1.3"><b style="font-weight:500">Нурлан</b><div style="color:var(--mut)">Camry 70 · <span class="num">24${N}500${N}$</span></div></div><span class="t44">${ic("phone")}</span></div>
-    <div class="scroll"><div class="msgs"><div class="warn">${ic("shield")}<span>Не${N}переводите предоплату. Встречайтесь в${N}людных местах.</span></div><span class="day">Сегодня</span>${msgs()}</div></div>
-    <div class="quick"><span class="pill">Где посмотреть?</span><span class="pill">Пришлите VIN</span><span class="pill">Ещё актуально?</span></div>
+  chat(){return `${sb()}<div class="chat-h"><span class="t44">${ic("back")}</span><div class="ava">Н</div><div style="flex:1;line-height:1.3;font-size:15px"><b style="font-weight:500">Нурлан</b><small>был 5${N}минут назад</small></div><span class="t44">${ic("phone")}</span></div>
+    <a class="adline" href="#"><img src="${img("camry")}" alt=""><span>Toyota Camry 70, 2019</span><b class="num">24${N}500${N}$</b></a>
+    <div class="scroll"><div class="thread">
+      <p class="sys">Табыл никогда не${N}просит предоплату и${N}не${N}присылает ссылки на${N}оплату</p>
+      <div class="grp me"><div class="b">Здравствуйте! Ещё продаёте?</div><div class="b">Можно сегодня вечером посмотреть?</div><span class="tm">14:31</span></div>
+      <div class="grp"><div class="b">Да, продаю. После шести буду дома, подъезжайте</div><div class="b place"><b style="font-weight:500">ул.${N}Ахунбаева, 98</b><span>Джал, во${N}дворе за${N}«Глобусом»</span><a href="#">Открыть в${N}2ГИС</a></div><div class="b photo"><img src="${img("camry")}" alt="Машина во дворе"></div><span class="tm">14:33</span></div>
+      <div class="grp me"><div class="b">Хорошо, буду в${N}18:30</div><span class="tm">14:36 · прочитано</span></div>
+    </div></div>
     <div class="input"><span class="t44">${ic("clip")}</span><div class="f">Сообщение</div><span class="send">${ic("send")}</span></div>`},
   lap(){return `<div class="M lap"><div class="l-top"><span class="logo"><span class="sun" aria-hidden="true"></span>табыл</span><span class="city"><span class="dash">Бишкек</span></span><div class="search">${ic("search")}Найти среди 214${N}380 объявлений<span class="t44 fb">${ic("filter")}</span></div>
     <nav><span>${ic("heart")}Избранное</span><span>${ic("chat")}Чаты</span><span>${ic("user")}Войти</span><span class="post">${ic("plus")}Подать объявление</span></nav></div>
-    <div class="l-cats">${CATS.map(n=>`<span class="pill">${n}</span>`).join("")}</div>
-    <div class="l-body"><div class="sec"><h4>Свежее<span>1${N}240 за${N}сегодня в${N}Бишкеке</span></h4><a href="#">Все</a></div>
+    <nav class="cats" style="padding:14px 40px 0;gap:26px">${CATS.map(n=>`<span>${n}</span>`).join("")}<span class="all dash">все категории</span></nav>
+    <div class="l-body"><div class="sec"><h4>Новые в${N}Бишкеке<span>сегодня 1${N}240</span></h4><a href="#">Все</a></div>
     <div class="l-mas">${["iphone","camry","kitten","bike","sofa","jacket","laptop","fridge","lexus","sneakers","apartment","iphone"].map(k=>this.card(k)).join("")}</div></div></div>`},
 };
 
