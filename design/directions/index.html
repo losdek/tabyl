@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tabyl UI directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700&family=Golos+Text:wght@400;500;700&family=Geologica:wght@400;500;800&display=swap" rel="stylesheet">
+<style>
+/* ---------- page chrome ---------- */
+:root{--bg:#EEEDEA;--fg:#141414;--mut:#6B6B6B;--line:#D6D4CF;--card:#FFFFFF}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121212;--fg:#EDEDED;--mut:#9A9A9A;--line:#2C2C2C;--card:#1C1C1C}}
+:root[data-theme="dark"]{--bg:#121212;--fg:#EDEDED;--mut:#9A9A9A;--line:#2C2C2C;--card:#1C1C1C}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font:15px/1.5 "Onest",system-ui,sans-serif;overflow-x:hidden}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.page{max-width:1480px;margin:0 auto;padding:32px 16px 80px}
+.intro{display:grid;gap:20px;grid-template-columns:1fr;margin-bottom:40px;border-bottom:1px solid var(--line);padding-bottom:28px}
+@media(min-width:900px){.intro{grid-template-columns:1.2fr 1fr;align-items:end}}
+.intro h1{font-size:clamp(28px,4vw,44px);line-height:1.08;letter-spacing:-.02em;font-weight:700;text-wrap:balance}
+.intro p{color:var(--mut);max-width:60ch}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--card)}
+.seg button{padding:7px 14px;border-radius:999px;font-size:14px;min-height:36px}
+.seg button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.jump{display:flex;gap:16px;flex-wrap:wrap;font-size:14px}
+.jump a{color:var(--fg)}
+.dir{margin:56px 0 0;scroll-margin-top:16px}
+.dir-head{display:grid;gap:8px 32px;grid-template-columns:1fr;margin-bottom:20px}
+@media(min-width:900px){.dir-head{grid-template-columns:auto 1fr;align-items:baseline}}
+.dir-head h2{font-size:30px;letter-spacing:-.02em;line-height:1.1}
+.dir-head h2 small{display:block;font-size:13px;font-weight:500;color:var(--mut);letter-spacing:0;margin-bottom:4px}
+.dir-head p{color:var(--mut);max-width:72ch}
+.dir-head dl{display:flex;flex-wrap:wrap;gap:4px 20px;font-size:13px;grid-column:1/-1}
+.dir-head dt{color:var(--mut);display:inline}.dir-head dd{display:inline;margin-right:4px}
+.swatch{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:-1px;margin-right:4px;border:1px solid rgba(0,0,0,.15)}
+.phones{display:flex;gap:18px;overflow-x:auto;padding:4px 2px 18px;scroll-snap-type:x mandatory}
+.phone-wrap{flex:0 0 auto;scroll-snap-align:start}
+.phone-cap{font-size:13px;color:var(--mut);margin:0 0 8px 4px}
+.phone{width:346px;height:730px;border-radius:44px;padding:10px;background:#0b0b0b;box-shadow:0 1px 0 rgba(255,255,255,.08) inset,0 20px 40px -24px rgba(0,0,0,.45)}
+.screen{width:100%;height:100%;border-radius:34px;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.scroll{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+.scroll::-webkit-scrollbar{display:none}
+.laptop-cap{font-size:13px;color:var(--mut);margin:24px 0 8px 4px}
+.laptop{border-radius:14px;background:#0b0b0b;padding:12px 12px 22px;max-width:1240px}
+.laptop-view{border-radius:6px;overflow:hidden;position:relative;height:calc(var(--lh) * 1px)}
+.laptop-inner{width:1280px;height:780px;transform-origin:0 0;overflow:hidden;position:absolute;left:0;top:0}
+.pick{margin-top:14px;font-size:14px;color:var(--mut)}
+.credits{margin-top:72px;border-top:1px solid var(--line);padding-top:20px;font-size:12px;color:var(--mut)}
+.credits a{color:var(--mut)}
+.credits li{margin:2px 0 2px 18px}
+:focus-visible{outline:2px solid #2F6BFF;outline-offset:2px}
+
+/* status bar shared */
+.sb{display:flex;justify-content:space-between;align-items:center;padding:12px 26px 6px;font:600 14px/1 system-ui,sans-serif;flex:0 0 auto}
+/*unused*/.sb i{display:inline-block;width:52px;height:11px;background:currentColor;mask:linear-gradient(90deg,#000 0 14px,transparent 14px 20px,#000 20px 34px,transparent 34px 40px,#000 40px);-webkit-mask:linear-gradient(90deg,#000 0 14px,transparent 14px 20px,#000 20px 34px,transparent 34px 40px,#000 40px);opacity:.85;border-radius:2px}
+.ico{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.num{font-variant-numeric:tabular-nums}
+.clamp2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* =====================================================================
+   A — КАТАЛОГ: Swiss precision. Hairlines, 0 radius, ink + ultramarine.
+   ===================================================================== */
+.A{--a-bg:#FFFFFF;--a-fg:#111111;--a-mut:#707070;--a-line:#E4E4E4;--a-acc:#2C3BF0;--a-acc-fg:#fff;--a-soft:#F5F5F5;font-family:"Onest",sans-serif;background:var(--a-bg);color:var(--a-fg)}
+.dark .A,.A.dark{--a-bg:#0E0E0E;--a-fg:#F2F2F2;--a-mut:#8E8E8E;--a-line:#262626;--a-acc:#8790FF;--a-acc-fg:#0E0E0E;--a-soft:#181818}
+.A .top{display:flex;justify-content:space-between;align-items:baseline;padding:8px 16px 10px}
+.A .logo{font-weight:700;font-size:22px;letter-spacing:-.03em}
+.A .logo b{color:var(--a-acc)}
+.A .city{font-size:13px;color:var(--a-mut)}
+.A .city u{text-decoration:underline dashed;text-underline-offset:3px;color:var(--a-fg)}
+.A .search{margin:0 16px;display:flex;align-items:center;gap:8px;border:1px solid var(--a-fg);height:46px;padding:0 12px;font-size:15px;color:var(--a-mut)}
+.A .label{display:flex;justify-content:space-between;font-size:12px;color:var(--a-mut);padding:22px 16px 8px;border-bottom:1px solid var(--a-line);text-transform:none}
+.A .label b{color:var(--a-fg);font-weight:500}
+.A .cats{display:grid;grid-template-columns:1fr 1fr}
+.A .cats a{display:flex;justify-content:space-between;gap:6px;padding:11px 12px 11px 16px;font-size:13.5px;border-bottom:1px solid var(--a-line);color:var(--a-fg);text-decoration:none}
+.A .cats a:nth-child(odd){border-right:1px solid var(--a-line)}
+.A .cats span{color:var(--a-mut);font-size:12px}
+.A .grid{display:grid;grid-template-columns:1fr 1fr}
+.A .card{padding:12px 12px 14px;border-bottom:1px solid var(--a-line)}
+.A .card:nth-child(odd){border-right:1px solid var(--a-line)}
+.A .card img{aspect-ratio:1;object-fit:cover;width:100%;margin-bottom:9px;background:var(--a-soft)}
+.A .price{font-weight:700;font-size:16px;letter-spacing:-.01em}
+.A .ttl{font-size:13px;line-height:1.35;margin-top:2px}
+.A .meta{font-size:11px;color:var(--a-mut);margin-top:5px}
+.A .top-tag{font-size:10px;font-weight:700;color:var(--a-acc);letter-spacing:.04em}
+.A .tabs{display:flex;justify-content:space-around;border-top:1px solid var(--a-line);padding:8px 0 22px;font-size:10px;color:var(--a-mut);flex:0 0 auto;background:var(--a-bg)}
+.A .tabs div{display:flex;flex-direction:column;align-items:center;gap:3px}
+.A .tabs .on{color:var(--a-fg)}
+.A .tabs .post .ico{color:var(--a-acc)}
+.A .bar{display:flex;align-items:center;gap:10px;padding:6px 12px 10px;border-bottom:1px solid var(--a-line)}
+.A .bar .q{flex:1;border:1px solid var(--a-fg);height:40px;display:flex;align-items:center;padding:0 10px;font-size:15px}
+.A .chips{display:flex;gap:6px;padding:10px 12px;overflow:hidden;white-space:nowrap}
+.A .chip{border:1px solid var(--a-line);padding:5px 10px;font-size:12px}
+.A .chip.on{border-color:var(--a-fg);background:var(--a-fg);color:var(--a-bg)}
+.A .count{font-size:12px;color:var(--a-mut);padding:2px 12px 8px;display:flex;justify-content:space-between}
+.A .count u{text-decoration:underline dashed;text-underline-offset:3px;color:var(--a-fg)}
+.A .row{display:grid;grid-template-columns:104px 1fr;gap:12px;padding:12px;border-top:1px solid var(--a-line)}
+.A .row img{width:104px;height:104px;object-fit:cover}
+.A .row .price{font-size:18px}
+.A .row.promo{background:var(--a-soft)}
+.A .gal{position:relative}
+.A .gal img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.A .gal .n{position:absolute;right:10px;bottom:10px;background:var(--a-bg);color:var(--a-fg);font-size:11px;padding:3px 7px}
+.A .gal .bk{position:absolute;left:10px;top:10px;background:var(--a-bg);width:36px;height:36px;display:grid;place-items:center}
+.A .ad-h{padding:14px 16px 4px}
+.A .ad-h .price{font-size:30px;letter-spacing:-.02em}
+.A .ad-h .som{font-size:13px;color:var(--a-mut);font-weight:400}
+.A .ad-h h3{font-size:17px;font-weight:500;margin-top:2px}
+.A table{width:calc(100% - 32px);margin:12px 16px;border-collapse:collapse;font-size:13px}
+.A td{border-top:1px solid var(--a-line);padding:8px 0}
+.A td:first-child{color:var(--a-mut);width:42%}
+.A .desc{padding:4px 16px 12px;font-size:14px}
+.A .seller{display:flex;gap:12px;align-items:center;margin:0 16px;padding:12px 0;border-top:1px solid var(--a-line);font-size:13px}
+.A .ava{width:40px;height:40px;background:var(--a-acc);color:var(--a-acc-fg);display:grid;place-items:center;font-weight:700}
+.A .cta{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px 24px;border-top:1px solid var(--a-line);flex:0 0 auto;background:var(--a-bg)}
+.A .btn{height:48px;display:grid;place-items:center;font-weight:500;font-size:15px;border:1px solid var(--a-fg)}
+.A .btn.fill{background:var(--a-acc);color:var(--a-acc-fg);border-color:var(--a-acc)}
+.A .chat-h{display:flex;gap:10px;align-items:center;padding:6px 12px 10px;border-bottom:1px solid var(--a-line)}
+.A .chat-h img{width:44px;height:44px;object-fit:cover}
+.A .msgs{display:flex;flex-direction:column;gap:8px;padding:14px 12px}
+.A .day{align-self:center;font-size:11px;color:var(--a-mut)}
+.A .m{max-width:78%;padding:9px 12px;font-size:14px;line-height:1.4;border:1px solid var(--a-line)}
+.A .m.me{align-self:flex-end;background:var(--a-fg);color:var(--a-bg);border-color:var(--a-fg)}
+.A .m small{display:block;font-size:10px;opacity:.6;margin-top:3px;text-align:right}
+.A .quick{display:flex;gap:6px;padding:0 12px 8px;flex-wrap:wrap}
+.A .input{display:flex;gap:8px;align-items:center;padding:8px 12px 24px;border-top:1px solid var(--a-line)}
+.A .input div{flex:1;border:1px solid var(--a-line);height:42px;display:flex;align-items:center;padding:0 12px;color:var(--a-mut);font-size:14px}
+/* A laptop */
+.A.lap{height:100%;display:flex;flex-direction:column}
+.A .l-top{display:flex;align-items:center;gap:28px;padding:18px 40px;border-bottom:1px solid var(--a-line)}
+.A .l-top .search{flex:1;margin:0;height:48px}
+.A .l-top nav{display:flex;gap:20px;font-size:14px}
+.A .l-top .btn{height:48px;padding:0 22px}
+.A .l-body{display:grid;grid-template-columns:240px 1fr;flex:1;min-height:0}
+.A .l-side{border-right:1px solid var(--a-line);padding:20px 0}
+.A .l-side a{display:flex;justify-content:space-between;padding:7px 40px 7px 40px;font-size:14px;color:var(--a-fg);text-decoration:none}
+.A .l-side a span{color:var(--a-mut);font-size:12px}
+.A .l-side a.on{color:var(--a-acc);font-weight:500}
+.A .l-main{overflow:hidden}
+.A .l-main .label{padding:20px 24px 10px}
+.A .l-grid{display:grid;grid-template-columns:repeat(5,1fr)}
+.A .l-grid .card{border-right:1px solid var(--a-line)}
+
+/* =====================================================================
+   B — БАЗАР: warm, photo-first, paper + deep green, price tags.
+   ===================================================================== */
+.B{--b-bg:#F5F0E6;--b-fg:#1E1B16;--b-mut:#7A7266;--b-card:#FFFDF8;--b-line:#E5DDCF;--b-acc:#0E6B43;--b-acc-fg:#fff;--b-tag:#F2C84B;--b-tag-fg:#1E1B16;font-family:"Golos Text",sans-serif;background:var(--b-bg);color:var(--b-fg)}
+.dark .B,.B.dark{--b-bg:#17150F;--b-fg:#F1ECE2;--b-mut:#A0978A;--b-card:#221F18;--b-line:#332E25;--b-acc:#3FBF83;--b-acc-fg:#0D1A12;--b-tag:#F2C84B;--b-tag-fg:#1E1B16}
+.B .hello{padding:6px 18px 12px}
+.B .hello .row1{display:flex;justify-content:space-between;align-items:center}
+.B .hello h3{font-size:26px;font-weight:700;letter-spacing:-.02em;display:flex;align-items:center;gap:4px}
+.B .hello p{font-size:13px;color:var(--b-mut)}
+.B .hello p b{color:var(--b-acc);font-weight:500}
+.B .bell{width:40px;height:40px;border-radius:10px;background:var(--b-card);display:grid;place-items:center;position:relative}
+.B .bell::after{content:"";position:absolute;top:9px;right:10px;width:7px;height:7px;border-radius:50%;background:var(--b-acc)}
+.B .search{margin:0 18px;height:48px;border-radius:10px;background:var(--b-card);display:flex;align-items:center;gap:10px;padding:0 14px;color:var(--b-mut);font-size:15px;border:1px solid var(--b-line)}
+.B .cats{display:flex;gap:10px;overflow:hidden;padding:18px 18px 6px}
+.B .cat{flex:0 0 auto;width:72px;text-align:center;font-size:11px;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.B .cat img{width:72px;height:66px;border-radius:10px;object-fit:cover;margin-bottom:6px}
+.B .cat .all{width:72px;height:66px;border-radius:10px;background:var(--b-acc);color:var(--b-acc-fg);display:grid;place-items:center;margin-bottom:6px;font-weight:700;font-size:13px}
+.B .sec{display:flex;justify-content:space-between;align-items:baseline;padding:16px 18px 10px}
+.B .sec h4{font-size:18px;letter-spacing:-.01em}
+.B .sec a{font-size:13px;color:var(--b-acc)}
+.B .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px 16px}
+.B .card{background:var(--b-card);border-radius:10px;overflow:hidden}
+.B .ph{position:relative}
+.B .ph img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.B .tag{position:absolute;left:8px;bottom:8px;background:var(--b-tag);color:var(--b-tag-fg);font-weight:700;font-size:14px;padding:4px 9px 4px 16px;border-radius:3px 6px 6px 3px;clip-path:polygon(9px 0,100% 0,100% 100%,9px 100%,0 50%)}
+.B .tag::before{content:"";position:absolute;left:7px;top:50%;width:4px;height:4px;margin-top:-2px;border-radius:50%;background:var(--b-tag-fg);opacity:.55}
+.B .tag.free{background:var(--b-acc);color:var(--b-acc-fg)}
+.B .tag.free::before{background:var(--b-acc-fg)}
+.B .fav{position:absolute;right:8px;top:8px;width:32px;height:32px;border-radius:50%;background:rgba(255,253,248,.9);color:#1E1B16;display:grid;place-items:center}
+.B .fav .ico{width:18px;height:18px}
+.B .info{padding:8px 10px 11px}
+.B .ttl{font-size:13.5px;line-height:1.3}
+.B .meta{font-size:11.5px;color:var(--b-mut);margin-top:4px}
+.B .up{font-size:10.5px;font-weight:700;color:var(--b-acc);display:flex;gap:3px;align-items:center;margin-bottom:3px}
+.B .tabs{display:flex;justify-content:space-around;align-items:center;padding:8px 6px 22px;background:var(--b-card);border-top:1px solid var(--b-line);font-size:10px;color:var(--b-mut);flex:0 0 auto}
+.B .tabs div{display:flex;flex-direction:column;align-items:center;gap:3px}
+.B .tabs .on{color:var(--b-acc)}
+.B .tabs .post{background:var(--b-acc);color:var(--b-acc-fg);border-radius:10px;padding:6px 14px;font-weight:500}
+.B .sbar{display:flex;gap:8px;padding:4px 12px 8px;align-items:center}
+.B .sbar .search{margin:0;flex:1;height:44px;color:var(--b-fg)}
+.B .fbtn{width:44px;height:44px;border-radius:10px;background:var(--b-acc);color:var(--b-acc-fg);display:grid;place-items:center;position:relative}
+.B .fbtn b{position:absolute;top:-4px;right:-4px;background:var(--b-tag);color:var(--b-tag-fg);font-size:10px;width:17px;height:17px;border-radius:50%;display:grid;place-items:center}
+.B .chips{display:flex;gap:6px;padding:2px 12px 10px;overflow:hidden;white-space:nowrap}
+.B .chip{background:var(--b-card);border:1px solid var(--b-line);padding:6px 11px;border-radius:999px;font-size:12px}
+.B .chip.on{background:var(--b-fg);color:var(--b-bg);border-color:var(--b-fg)}
+.B .count{font-size:12px;color:var(--b-mut);padding:0 18px 8px}
+.B .card.promo{outline:2px solid var(--b-acc);outline-offset:-2px}
+.B .gal{position:relative}
+.B .gal img{width:100%;height:330px;object-fit:cover}
+.B .gal .btns{position:absolute;inset:12px 12px auto;display:flex;justify-content:space-between}
+.B .gal .btns span{width:38px;height:38px;border-radius:10px;background:rgba(255,253,248,.92);color:#1E1B16;display:grid;place-items:center}
+.B .dots{position:absolute;bottom:30px;left:0;right:0;display:flex;justify-content:center;gap:5px}
+.B .dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.55)}
+.B .dots i:first-child{background:#fff;width:16px;border-radius:3px}
+.B .sheet{background:var(--b-bg);border-radius:18px 18px 0 0;margin-top:-20px;position:relative;padding:16px 18px 10px}
+.B .sheet .tag{position:static;display:inline-block;font-size:22px;padding:6px 14px 6px 22px;clip-path:polygon(12px 0,100% 0,100% 100%,12px 100%,0 50%)}
+.B .sheet .tag::before{left:9px;width:5px;height:5px;margin-top:-2.5px}
+.B .sheet h3{font-size:19px;margin-top:10px;line-height:1.25}
+.B .sheet .meta{font-size:12.5px}
+.B .specs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}
+.B .specs div{background:var(--b-card);border-radius:10px;padding:9px 11px;font-size:13px;font-weight:500}
+.B .specs span{display:block;font-size:11px;color:var(--b-mut);font-weight:400}
+.B .seller{display:flex;gap:12px;align-items:center;background:var(--b-card);border-radius:10px;padding:12px;font-size:13px}
+.B .ava{width:44px;height:44px;border-radius:50%;background:#D7C9A8;color:#1E1B16;display:grid;place-items:center;font-weight:700}
+.B .stars{color:var(--b-acc);font-weight:500}
+.B .cta{display:grid;grid-template-columns:1fr 1.4fr;gap:8px;padding:10px 12px 24px;background:var(--b-card);border-top:1px solid var(--b-line);flex:0 0 auto}
+.B .btn{height:50px;border-radius:10px;display:flex;align-items:center;justify-content:center;gap:6px;font-weight:500;font-size:15px;border:1.5px solid var(--b-acc);color:var(--b-acc)}
+.B .btn.fill{background:var(--b-acc);color:var(--b-acc-fg)}
+.B .chat-h{display:flex;gap:10px;align-items:center;padding:6px 12px 10px;border-bottom:1px solid var(--b-line)}
+.B .chat-h .ava{width:38px;height:38px;font-size:14px}
+.B .adpin{display:flex;gap:10px;align-items:center;margin:10px 12px 0;background:var(--b-card);border-radius:10px;padding:8px}
+.B .adpin img{width:46px;height:46px;border-radius:8px;object-fit:cover}
+.B .msgs{display:flex;flex-direction:column;gap:8px;padding:14px 12px}
+.B .day{align-self:center;font-size:11px;color:var(--b-mut);background:var(--b-card);padding:3px 10px;border-radius:999px}
+.B .m{max-width:78%;padding:9px 12px;font-size:14px;line-height:1.4;background:var(--b-card);border-radius:14px 14px 14px 4px}
+.B .m.me{align-self:flex-end;background:var(--b-acc);color:var(--b-acc-fg);border-radius:14px 14px 4px 14px}
+.B .m small{display:block;font-size:10px;opacity:.65;margin-top:3px;text-align:right}
+.B .m .ph2{border-radius:10px;overflow:hidden;margin:-4px -7px 6px}
+.B .quick{display:flex;gap:6px;padding:0 12px 8px;flex-wrap:wrap}
+.B .input{display:flex;gap:8px;align-items:center;padding:8px 12px 24px;background:var(--b-card);border-top:1px solid var(--b-line)}
+.B .input div{flex:1;background:var(--b-bg);border-radius:10px;height:42px;display:flex;align-items:center;padding:0 12px;color:var(--b-mut);font-size:14px}
+.B .send{width:42px;height:42px;border-radius:10px;background:var(--b-acc);color:var(--b-acc-fg);display:grid;place-items:center}
+/* B laptop */
+.B.lap{height:100%;display:flex;flex-direction:column}
+.B .l-top{display:flex;align-items:center;gap:24px;padding:16px 36px}
+.B .logo{font-weight:700;font-size:24px;letter-spacing:-.03em;color:var(--b-acc)}
+.B .l-top .search{flex:1;margin:0}
+.B .l-top .btn{padding:0 22px;height:48px}
+.B .l-cats{display:flex;gap:18px;padding:4px 36px 14px}
+.B .l-cats .cat{width:92px;font-size:13px}
+.B .l-cats .cat img,.B .l-cats .cat .all{width:92px;height:72px}
+.B .l-body{padding:0 24px;overflow:hidden;flex:1}
+.B .l-body .sec{padding:8px 12px 12px}
+.B .l-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;padding:0 12px}
+
+/* =====================================================================
+   C — СОЛНЦЕ: poster-bold. Sun yellow + black, Geologica 800.
+   ===================================================================== */
+.C{--c-bg:#FFFFFF;--c-fg:#0D0D0D;--c-mut:#6E6E6E;--c-sun:#FFD02B;--c-sun-fg:#0D0D0D;--c-soft:#F3F3F1;--c-ink:#0D0D0D;--c-ink-fg:#FFFFFF;font-family:"Geologica",sans-serif;background:var(--c-bg);color:var(--c-fg)}
+.dark .C,.C.dark{--c-bg:#0B0B0B;--c-fg:#F5F5F5;--c-mut:#8F8F8F;--c-sun:#FFD02B;--c-sun-fg:#0D0D0D;--c-soft:#1A1A1A;--c-ink:#F5F5F5;--c-ink-fg:#0B0B0B}
+.C .sun{background:var(--c-sun);color:var(--c-sun-fg);padding:0 0 18px;border-radius:0 0 26px 26px}
+.C .sun .sb{color:var(--c-sun-fg)}
+.C .brand{display:flex;justify-content:space-between;align-items:center;padding:4px 18px 0;font-size:13px;font-weight:500}
+.C .brand b{font-size:20px;font-weight:800;letter-spacing:-.04em}
+.C .sun h3{font-size:40px;line-height:.98;font-weight:800;letter-spacing:-.045em;padding:18px 18px 14px}
+.C .search{margin:0 14px;height:52px;border-radius:16px;background:#fff;color:#6E6E6E;display:flex;align-items:center;gap:10px;padding:0 16px;font-size:15px}
+.C .search .ico{color:#0D0D0D}
+.C .cats{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px 14px 4px}
+.C .cat{border-radius:16px;padding:12px 14px;background:var(--c-soft);display:flex;flex-direction:column;justify-content:space-between;min-height:74px}
+.C .cat b{font-weight:800;font-size:16px;letter-spacing:-.02em}
+.C .cat span{font-size:11px;color:var(--c-mut)}
+.C .cat.ink{background:var(--c-ink);color:var(--c-ink-fg)}
+.C .cat.ink span{color:inherit;opacity:.6}
+.C .sec{display:flex;justify-content:space-between;align-items:baseline;padding:18px 18px 10px}
+.C .sec h4{font-size:22px;font-weight:800;letter-spacing:-.03em}
+.C .sec a{font-size:13px;color:var(--c-fg)}
+.C .feed{display:flex;flex-direction:column;gap:14px;padding:0 14px 16px}
+.C .card{position:relative}
+.C .card img{width:100%;aspect-ratio:16/11;object-fit:cover;border-radius:16px}
+.C .stk{position:absolute;left:10px;top:10px;background:var(--c-sun);color:var(--c-sun-fg);font-weight:800;font-size:18px;letter-spacing:-.02em;padding:5px 11px;border-radius:12px}
+.C .stk.ink{background:#0D0D0D;color:#fff}
+.C .card .ttl{font-size:15px;font-weight:500;margin-top:8px}
+.C .card .meta{font-size:12px;color:var(--c-mut);margin-top:2px}
+.C .heart{position:absolute;right:10px;top:10px;width:36px;height:36px;border-radius:12px;background:#fff;color:#0D0D0D;display:grid;place-items:center}
+.C .tabs{display:flex;justify-content:space-around;align-items:center;padding:8px 8px 22px;background:var(--c-bg);border-top:1px solid var(--c-soft);flex:0 0 auto;color:var(--c-mut)}
+.C .tabs .on{color:var(--c-fg)}
+.C .tabs .post{width:56px;height:44px;border-radius:14px;background:var(--c-sun);color:var(--c-sun-fg);display:grid;place-items:center}
+.C .sbar{background:var(--c-sun);color:var(--c-sun-fg);padding:0 0 12px;border-radius:0 0 22px 22px}
+.C .sbar .row{display:flex;gap:8px;align-items:center;padding:4px 12px 0}
+.C .sbar .search{margin:0;flex:1;height:46px;color:#0D0D0D;font-weight:500}
+.C .sq{width:46px;height:46px;border-radius:14px;background:#0D0D0D;color:#fff;display:grid;place-items:center;flex:0 0 auto}
+.C .chips{display:flex;gap:6px;padding:12px 12px 0;overflow:hidden;white-space:nowrap}
+.C .chip{background:rgba(13,13,13,.08);padding:7px 12px;border-radius:12px;font-size:12.5px;font-weight:500}
+.C .chip.on{background:#0D0D0D;color:var(--c-sun)}
+.C .count{padding:14px 18px 8px;font-size:13px;color:var(--c-mut)}
+.C .count b{color:var(--c-fg);font-size:24px;font-weight:800;letter-spacing:-.03em;margin-right:6px}
+.C .gal img{width:100%;height:360px;object-fit:cover}
+.C .gal{position:relative}
+.C .gal .btns{position:absolute;inset:12px 12px auto;display:flex;justify-content:space-between}
+.C .gal .btns span{width:40px;height:40px;border-radius:14px;background:#fff;color:#0D0D0D;display:grid;place-items:center}
+.C .gal .n{position:absolute;right:12px;bottom:14px;background:#0D0D0D;color:#fff;font-size:12px;padding:4px 9px;border-radius:10px;font-weight:500}
+.C .pblock{background:var(--c-sun);color:var(--c-sun-fg);padding:14px 18px 16px}
+.C .pblock .p{font-size:40px;font-weight:800;letter-spacing:-.045em;line-height:1}
+.C .pblock .s{font-size:13px;font-weight:500;margin-top:4px;opacity:.75}
+.C .adb{padding:14px 18px}
+.C .adb h3{font-size:22px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+.C .adb .meta{font-size:12.5px;color:var(--c-mut);margin-top:4px}
+.C .facts{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+.C .facts span{background:var(--c-soft);border-radius:12px;padding:7px 11px;font-size:13px;font-weight:500}
+.C .seller{display:flex;align-items:center;gap:12px;background:var(--c-soft);border-radius:16px;padding:12px;font-size:13px}
+.C .ava{width:44px;height:44px;border-radius:14px;background:var(--c-ink);color:var(--c-ink-fg);display:grid;place-items:center;font-weight:800}
+.C .cta{display:grid;grid-template-columns:52px 1fr;gap:8px;padding:10px 12px 24px;border-top:1px solid var(--c-soft);flex:0 0 auto;background:var(--c-bg)}
+.C .btn{height:52px;border-radius:16px;display:grid;place-items:center;font-weight:800;font-size:16px;letter-spacing:-.01em;background:var(--c-soft)}
+.C .btn.fill{background:var(--c-sun);color:var(--c-sun-fg)}
+.C .chat-h{background:var(--c-sun);color:var(--c-sun-fg);border-radius:0 0 22px 22px;padding-bottom:12px}
+.C .chat-h .row{display:flex;gap:10px;align-items:center;padding:4px 14px 0}
+.C .chat-h img{width:46px;height:46px;border-radius:12px;object-fit:cover}
+.C .chat-h b{font-weight:800;letter-spacing:-.02em}
+.C .msgs{display:flex;flex-direction:column;gap:8px;padding:14px 12px}
+.C .day{align-self:center;font-size:11px;color:var(--c-mut)}
+.C .m{max-width:78%;padding:10px 13px;font-size:14px;line-height:1.4;background:var(--c-soft);border-radius:18px}
+.C .m.me{align-self:flex-end;background:var(--c-ink);color:var(--c-ink-fg)}
+.C .m small{display:block;font-size:10px;opacity:.55;margin-top:3px;text-align:right}
+.C .quick{display:flex;gap:6px;padding:0 12px 8px;flex-wrap:wrap}
+.C .quick .chip{background:var(--c-soft)}
+.C .input{display:flex;gap:8px;align-items:center;padding:8px 12px 24px}
+.C .input div{flex:1;background:var(--c-soft);border-radius:16px;height:46px;display:flex;align-items:center;padding:0 14px;color:var(--c-mut);font-size:14px}
+.C .send{width:46px;height:46px;border-radius:14px;background:var(--c-sun);color:var(--c-sun-fg);display:grid;place-items:center}
+/* C laptop */
+.C.lap{height:100%;display:flex;flex-direction:column}
+.C .l-sun{background:var(--c-sun);color:var(--c-sun-fg);padding:18px 40px 26px;border-radius:0 0 32px 32px}
+.C .l-sun .brand{padding:0}
+.C .l-sun nav{display:flex;gap:22px}
+.C .l-hero{display:grid;grid-template-columns:1fr 520px;gap:40px;align-items:end;margin-top:22px}
+.C .l-hero h3{font-size:64px;line-height:.95;font-weight:800;letter-spacing:-.05em;padding:0}
+.C .l-hero .search{margin:0;height:58px}
+.C .l-catrow{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}
+.C .l-catrow span{background:rgba(13,13,13,.08);padding:8px 14px;border-radius:12px;font-size:14px;font-weight:500}
+.C .l-catrow span.on{background:#0D0D0D;color:var(--c-sun)}
+.C .l-body{padding:6px 28px;overflow:hidden}
+.C .l-body .sec{padding:14px 12px 12px}
+.C .l-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding:0 12px}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="intro">
+    <div>
+      <h1>Табыл: три варианта дизайна</h1>
+      <p style="margin-top:10px">Одни и те же экраны в трёх направлениях: главная, поиск, объявление и чат на телефоне, плюс главная на ноутбуке. Телефоны листаются внутри. Выберите один вариант или соберите свой из частей: например, «карточки из Б, цвет из В».</p>
+    </div>
+    <div style="display:grid;gap:14px;justify-items:start">
+      <div class="controls">
+        <span style="font-size:13px;color:var(--mut)">Тема макетов</span>
+        <div class="seg" role="group" aria-label="Тема макетов">
+          <button data-mode="light" aria-pressed="true">Светлая</button>
+          <button data-mode="dark" aria-pressed="false">Тёмная</button>
+        </div>
+      </div>
+      <nav class="jump" aria-label="Варианты">
+        <a href="#dir-a">А — Каталог</a><a href="#dir-b">Б — Базар</a><a href="#dir-c">В — Солнце</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="dir" id="dir-a">
+    <div class="dir-head">
+      <h2><small>Вариант А</small>Каталог</h2>
+      <p>Швейцарская точность: тонкие линии, прямые углы, чернила и один ультрамарин. Цена — главный элемент, поиск — список с крупной ценой справа. Самый плотный и самый быстрый на вид: больше объявлений на экране, ничего лишнего.</p>
+      <dl><div><dt>Шрифт </dt><dd>Onest</dd></div><div><dt>Цвет </dt><dd><span class="swatch" style="background:#2C3BF0"></span>ультрамарин</dd></div><div><dt>Углы </dt><dd>0</dd></div><div><dt>Приём </dt><dd>сетка из волосяных линий</dd></div></dl>
+    </div>
+    <div class="phones" data-dir="A"></div>
+    <div class="laptop-cap">Главная на ноутбуке</div>
+    <div class="laptop"><div class="laptop-view"><div class="laptop-inner" data-lap="A"></div></div></div>
+  </section>
+
+  <section class="dir" id="dir-b">
+    <div class="dir-head">
+      <h2><small>Вариант Б</small>Базар</h2>
+      <p>Тёплый и фотографичный: бумажный фон, глубокий зелёный и жёлтые ценники-бирки прямо на фото. Ощущение живого рынка: категории — фотографиями, у продавца рейтинг и отзывы на виду.</p>
+      <dl><div><dt>Шрифт </dt><dd>Golos Text</dd></div><div><dt>Цвет </dt><dd><span class="swatch" style="background:#0E6B43"></span>зелёный + <span class="swatch" style="background:#F2C84B"></span>бирка</dd></div><div><dt>Углы </dt><dd>10 px</dd></div><div><dt>Приём </dt><dd>ценник-бирка</dd></div></dl>
+    </div>
+    <div class="phones" data-dir="B"></div>
+    <div class="laptop-cap">Главная на ноутбуке</div>
+    <div class="laptop"><div class="laptop-view"><div class="laptop-inner" data-lap="B"></div></div></div>
+  </section>
+
+  <section class="dir" id="dir-c">
+    <div class="dir-head">
+      <h2><small>Вариант В</small>Солнце</h2>
+      <p>Смелый и плакатный: солнечно-жёлтый верх, чёрный текст, крупный шрифт Geologica. Лента из больших фото с ценой-наклейкой, как в соцсетях. Самый узнаваемый и «молодой», жёлтый — фирменный цвет.</p>
+      <dl><div><dt>Шрифт </dt><dd>Geologica</dd></div><div><dt>Цвет </dt><dd><span class="swatch" style="background:#FFD02B"></span>солнечный жёлтый</dd></div><div><dt>Углы </dt><dd>16 px</dd></div><div><dt>Приём </dt><dd>жёлтая шапка-плакат</dd></div></dl>
+    </div>
+    <div class="phones" data-dir="C"></div>
+    <div class="laptop-cap">Главная на ноутбуке</div>
+    <div class="laptop"><div class="laptop-view"><div class="laptop-inner" data-lap="C"></div></div></div>
+  </section>
+
+  <footer class="credits">
+    <p>Фото — Wikimedia Commons, только для макета. Авторы и лицензии:</p>
+    <ul id="credits"><li><a href="https://commons.wikimedia.org/wiki/File:Toyota_Camry_(XV70)_IMG_9081.jpg">Toyota Camry (XV70) IMG 9081.jpg</a> — CC BY-SA 4.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Apple_iPhone_15_Pro.jpg">Apple iPhone 15 Pro.jpg</a> — CC BY-SA 4.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Living_room_in_apartment_of_Condom%C3%ADnio_do_Edif%C3%ADcio_Zaher,_Le_Blond,_Rio_de_Janeiro,_Brazil.jpg">Living room in apartment of Condomínio do Edifício Zaher, Le Blond, Rio de Janeiro, Brazil.jpg</a> — CC0</li><li><a href="https://commons.wikimedia.org/wiki/File:Cozy_living_room_with_a_gray_sofa.jpg">Cozy living room with a gray sofa.jpg</a> — CC BY 2.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Cube,_Cyclingworld_Europe_2024,_Meerbusch_(P1180003).jpg">Cube, Cyclingworld Europe 2024, Meerbusch (P1180003).jpg</a> — CC BY-SA 4.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Professional_Sneakers_-_Sneakers_for_hostesses,_pilots_and_other_professionals._Comfortable_sneakers_produced_in_leather_inside_and_outside.jpg">Professional Sneakers - Sneakers for hostesses, pilots and other professionals. Comfortable sneakers produced in leather inside and outside.jpg</a> — CC BY-SA 4.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Six_weeks_old_cat_(aka).jpg">Six weeks old cat (aka).jpg</a> — CC BY-SA 2.5</li><li><a href="https://commons.wikimedia.org/wiki/File:Macbook_Air.png">Macbook Air.png</a> — Public domain</li><li><a href="https://commons.wikimedia.org/wiki/File:Polo_Ralph_Lauren_winter_jacket,_red_and_black_plaid.jpg">Polo Ralph Lauren winter jacket, red and black plaid.jpg</a> — CC BY 2.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Freezer_door_open_on_refrigerator_in_home_kitchen_in_New_Orleans,_March_2025.jpg">Freezer door open on refrigerator in home kitchen in New Orleans, March 2025.jpg</a> — CC BY-SA 2.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Lexus_RX_450h%2B_(AALH16)_1X7A1930.jpg">Lexus RX 450h+ (AALH16) 1X7A1930.jpg</a> — CC BY-SA 4.0</li></ul>
+  </footer>
+</div>
+
+<script>
+const N = " ";
+const nb = s => s.replace(/(\d) (?=\d)/g, "$1" + N).replace(/ (сом|\$|км|м²|ГБ|р\.)/g, N + "$1");
+const I = {
+  search:'<path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Zm10 3-5-5"/>',
+  heart:'<path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10Z"/>',
+  home:'<path d="M4 10.5 12 4l8 6.5V20h-5.5v-6h-5v6H4z"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  chat:'<path d="M5 18.5V6.5A1.5 1.5 0 0 1 6.5 5h11A1.5 1.5 0 0 1 19 6.5v8a1.5 1.5 0 0 1-1.5 1.5H8z"/>',
+  user:'<path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8a7 7 0 0 1 14 0"/>',
+  back:'<path d="m14.5 5-7 7 7 7"/>',
+  filter:'<path d="M4 7h10m4 0h2M4 17h4m4 0h8M16 5v4M10 15v4"/>',
+  phone:'<path d="M6.6 4h2.6l1.3 4-1.9 1.2a11 11 0 0 0 6.2 6.2l1.2-1.9 4 1.3v2.6A1.6 1.6 0 0 1 18.4 19 14.4 14.4 0 0 1 5 5.6 1.6 1.6 0 0 1 6.6 4Z"/>',
+  share:'<path d="M12 4v11M8 8l4-4 4 4M5 13v6h14v-6"/>',
+  bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15zM10 20.5h4"/>',
+  send:'<path d="m4 12 16-8-6 16-2.5-6.5z"/>',
+  clip:'<path d="m19 11-7.2 7.2a4.5 4.5 0 0 1-6.4-6.4l7.5-7.5a3 3 0 0 1 4.3 4.3l-7.3 7.3a1.5 1.5 0 0 1-2.1-2.1L14.5 7"/>',
+  down:'<path d="m7 10 5 5 5-5"/>',
+  up:'<path d="M12 19V6m-5 5 5-5 5 5"/>',
+};
+const ic = (n, cls = "") => `<svg class="ico ${cls}" viewBox="0 0 24 24" aria-hidden="true">${I[n]}</svg>`;
+const img = k => `img/${k}.webp`;
+
+const L = {
+  camry:   {t:"Toyota Camry 70, 2019", d:"2.5 AT · 86 000 км · белый", p:"24 500 $", c:"Бишкек, Джал", tm:"14:20"},
+  iphone:  {t:"iPhone 15 Pro, 256 ГБ, натуральный титан", d:"Как новый · батарея 96 %", p:"92 000 сом", c:"Бишкек, ЦУМ", tm:"12 мин"},
+  apartment:{t:"2-комн. квартира, 64 м², 7/12 эт.", d:"Элитка · евроремонт", p:"78 000 $", c:"Бишкек, Асанбай", tm:"вчера"},
+  sofa:    {t:"Угловой диван, серый, почти новый", d:"Б/у · самовывоз", p:"28 000 сом", c:"Бишкек, Восток-5", tm:"13:02"},
+  bike:    {t:"Велосипед Cube Stereo, рама L", d:"Б/у · 1 сезон", p:"115 000 сом", c:"Каракол", tm:"11:47"},
+  fridge:  {t:"Холодильник Samsung No Frost", d:"Б/у · 185 см", p:"21 500 сом", c:"Ош", tm:"10:15"},
+  jacket:  {t:"Куртка Polo Ralph Lauren, M", d:"Новая с биркой", p:"6 500 сом", c:"Бишкек, Дордой", tm:"09:30"},
+  kitten:  {t:"Котёнок, 2 месяца, в добрые руки", d:"Приучен к лотку", p:"Даром", c:"Бишкек, Кок-Жар", tm:"08:55"},
+  laptop:  {t:"MacBook Air M2, 8/256", d:"Б/у · 41 цикл", p:"68 000 сом", c:"Бишкек, Филармония", tm:"вчера"},
+  lexus:   {t:"Lexus RX 450h+, 2023", d:"Гибрид · 12 000 км", p:"71 000 $", c:"Бишкек", tm:"вчера"},
+  sneakers:{t:"Кеды кожаные, 41 р.", d:"Новые · 2 пары", p:"2 900 сом", c:"Ош", tm:"07:40"},
+};
+const CATS = [["Транспорт","38 214"],["Недвижимость","27 905"],["Электроника","41 377"],["Дом и сад","22 610"],["Работа","9 482"],["Услуги","15 033"],["Одежда","18 756"],["Детям","11 204"],["Животные","4 318"],["Хобби","6 190"]];
+const FEED = ["iphone","camry","sofa","kitten","bike","jacket","fridge","laptop"];
+const SEARCH = [
+  {k:"iphone", promo:true},
+  {k:"iphone", t:"iPhone 15 Pro, 128 ГБ, чёрный", d:"Б/у · коробка, чек", p:"79 500 сом", c:"Бишкек, Аламедин", tm:"34 мин"},
+  {k:"iphone", t:"iPhone 15 Pro Max, 512 ГБ", d:"Новый · запечатан", p:"124 000 сом", c:"Ош", tm:"1 ч"},
+  {k:"iphone", t:"iPhone 15 Pro, 256 ГБ, синий", d:"Б/у · царапина на рамке", p:"74 000 сом", c:"Бишкек, 7 мкр", tm:"2 ч"},
+];
+const it = (k, o = {}) => ({...L[k], k, ...o});
+const sb = () => `<div class="sb"><span>9:41</span><svg width="58" height="12" viewBox="0 0 58 12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0.5" width="3" height="11.5" rx="1"/><path d="M28 3.2a9 9 0 0 1 11 0l-1.4 1.6a6.8 6.8 0 0 0-8.2 0zm2.6 3a4.7 4.7 0 0 1 5.8 0L33.5 9.5z"/><rect x="43.5" y="1" width="12" height="10" rx="2.5" fill="none" stroke="currentColor" opacity=".5"/><rect x="45" y="2.5" width="8.5" height="7" rx="1.3"/><rect x="56.3" y="4" width="1.4" height="4" rx=".7" opacity=".5"/></svg></div>`;
+
+/* ---------------- A ---------------- */
+const A = {
+  tabs(on){const t=[["home","Главная"],["search","Поиск"],["plus","Подать"],["chat","Чаты"],["user","Профиль"]];
+    return `<nav class="tabs">${t.map(([i,l])=>`<div class="${i===on?'on':''} ${i==='plus'?'post':''}">${ic(i)}${l}</div>`).join("")}</nav>`},
+  card(k){const x=it(k);return `<article class="card"><img src="${img(k)}" alt="" loading="lazy"><div class="price num">${nb(x.p)}</div><div class="ttl clamp2">${nb(x.t)}</div><div class="meta">${x.c} · ${x.tm}</div></article>`},
+  home(){return `${sb()}<div class="scroll">
+    <div class="top"><span class="logo">табыл<b>.</b></span><span class="city"><u>Бишкек</u></span></div>
+    <div class="search">${ic("search")}Найти среди 214${N}380</div>
+    <div class="label"><b>Категории</b><span>все 10</span></div>
+    <div class="cats">${CATS.slice(0,8).map(([n,c])=>`<a href="#">${n}<span class="num">${nb(c)}</span></a>`).join("")}</div>
+    <div class="label"><b>Свежие в Бишкеке</b><span>обновлено 12${N}мин назад</span></div>
+    <div class="grid">${FEED.map(k=>this.card(k)).join("")}</div></div>${this.tabs("home")}`},
+  search(){return `${sb()}<div class="bar">${ic("back")}<div class="q">айфон 15 про</div>${ic("filter")}</div>
+    <div class="chips"><span class="chip on">Бишкек</span><span class="chip">до 100${N}000 сом</span><span class="chip">Б/у</span><span class="chip">С фото</span></div>
+    <div class="count"><span><b style="color:var(--a-fg)">348</b> объявлений</span><u>сначала новые</u></div>
+    <div class="scroll">${SEARCH.map(o=>{const x=it(o.k,o);return `<div class="row ${o.promo?'promo':''}"><img src="${img(x.k)}" alt=""><div>${o.promo?'<div class="top-tag">ТОП</div>':''}<div class="price num">${nb(x.p)}</div><div class="ttl clamp2">${nb(x.t)}</div><div class="meta">${nb(x.d)}</div><div class="meta">${x.c} · ${x.tm}</div></div></div>`}).join("")}
+    ${["laptop","sneakers"].map(k=>{const x=it(k);return `<div class="row"><img src="${img(k)}" alt=""><div><div class="price num">${nb(x.p)}</div><div class="ttl clamp2">${nb(x.t)}</div><div class="meta">${x.c} · ${x.tm}</div></div></div>`}).join("")}</div>${this.tabs("search")}`},
+  ad(){return `${sb()}<div class="scroll">
+    <div class="gal"><img src="${img("camry")}" alt="Белая Toyota Camry"><span class="bk">${ic("back")}</span><span class="n num">1 / 14</span></div>
+    <div class="ad-h"><div class="price num">${nb("24 500 $")} <span class="som">≈${N}2${N}130${N}000 сом</span></div><h3>Toyota Camry 70, 2019</h3><div class="meta" style="font-size:12px;color:var(--a-mut);margin-top:4px">Бишкек, Джал · сегодня в 14:20 · 312 просмотров</div></div>
+    <table><tr><td>Год</td><td>2019</td></tr><tr><td>Пробег</td><td class="num">${nb("86 000 км")}</td></tr><tr><td>Двигатель</td><td>2,5 бензин</td></tr><tr><td>Коробка</td><td>автомат</td></tr><tr><td>Руль</td><td>левый</td></tr><tr><td>Растаможен</td><td>да</td></tr></table>
+    <p class="desc">Один хозяин, обслуживание у официального дилера, все чеки есть. Не бита, не крашена. Торг у машины.</p>
+    <div class="seller"><div class="ava">Н</div><div style="flex:1"><b style="font-weight:500">Нурлан</b><div style="color:var(--a-mut);font-size:12px">на Табыл с 2021 · отвечает за час</div></div><span style="font-size:12px">★${N}4,9</span></div></div>
+    <div class="cta"><div class="btn">Позвонить</div><div class="btn fill">Написать</div></div>`},
+  chat(){return `${sb()}<div class="chat-h">${ic("back")}<img src="${img("camry")}" alt=""><div style="flex:1;font-size:13px"><b style="font-weight:500">Нурлан</b><div style="color:var(--a-mut)">Toyota Camry 70 · <span class="num">${nb("24 500 $")}</span></div></div>${ic("phone")}</div>
+    <div class="scroll"><div class="msgs"><span class="day">Сегодня</span>
+      <div class="m me">Здравствуйте! Машина ещё продаётся?<small>14:31</small></div>
+      <div class="m">Да, продаётся. Можно посмотреть сегодня после 18:00 на Джале.<small>14:33</small></div>
+      <div class="m me">Отлично. Торг возможен?<small>14:34</small></div>
+      <div class="m">Небольшой — у машины. Скину видео двигателя.<small>14:35</small></div>
+      <div class="m me">Договорились, буду в 18:30.<small>14:36</small></div></div></div>
+    <div class="quick"><span class="chip">Где можно посмотреть?</span><span class="chip">Пришлите VIN</span></div>
+    <div class="input">${ic("clip")}<div>Сообщение</div>${ic("send")}</div>`},
+  lap(){return `<div class="A lap"><div class="l-top"><span class="logo">табыл<b>.</b></span><div class="search">${ic("search")}Поиск среди 214${N}380 объявлений</div><nav><span>Избранное</span><span>Чаты</span><span>Войти</span></nav><div class="btn fill">Подать объявление</div></div>
+    <div class="l-body"><aside class="l-side">${CATS.map(([n,c],i)=>`<a href="#" class="${i===0?'':''}">${n}<span class="num">${nb(c)}</span></a>`).join("")}</aside>
+    <main class="l-main"><div class="label"><b>Свежие в Бишкеке</b><span>обновлено 12${N}мин назад</span></div><div class="l-grid">${["iphone","camry","sofa","kitten","bike","jacket","fridge","laptop","lexus","sneakers"].map(k=>this.card(k)).join("")}</div></main></div></div>`},
+};
+
+/* ---------------- B ---------------- */
+const B = {
+  tabs(on){const t=[["home","Главная"],["heart","Избранное"],["plus","Подать"],["chat","Чаты"],["user","Профиль"]];
+    return `<nav class="tabs">${t.map(([i,l])=>i==='plus'?`<div class="post">${ic(i)}</div>`:`<div class="${i===on?'on':''}">${ic(i)}${l}</div>`).join("")}</nav>`},
+  card(k,o={}){const x=it(k,o);return `<article class="card ${o.promo?'promo':''}"><div class="ph"><img src="${img(k)}" alt="" loading="lazy"><span class="tag ${x.p==='Даром'?'free':''} num">${nb(x.p)}</span><span class="fav">${ic("heart")}</span></div><div class="info">${o.promo?`<div class="up">${ic("up","")}Поднято</div>`:''}<div class="ttl clamp2">${nb(x.t)}</div><div class="meta">${x.c} · ${x.tm}</div></div></article>`},
+  catrow(){const c=[["camry","Транспорт"],["apartment","Недвижимость"],["iphone","Электроника"],["sofa","Дом и сад"],["jacket","Одежда"]];
+    return `<div class="cat"><div class="all">Все</div>Категории</div>`+c.map(([k,n])=>`<div class="cat"><img src="${img(k)}" alt="">${n}</div>`).join("")},
+  home(){return `${sb()}<div class="scroll">
+    <div class="hello"><div class="row1"><h3>Бишкек ${ic("down")}</h3><span class="bell">${ic("bell")}</span></div><p>Сегодня <b>1${N}240 новых</b> объявлений</p></div>
+    <div class="search">${ic("search")}Что ищете?</div>
+    <div class="cats">${this.catrow()}</div>
+    <div class="sec"><h4>Рядом с вами</h4><a href="#">Все</a></div>
+    <div class="grid">${FEED.map(k=>this.card(k)).join("")}</div></div>${this.tabs("home")}`},
+  search(){return `${sb()}<div class="sbar">${ic("back")}<div class="search">${ic("search")}айфон 15 про</div><span class="fbtn">${ic("filter")}<b>3</b></span></div>
+    <div class="chips"><span class="chip on">Бишкек</span><span class="chip">до 100${N}000 сом</span><span class="chip">Б/у</span><span class="chip">С доставкой</span></div>
+    <div class="count">348 объявлений · сначала новые</div>
+    <div class="scroll"><div class="grid">${SEARCH.map(o=>this.card(o.k,o)).join("")}${this.card("laptop")}${this.card("sneakers")}</div></div>${this.tabs("search")}`},
+  ad(){return `<div class="scroll" style="position:relative">
+    <div class="gal"><img src="${img("camry")}" alt="Белая Toyota Camry"><div style="position:absolute;top:0;left:0;right:0;color:#fff">${sb()}</div><div class="btns" style="top:44px"><span>${ic("back")}</span><span>${ic("heart")}</span></div><div class="dots"><i></i><i></i><i></i><i></i><i></i></div></div>
+    <div class="sheet"><span class="tag num">${nb("24 500 $")}</span><span style="font-size:13px;color:var(--b-mut);margin-left:8px">≈${N}2${N}130${N}000 сом</span>
+    <h3>Toyota Camry 70, 2019</h3><div class="meta">Бишкек, Джал · сегодня в 14:20</div>
+    <div class="specs"><div><span>Пробег</span>${nb("86 000 км")}</div><div><span>Двигатель</span>2,5 бензин</div><div><span>Коробка</span>Автомат</div><div><span>Растаможен</span>Да</div></div>
+    <p style="font-size:14px;margin-bottom:14px">Один хозяин, обслуживание у официального дилера, все чеки есть. Не бита, не крашена. Торг у машины.</p>
+    <div class="seller"><div class="ava">Н</div><div style="flex:1"><b style="font-weight:500">Нурлан</b><div style="color:var(--b-mut);font-size:12px"><span class="stars">★${N}4,9</span> · 37 отзывов · отвечает за час</div></div></div></div></div>
+    <div class="cta"><div class="btn">${ic("phone")}Позвонить</div><div class="btn fill">${ic("chat")}Написать</div></div>`},
+  chat(){return `${sb()}<div class="chat-h">${ic("back")}<div class="ava">Н</div><div style="flex:1;font-size:13px"><b style="font-weight:500">Нурлан</b><div style="color:var(--b-acc);font-size:12px">в сети</div></div>${ic("phone")}</div>
+    <div class="adpin"><img src="${img("camry")}" alt=""><div style="font-size:13px;flex:1">Toyota Camry 70, 2019<div style="font-weight:700" class="num">${nb("24 500 $")}</div></div></div>
+    <div class="scroll"><div class="msgs"><span class="day">Сегодня</span>
+      <div class="m me">Здравствуйте! Машина ещё продаётся?<small>14:31</small></div>
+      <div class="m">Да, продаётся. Можно посмотреть сегодня после 18:00 на Джале.<small>14:33</small></div>
+      <div class="m"><div class="ph2"><img src="${img("camry")}" alt="" style="aspect-ratio:4/3;object-fit:cover"></div>Вот так она выглядит сейчас<small>14:34</small></div>
+      <div class="m me">Договорились, буду в 18:30.<small>14:36</small></div></div></div>
+    <div class="quick"><span class="chip">Где можно посмотреть?</span><span class="chip">Пришлите VIN</span></div>
+    <div class="input">${ic("clip")}<div>Сообщение</div><span class="send">${ic("send")}</span></div>`},
+  lap(){return `<div class="B lap"><div class="l-top"><span class="logo">табыл</span><span style="display:flex;align-items:center;gap:4px;font-weight:500">Бишкек ${ic("down")}</span><div class="search">${ic("search")}Что ищете? Например, «Camry 2019» или «диван»</div><span>${ic("heart")}</span><span>${ic("chat")}</span><div class="btn fill">${ic("plus")}Подать</div></div>
+    <div class="l-cats">${this.catrow()}${[["bike","Хобби"],["kitten","Животные"],["fridge","Техника"]].map(([k,n])=>`<div class="cat"><img src="${img(k)}" alt="">${n}</div>`).join("")}</div>
+    <div class="l-body"><div class="sec"><h4>Рядом с вами <span style="font-weight:400;font-size:14px;color:var(--b-mut)">· сегодня 1${N}240 новых</span></h4><a href="#">Все</a></div>
+    <div class="l-grid">${["iphone","camry","sofa","kitten","bike","jacket","fridge","laptop","lexus","sneakers","apartment","iphone"].map(k=>this.card(k)).join("")}</div></div></div>`},
+};
+
+/* ---------------- C ---------------- */
+const C = {
+  tabs(on){const t=["home","search","plus","chat","user"];
+    return `<nav class="tabs">${t.map(i=>i==='plus'?`<div class="post">${ic(i)}</div>`:`<div class="${i===on?'on':''}">${ic(i)}</div>`).join("")}</nav>`},
+  card(k,o={}){const x=it(k,o);return `<article class="card"><img src="${img(k)}" alt="" loading="lazy"><span class="stk ${o.promo?'':''} num">${nb(x.p)}</span><span class="heart">${ic("heart")}</span>${o.promo?'<div style="font-size:11px;font-weight:800;margin-top:8px;letter-spacing:.04em">ТОП</div>':''}<div class="ttl" style="${o.promo?'margin-top:0':''}">${nb(x.t)}</div><div class="meta">${x.c} · ${x.tm}</div></article>`},
+  home(){return `<div class="scroll"><div class="sun">${sb()}<div class="brand"><b>табыл</b><span style="display:flex;align-items:center;gap:2px">Бишкек${ic("down")}</span></div>
+    <h3>Найдётся<br>всё.</h3><div class="search">${ic("search")}Что ищете?</div></div>
+    <div class="cats">${CATS.slice(0,6).map(([n,c],i)=>`<div class="cat ${i===0?'ink':''}"><b>${n}</b><span class="num">${nb(c)} объявлений</span></div>`).join("")}</div>
+    <div class="sec"><h4>Свежее</h4><a href="#">Все</a></div>
+    <div class="feed">${FEED.slice(0,5).map(k=>this.card(k)).join("")}</div></div>${this.tabs("home")}`},
+  search(){return `<div class="sbar">${sb()}<div class="row"><span class="sq" style="background:transparent;color:#0D0D0D;width:28px">${ic("back")}</span><div class="search">${ic("search")}айфон 15 про</div><span class="sq">${ic("filter")}</span></div>
+    <div class="chips"><span class="chip on">Бишкек</span><span class="chip">до 100${N}000 сом</span><span class="chip">Б/у</span><span class="chip">С фото</span></div></div>
+    <div class="scroll"><div class="count"><b>348</b>объявлений · сначала новые</div><div class="feed">${SEARCH.map(o=>this.card(o.k,o)).join("")}</div></div>${this.tabs("search")}`},
+  ad(){return `<div class="scroll"><div class="gal"><img src="${img("camry")}" alt="Белая Toyota Camry"><div style="position:absolute;top:0;left:0;right:0;color:#fff">${sb()}</div><div class="btns" style="top:44px"><span>${ic("back")}</span><span>${ic("heart")}</span></div><span class="n">1 / 14</span></div>
+    <div class="pblock"><div class="p num">${nb("24 500 $")}</div><div class="s">≈${N}2${N}130${N}000 сом · торг</div></div>
+    <div class="adb"><h3>Toyota Camry 70, 2019</h3><div class="meta">Бишкек, Джал · сегодня в 14:20 · 312 просмотров</div>
+    <div class="facts"><span>${nb("86 000 км")}</span><span>2,5 бензин</span><span>Автомат</span><span>Левый руль</span><span>Растаможен</span></div>
+    <p style="font-size:14px;margin-bottom:14px">Один хозяин, обслуживание у официального дилера, все чеки есть. Не бита, не крашена. Торг у машины.</p>
+    <div class="seller"><div class="ava">Н</div><div style="flex:1"><b style="font-weight:800">Нурлан</b><div style="color:var(--c-mut);font-size:12px">★${N}4,9 · 37 отзывов · отвечает за час</div></div></div></div></div>
+    <div class="cta"><div class="btn">${ic("phone")}</div><div class="btn fill">Написать продавцу</div></div>`},
+  chat(){return `<div class="chat-h">${sb()}<div class="row">${ic("back")}<img src="${img("camry")}" alt=""><div style="flex:1;font-size:13px"><b>Нурлан</b><div style="font-weight:500;opacity:.75">Camry 70 · <span class="num">${nb("24 500 $")}</span></div></div>${ic("phone")}</div></div>
+    <div class="scroll"><div class="msgs"><span class="day">Сегодня</span>
+      <div class="m me">Здравствуйте! Машина ещё продаётся?<small>14:31</small></div>
+      <div class="m">Да, продаётся. Можно посмотреть сегодня после 18:00 на Джале.<small>14:33</small></div>
+      <div class="m me">Отлично. Торг возможен?<small>14:34</small></div>
+      <div class="m">Небольшой — у машины. Скину видео двигателя.<small>14:35</small></div>
+      <div class="m me">Договорились, буду в 18:30.<small>14:36</small></div></div></div>
+    <div class="quick"><span class="chip">Где можно посмотреть?</span><span class="chip">Пришлите VIN</span></div>
+    <div class="input">${ic("clip")}<div>Сообщение</div><span class="send">${ic("send")}</span></div>`},
+  lap(){return `<div class="C lap"><div class="l-sun"><div class="brand"><b style="font-size:26px">табыл</b><nav><span>Избранное</span><span>Чаты</span><span>Войти</span><span style="background:#0D0D0D;color:var(--c-sun);padding:6px 14px;border-radius:12px;font-weight:800">+ Подать</span></nav></div>
+    <div class="l-hero"><h3>Найдётся всё.<br><span style="opacity:.55">214${N}380 объявлений</span></h3><div class="search">${ic("search")}Что ищете?</div></div>
+    <div class="l-catrow">${CATS.map(([n],i)=>`<span class="${i===0?'on':''}">${n}</span>`).join("")}</div></div>
+    <div class="l-body"><div class="sec"><h4>Свежее в Бишкеке</h4><a href="#">Все</a></div><div class="l-grid">${["iphone","camry","sofa","kitten","bike","jacket","fridge","laptop"].map(k=>this.card(k)).join("")}</div></div></div>`},
+};
+
+const DIRS = {A, B, C};
+const SCREENS = [["home","Главная"],["search","Поиск: «айфон 15 про»"],["ad","Объявление"],["chat","Чат с продавцом"]];
+for (const [key, D] of Object.entries(DIRS)) {
+  document.querySelector(`.phones[data-dir="${key}"]`).innerHTML = SCREENS.map(([s, cap]) =>
+    `<div class="phone-wrap"><p class="phone-cap">${cap}</p><div class="phone"><div class="screen ${key}">${D[s]()}</div></div></div>`).join("");
+  document.querySelector(`[data-lap="${key}"]`).innerHTML = D.lap();
+}
+
+function fitLaptops(){
+  document.querySelectorAll(".laptop-view").forEach(v=>{
+    const s = v.clientWidth / 1280;
+    v.style.setProperty("--lh", Math.round(780 * s));
+    v.firstElementChild.style.transform = `scale(${s})`;
+  });
+}
+addEventListener("resize", fitLaptops); fitLaptops();
+
+let mode = "light";
+try { mode = new URLSearchParams(location.search).get("mode") || localStorage.getItem("tabyl-mode") || "light"; } catch (e) {}
+function setMode(m){
+  mode = m;
+  document.querySelectorAll(".screen, .lap").forEach(el => el.classList.toggle("dark", m === "dark"));
+  document.querySelectorAll(".seg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.mode === m));
+  try { localStorage.setItem("tabyl-mode", m); } catch (e) {}
+}
+document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => setMode(b.dataset.mode)));
+setMode(mode);
+
+</script>
+</body>
+</html>

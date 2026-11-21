@@ -1,5 +1,5 @@
 # Tabyl — classifieds marketplace (Lalafo-class, faster, better designed)
-Ticket: none (personal project). Plan approved: _pending_
+Ticket: none (personal project). Plan approved: 2026-11-21
 
 Tabyl («Табыл», Kyrgyz for "find") is a Russian-language classifieds marketplace for
 Kyrgyzstan (prices in сом, cities Бишкек/Ош/…), built to beat Lalafo on speed and design.
