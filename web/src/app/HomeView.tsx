@@ -60,20 +60,18 @@ export async function HomeView({ sp }: { sp: Record<string, string | string[] | 
       <main id="results" className="mx-auto grid max-w-[1280px] gap-2.5 px-2 pt-2.5 md:gap-4 md:px-4 md:pt-4">
 
         <div className="no-scrollbar -mx-2 flex snap-x gap-2.5 overflow-x-auto px-2 md:mx-0 md:grid md:grid-cols-3 md:gap-4 md:px-0">
-          <Island className="flex min-h-[200px] w-[86%] shrink-0 snap-start flex-col justify-between gap-5 md:min-h-[220px] md:w-auto">
+          <Island className="flex w-[78%] shrink-0 snap-start flex-col justify-between gap-4 md:w-auto">
             <div>
-              <span className="mb-3 grid size-16 place-items-center rounded-full bg-sun text-on-sun"><Icon name="camera" size={32} /></span>
-              <h2 className="text-xl font-medium tracking-tight md:text-2xl">Продайте за минуту</h2>
-              <p className="mt-1.5 text-[15px] text-mut">Фото, цена и пара слов — объявление сразу в ленте. Бесплатно.</p>
+              <h2 className="text-lg font-medium">Продайте за минуту</h2>
+              <p className="mt-1 text-sm text-mut">Фото, цена и пара слов — объявление сразу в ленте. Бесплатно.</p>
             </div>
             <Link href="/post" className="press flex h-11 items-center justify-center gap-1.5 self-start rounded-[12px] bg-sun px-4 font-medium text-on-sun"><Icon name="plus" size={20} />Подать объявление</Link>
           </Island>
           {user ? (
-            <Island className="flex min-h-[200px] w-[86%] shrink-0 snap-start flex-col justify-between gap-5 md:min-h-[220px] md:w-auto">
+            <Island className="flex w-[78%] shrink-0 snap-start flex-col justify-between gap-4 md:w-auto">
               <div>
-                <span className="mb-3 grid size-16 place-items-center rounded-full bg-sun text-on-sun"><Icon name="user" size={32} /></span>
-                <h2 className="text-xl font-medium tracking-tight md:text-2xl">{activeMine.length ? "Ваши объявления" : `Здравствуйте${user.name ? `, ${user.name}` : ""}`}</h2>
-                <p className="mt-1.5 text-[15px] text-mut">
+                <h2 className="text-lg font-medium">{activeMine.length ? "Ваши объявления" : `Здравствуйте${user.name ? `, ${user.name}` : ""}`}</h2>
+                <p className="mt-1 text-sm text-mut">
                   {activeMine.length
                     ? `${count(activeMine.length, ["опубликовано", "опубликовано", "опубликовано"])} · ${count(views, ["просмотр", "просмотра", "просмотров"])} всего`
                     : "Сохранённые поиски и избранное — в профиле."}
@@ -82,11 +80,10 @@ export async function HomeView({ sp }: { sp: Record<string, string | string[] | 
               <Link href="/profile" className="press flex h-11 items-center self-start rounded-[12px] bg-field px-4 font-medium">Открыть профиль</Link>
             </Island>
           ) : (
-            <Island className="flex min-h-[200px] w-[86%] shrink-0 snap-start flex-col justify-between gap-5 md:min-h-[220px] md:w-auto">
+            <Island className="flex w-[78%] shrink-0 snap-start flex-col justify-between gap-4 md:w-auto">
               <div>
-                <span className="mb-3 grid size-16 place-items-center rounded-full bg-sun text-on-sun"><Icon name="phone" size={30} /></span>
-                <h2 className="text-xl font-medium tracking-tight md:text-2xl">Войдите по номеру</h2>
-                <p className="mt-1.5 text-[15px] text-mut">Писать продавцам, получать новые по сохранённым поискам и видеть избранное на любом устройстве.</p>
+                <h2 className="text-lg font-medium">Войдите по номеру</h2>
+                <p className="mt-1 text-sm text-mut">Писать продавцам, получать новые по сохранённым поискам и видеть избранное на любом устройстве.</p>
               </div>
               <Link href="/login?mode=register" className="press flex h-11 items-center self-start rounded-[12px] bg-ink px-4 font-medium text-on-ink">Войти или зарегистрироваться</Link>
             </Island>
