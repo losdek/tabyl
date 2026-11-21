@@ -230,7 +230,7 @@ and test on an iPhone.
 ## Progress
 | Phase | Status |
 | --- | --- |
-| 0 Foundation | pending |
+| 0 Foundation | 0.3 done: 3 directions published, waiting for the user to pick |
 | 1 Accounts | pending |
 | 2 Posting | pending |
 | 3 Browse + search | pending |
