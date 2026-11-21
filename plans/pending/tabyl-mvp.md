@@ -48,11 +48,17 @@ Files to touch: `package.json`, `drizzle.config.ts`, `src/db/*`, `src/app/layout
 - Verification command: `npm run check && npm run build`
 - Blocked by: 0.1
 
-#### Step 0.3: Design system (Size: M)
-- Acceptance: tokens (colour, type scale, spacing, radius) in light/dark; core components (Button, Input, Select, Card, Badge, Sheet, Toast, Price, Avatar); typography helpers (`formatPrice`, `formatPhone`, `typograf`).
+#### Step 0.3: UI directions — USER PICKS (Size: M)
+- Acceptance: 3 clearly different design directions (per `ru-web-design`), each shown as the same 4 phone screens (home, search results, ad page, chat) plus a laptop view of home, in light + dark, on one comparison page. **The user chooses one (or mixes parts); building waits for that choice.** This is a planned pause the user asked for, not a mid-stream question.
+- Verification command: user's choice recorded in the decision log
+- Files: `design/directions/*`
+- Blocked by: none (runs in parallel with 0.1–0.2)
+
+#### Step 0.4: Design system from the chosen direction (Size: M)
+- Acceptance: tokens (colour, type scale, spacing, radius) in light/dark, exported both as CSS variables and as a JSON file the Android app reuses; core components (Button, Input, Select, Card, Badge, Sheet, Toast, Price, Avatar); typography helpers (`formatPrice`, `formatPhone`, `typograf`).
 - Verification command: `npm run check` + `/design` page screenshot review
-- Files: `src/ui/*`, `src/lib/format.ts`, `src/app/design/page.tsx`
-- Blocked by: 0.2
+- Files: `src/ui/*`, `src/lib/format.ts`, `src/app/design/page.tsx`, `design/tokens.json`
+- Blocked by: 0.2, 0.3
 
 ### Phase 1: Accounts
 Verified when: e2e `auth.spec.ts` signs in by phone code, persists the session, and signs out; the Google button is hidden without keys and the redirect is built correctly with test keys.
@@ -61,7 +67,13 @@ Verified when: e2e `auth.spec.ts` signs in by phone code, persists the session, 
 - Acceptance: `users`, `sessions`, `login_codes` tables; code is rate-limited (5 / hour / phone, 5 tries / code), hashed, expires in 5 min; httpOnly secure session cookie.
 - Verification command: `npm run test -- auth && npx playwright test auth`
 - Files: `src/db/schema/users.ts`, `src/server/auth/*`, `src/app/(auth)/*`
-- Blocked by: 0.3
+- Blocked by: 0.4
+
+#### Step 1.3: Mobile API foundation (Size: S)
+- Acceptance: versioned JSON API at `/api/v1` sharing the same server functions as the website (no duplicate logic); bearer-token sessions for apps alongside web cookies; OpenAPI spec generated from Zod schemas at `/api/v1/openapi.json`. Every later phase adds its endpoints here in the same slice as its web UI.
+- Verification command: `npm run test -- api`
+- Files: `src/app/api/v1/*`, `src/server/api/*`
+- Blocked by: 1.1
 
 #### Step 1.2: Google OAuth + profile settings (Size: S)
 - Acceptance: Google sign-in links to an existing phone account or creates one; profile name/avatar/city editable.
@@ -143,6 +155,49 @@ Verified when: `npm run lhci` meets every budget on all main pages; full Playwri
 - Acceptance: performance profiling and fixes, empty/loading/error states everywhere, dark-theme review, 404/500 pages, SEO (meta, OG images, sitemap, JSON-LD `Product`), deploy guide (`docs/deploy.md`) for Vercel + Supabase + Freedom Pay live keys + SMS provider + Google keys.
 - Blocked by: 4, 6, 8.2
 
+---
+
+## Part B — Android app (Kotlin Multiplatform), iOS later
+
+Starts after the website's Phase 9. Same backend (`/api/v1`), same design tokens, same
+Russian copy. Code lives in `mobile/` in this repo.
+
+| Layer | Choice |
+| --- | --- |
+| Project | Kotlin Multiplatform; `shared` module (API client, models, auth, repositories, view-models) + `androidApp`; `iosApp` target declared but not built until a Mac is available |
+| UI | Compose Multiplatform, Material 3 themed from `design/tokens.json` |
+| Network | Ktor client + kotlinx.serialization, generated from the OpenAPI spec |
+| Storage | SQLDelight cache (offline browsing of viewed ads/favourites), DataStore for the token |
+| Images | Coil 3 (requests the AVIF/WebP sizes the server already makes) |
+| Push | Firebase Cloud Messaging for chat messages — needs a Firebase project from the user at deploy; locally falls back to polling |
+| Tests | kotlin.test (shared), Compose UI tests on an emulator |
+
+### Phase 10: Android toolchain + shell (Size: M)
+Verified when: `./gradlew :androidApp:assembleDebug` builds, and the app launches on the emulator showing the home feed from the local server.
+- Acceptance: JDK + Android SDK installed under the user's home (no sudo); KMP project; theme from tokens; bottom navigation (Главная, Поиск, Подать, Чаты, Профиль).
+- Blocked by: 9
+
+### Phase 11: Android sign-in, browse, search, ad page (Size: M)
+Verified when: Compose UI tests `SignInTest`, `SearchTest` pass on the emulator.
+- Blocked by: 10
+
+### Phase 12: Android posting (camera/gallery, compression before upload), favourites, profile (Size: M)
+Verified when: `PostAdTest` passes; an ad posted from Android appears on the website.
+- Blocked by: 11
+
+### Phase 13: Android chat, reviews, promotion (Freedom Pay in a Custom Tab), reports (Size: M)
+Verified when: a chat between the website and the Android app works live; `PromoteTest` passes in test mode.
+- Blocked by: 12
+
+### Phase 14: Android polish + release build (Size: S)
+Verified when: signed release APK/AAB builds; cold start < 1 s on the emulator (Baseline Profiles); dark theme reviewed.
+- Blocked by: 13
+
+### Later (not this build): iOS
+The `iosApp` target already exists in the shared code. When a Mac (or a macOS CI runner)
+is available: build `iosApp`, adjust platform bits (photo picker, payments sheet, APNs),
+and test on an iPhone.
+
 ## Decision log
 | Decision | Chosen option | Why |
 | --- | --- | --- |
@@ -154,15 +209,23 @@ Verified when: `npm run lhci` meets every budget on all main pages; full Playwri
 | Payments | Freedom Pay, test mode, behind an adapter | User choice; a stub stands in until merchant keys exist |
 | Demo data | None; empty start | User choice (e2e tests create their own data) |
 | Name | Tabyl («Табыл») | User choice |
+| Order | Website first → user picks UI → Android app | User choice |
+| Desktop | No desktop apps; website is phone-first but still works on laptops | User choice |
+| Mobile | Kotlin Multiplatform + Compose Multiplatform | User choice; one codebase for Android now and iOS later |
+| iOS | Deferred until a Mac is available | User choice; iOS can't be compiled on Linux |
+| Repo | Private GitHub `losdek/tabyl`, auto-pushed by the user's hook | User choice |
+| UI direction | _pending — user picks at Step 0.3_ | |
 
 ## Not yet specified
 - Phase 7: Freedom Pay test mode may still require a merchant ID/secret; if signup is needed, the stub covers local work and live keys come from the user.
 - Phase 1: SMS provider for real codes (e.g. Nikita.kg, SMS.ru) — chosen at deploy, not now.
 - Phase 9 / deploy: hosting choice for photo storage (Supabase Storage vs S3-compatible) is fog; decided when deploying.
+- Phase 13: push notifications need a Firebase project from the user; until then the app polls.
+- Phase 11+: the Android app talks to the local server through the emulator (`10.0.2.2`); a physical phone needs the PC's LAN IP or a deploy.
 
 ## Always / Never
 - Always: Russian UI copy with correct typography; mobile-first; every page server-rendered; perf budget checked in CI; secrets only in `.env` (git-ignored).
-- Never (this build): native mobile apps, Kyrgyz translation, delivery/escrow ("безопасная сделка"), real SMS sending, public deploy, demo/seed listings, scraping or copying Lalafo's content, name or look.
+- Never (this build): desktop apps, an iOS build, Play Store publishing, Kyrgyz translation, delivery/escrow ("безопасная сделка"), real SMS sending, public deploy, demo/seed listings, scraping or copying Lalafo's content, name or look.
 
 ## Progress
 | Phase | Status |
@@ -177,3 +240,9 @@ Verified when: `npm run lhci` meets every budget on all main pages; full Playwri
 | 7 Promotion + payments | pending |
 | 8 Moderation | pending |
 | 9 Speed + polish | pending |
+| 10 Android toolchain + shell | pending |
+| 11 Android browse/search | pending |
+| 12 Android posting | pending |
+| 13 Android chat/reviews/promote | pending |
+| 14 Android release build | pending |
+| iOS | deferred (needs a Mac) |
