@@ -58,9 +58,17 @@ export async function HomeView({ sp }: { sp: Record<string, string | string[] | 
     <>
       <Header isHome signedIn={!!user} filtersHref={`/search?${filtersToQuery(f)}#filters`} />
       <main id="results" className="mx-auto grid max-w-[1280px] gap-2.5 px-2 pt-2.5 md:gap-4 md:px-4 md:pt-4">
+        <Island className="flex flex-col gap-4 md:flex-row md:items-center md:gap-6">
+          <span className="grid size-16 shrink-0 place-items-center rounded-full bg-sun text-on-sun"><Icon name="shield" size={34} /></span>
+          <div className="flex-1">
+            <h2 className="text-xl font-medium tracking-tight md:text-2xl">Без предоплаты</h2>
+            <p className="mt-1.5 max-w-[60ch] text-[15px] text-mut">Встречайтесь в людных местах и проверяйте товар до оплаты. Табыл не присылает ссылки на оплату.</p>
+          </div>
+          <Link href="/rules" className="link shrink-0 text-sm">Как не попасться мошенникам</Link>
+        </Island>
 
-        <div className="no-scrollbar -mx-2 flex snap-x gap-2.5 overflow-x-auto px-2 md:mx-0 md:grid md:grid-cols-3 md:gap-4 md:px-0">
-          <Island className="flex w-[78%] shrink-0 snap-start flex-col justify-between gap-4 md:w-auto">
+        <div className="no-scrollbar -mx-2 flex snap-x gap-2.5 overflow-x-auto px-2 md:mx-0 md:grid md:grid-cols-2 md:gap-4 md:px-0">
+          <Island className="flex w-[78%] shrink-0 snap-start flex-col items-start gap-4 md:w-auto">
             <div>
               <h2 className="text-lg font-medium">Продайте за минуту</h2>
               <p className="mt-1 text-sm text-mut">Фото, цена и пара слов — объявление сразу в ленте. Бесплатно.</p>
@@ -68,7 +76,7 @@ export async function HomeView({ sp }: { sp: Record<string, string | string[] | 
             <Link href="/post" className="press flex h-11 items-center justify-center gap-1.5 self-start rounded-[12px] bg-sun px-4 font-medium text-on-sun"><Icon name="plus" size={20} />Подать объявление</Link>
           </Island>
           {user ? (
-            <Island className="flex w-[78%] shrink-0 snap-start flex-col justify-between gap-4 md:w-auto">
+            <Island className="flex w-[78%] shrink-0 snap-start flex-col items-start gap-4 md:w-auto">
               <div>
                 <h2 className="text-lg font-medium">{activeMine.length ? "Ваши объявления" : `Здравствуйте${user.name ? `, ${user.name}` : ""}`}</h2>
                 <p className="mt-1 text-sm text-mut">
@@ -80,7 +88,7 @@ export async function HomeView({ sp }: { sp: Record<string, string | string[] | 
               <Link href="/profile" className="press flex h-11 items-center self-start rounded-[12px] bg-field px-4 font-medium">Открыть профиль</Link>
             </Island>
           ) : (
-            <Island className="flex w-[78%] shrink-0 snap-start flex-col justify-between gap-4 md:w-auto">
+            <Island className="flex w-[78%] shrink-0 snap-start flex-col items-start gap-4 md:w-auto">
               <div>
                 <h2 className="text-lg font-medium">Войдите по номеру</h2>
                 <p className="mt-1 text-sm text-mut">Писать продавцам, получать новые по сохранённым поискам и видеть избранное на любом устройстве.</p>
@@ -88,14 +96,6 @@ export async function HomeView({ sp }: { sp: Record<string, string | string[] | 
               <Link href="/login?mode=register" className="press flex h-11 items-center self-start rounded-[12px] bg-ink px-4 font-medium text-on-ink">Войти или зарегистрироваться</Link>
             </Island>
           )}
-          <Island className="flex min-h-[200px] w-[86%] shrink-0 snap-start flex-col justify-between gap-5 md:min-h-[220px] md:w-auto">
-            <div>
-              <span className="mb-3 grid size-16 place-items-center rounded-full bg-sun text-on-sun"><Icon name="shield" size={34} /></span>
-              <h2 className="text-xl font-medium tracking-tight md:text-2xl">Без предоплаты</h2>
-              <p className="mt-1.5 text-[15px] text-mut">Встречайтесь в людных местах и проверяйте товар до оплаты. Табыл не присылает ссылки на оплату.</p>
-            </div>
-            <Link href="/rules" className="link self-start text-sm">Как не попасться мошенникам</Link>
-          </Island>
         </div>
 
         {!cursor &&
