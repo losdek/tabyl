@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tabyl Sun variants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@400;500;700&family=Sofia+Sans+Extra+Condensed:wght@600;800&family=Rubik:wght@400;500;700&family=Commissioner:wght@400;500;700&family=Onest:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ---------- page chrome ---------- */
+:root{--bg:#EEEDEA;--fg:#141414;--mut:#666;--line:#D6D4CF;--card:#FFFFFF}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121212;--fg:#EDEDED;--mut:#9A9A9A;--line:#2C2C2C;--card:#1C1C1C}}
+:root[data-theme="dark"]{--bg:#121212;--fg:#EDEDED;--mut:#9A9A9A;--line:#2C2C2C;--card:#1C1C1C}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font:15px/1.5 "Onest",system-ui,sans-serif;overflow-x:hidden}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent)}
+a:hover{text-decoration-color:currentColor}
+.page{max-width:1480px;margin:0 auto;padding:32px 16px 80px}
+.intro{display:grid;gap:20px;grid-template-columns:1fr;margin-bottom:24px;border-bottom:1px solid var(--line);padding-bottom:28px}
+@media(min-width:900px){.intro{grid-template-columns:1.2fr 1fr;align-items:end}}
+.intro h1{font-size:clamp(28px,4vw,44px);line-height:1.08;letter-spacing:-.02em;font-weight:700;text-wrap:balance}
+.intro p{color:var(--mut);max-width:62ch;text-wrap:pretty}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--card)}
+.seg button{padding:7px 14px;border-radius:999px;font-size:14px;min-height:38px}
+.seg button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.jump{display:flex;gap:16px;flex-wrap:wrap;font-size:14px}
+.changes{font-size:14px;color:var(--mut);margin:0 0 8px;display:grid;gap:4px 28px;grid-template-columns:1fr}
+@media(min-width:900px){.changes{grid-template-columns:1fr 1fr}}
+.changes h3{font-size:13px;color:var(--fg);font-weight:500;grid-column:1/-1;margin-bottom:4px}
+.changes li{list-style:none;padding-left:14px;position:relative}
+.changes li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:#FFC800}
+.dir{margin:56px 0 0;scroll-margin-top:16px}
+.dir-head{display:grid;gap:8px 32px;grid-template-columns:1fr;margin-bottom:20px}
+@media(min-width:900px){.dir-head{grid-template-columns:auto 1fr;align-items:baseline}}
+.dir-head h2{font-size:30px;letter-spacing:-.02em;line-height:1.1}
+.dir-head h2 small{display:block;font-size:13px;font-weight:500;color:var(--mut);letter-spacing:0;margin-bottom:4px}
+.dir-head p{color:var(--mut);max-width:74ch;text-wrap:pretty}
+.dir-head dl{display:flex;flex-wrap:wrap;gap:4px 20px;font-size:13px;grid-column:1/-1}
+.dir-head dt{color:var(--mut);display:inline}.dir-head dd{display:inline;margin-right:4px}
+.fontsample{grid-column:1/-1;font-size:28px;line-height:1.15;margin-top:6px;overflow-wrap:anywhere}
+.phones{display:flex;gap:18px;overflow-x:auto;padding:4px 2px 18px;scroll-snap-type:x mandatory}
+.phone-wrap{flex:0 0 auto;scroll-snap-align:start}
+.phone-cap{font-size:13px;color:var(--mut);margin:0 0 8px 4px}
+.phone{width:346px;height:730px;border-radius:44px;padding:10px;background:#0b0b0b;box-shadow:0 1px 0 rgba(255,255,255,.08) inset,0 20px 40px -24px rgba(0,0,0,.45)}
+.screen{width:100%;height:100%;border-radius:34px;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.scroll{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+.scroll::-webkit-scrollbar{display:none}
+.laptop-cap{font-size:13px;color:var(--mut);margin:24px 0 8px 4px}
+.laptop{border-radius:14px;background:#0b0b0b;padding:12px 12px 22px;max-width:1240px}
+.laptop-view{border-radius:6px;overflow:hidden;position:relative;height:calc(var(--lh) * 1px)}
+.laptop-inner{width:1280px;height:780px;transform-origin:0 0;overflow:hidden;position:absolute;left:0;top:0}
+.credits{margin-top:72px;border-top:1px solid var(--line);padding-top:20px;font-size:12px;color:var(--mut)}
+.credits li{margin:2px 0 2px 18px}
+:focus-visible{outline:2px solid #2F6BFF;outline-offset:2px}
+.sb{display:flex;justify-content:space-between;align-items:center;padding:12px 26px 6px;font:600 14px/1 system-ui,sans-serif;flex:0 0 auto}
+.ico{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.num{font-variant-numeric:tabular-nums}
+.clamp2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.t44{min-width:44px;min-height:44px;display:grid;place-items:center}
+.dash{text-decoration:underline dashed 1px;text-underline-offset:.22em}
+.ul{text-decoration:underline 1px;text-underline-offset:.2em;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent)}
+
+/* =====================================================================
+   S1 — АФИША: Sofia Sans Extra Condensed numbers, poster rhythm
+   ===================================================================== */
+.S1{--bg:#FFFFFF;--fg:#0D0D0D;--mut:#666;--sun:#FFCC1A;--on-sun:#0D0D0D;--soft:#F2F1EE;--ink:#0D0D0D;--on-ink:#fff;--line:#E6E4DF;font-family:"Sofia Sans",sans-serif;background:var(--bg);color:var(--fg)}
+.dark .S1,.S1.dark{--bg:#0C0C0B;--fg:#F4F3EF;--mut:#9C9A94;--soft:#1B1A18;--ink:#F4F3EF;--on-ink:#0C0C0B;--line:#262522}
+.S1 .cond{font-family:"Sofia Sans Extra Condensed",sans-serif;font-weight:800;letter-spacing:-.005em;line-height:.9}
+.S1 .head{background:var(--sun);color:var(--on-sun)}
+.S1 .brand{display:flex;justify-content:space-between;align-items:center;padding:0 12px 0 18px;font-size:14px}
+.S1 .brand b{font-size:22px;font-weight:700;letter-spacing:-.03em}
+.S1 .big{padding:6px 18px 2px;display:flex;align-items:flex-end;gap:10px}
+.S1 .big .cond{font-size:92px}
+.S1 .big span{font-size:15px;line-height:1.15;padding-bottom:10px;font-weight:500}
+.S1 .search{margin:10px 14px 0;height:50px;border-radius:12px;background:#fff;color:#5C5C5C;display:flex;align-items:center;gap:10px;padding:0 14px;font-size:16px;box-shadow:0 0 0 2px #0D0D0D}
+.S1 .search .ico{color:#0D0D0D}
+.S1 .catline{display:flex;gap:18px;padding:14px 18px 16px;overflow:hidden;white-space:nowrap;font-size:15px;font-weight:500}
+.S1 .catline span.on{text-decoration:underline 2px;text-underline-offset:6px}
+.S1 .sec{display:flex;justify-content:space-between;align-items:baseline;padding:16px 18px 10px}
+.S1 .sec h4{font-size:34px}
+.S1 .sec a{font-size:14px}
+.S1 .feed{display:flex;flex-direction:column}
+.S1 .card{padding:0 14px 18px}
+.S1 .card .ph{position:relative}
+.S1 .card img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:12px}
+.S1 .price{position:absolute;left:0;bottom:-1px;background:var(--sun);color:var(--on-sun);padding:8px 12px 4px;border-radius:0 12px 0 12px;font-size:40px}
+.S1 .price.free{background:var(--ink);color:var(--on-ink)}
+.S1 .heart{position:absolute;right:6px;top:6px;color:#fff;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+.S1 .ttl{font-size:16px;font-weight:500;margin-top:10px;line-height:1.3}
+.S1 .meta{font-size:13px;color:var(--mut);margin-top:2px}
+.S1 .tabs{display:flex;justify-content:space-around;align-items:center;padding:4px 8px 18px;background:var(--bg);border-top:1px solid var(--line);flex:0 0 auto;color:var(--mut);font-size:11px}
+.S1 .tabs div{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:52px;min-height:46px;justify-content:center}
+.S1 .tabs .on{color:var(--fg);font-weight:700}
+.S1 .tabs .post{background:var(--sun);color:var(--on-sun);border-radius:12px;min-width:58px;font-weight:700}
+.S1 .sbar{background:var(--sun);color:var(--on-sun);padding-bottom:12px}
+.S1 .sbar .row{display:flex;gap:6px;align-items:center;padding:2px 10px 0 4px}
+.S1 .sbar .search{margin:0;flex:1;height:46px;color:#0D0D0D;font-weight:500}
+.S1 .fbtn{width:46px;height:46px;border-radius:12px;background:#0D0D0D;color:#fff;display:grid;place-items:center;position:relative;flex:0 0 auto}
+.S1 .fbtn b{position:absolute;top:-5px;right:-5px;background:#fff;color:#0D0D0D;font-size:11px;width:19px;height:19px;border-radius:50%;display:grid;place-items:center;box-shadow:0 0 0 2px var(--sun)}
+.S1 .chips{display:flex;gap:6px;padding:10px 12px 0;overflow:hidden;white-space:nowrap}
+.S1 .chip{border:1.5px solid #0D0D0D;padding:7px 12px;border-radius:10px;font-size:13px;font-weight:500;min-height:36px}
+.S1 .chip.on{background:#0D0D0D;color:var(--sun)}
+.S1 .count{display:flex;justify-content:space-between;align-items:baseline;padding:12px 16px 8px;font-size:13px;color:var(--mut)}
+.S1 .count .cond{font-size:34px;color:var(--fg);margin-right:6px}
+.S1 .count button{color:var(--fg)}
+.S1 .row{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:12px 14px;border-top:1px solid var(--line)}
+.S1 .row img{width:120px;height:96px;object-fit:cover;border-radius:10px}
+.S1 .row .cond{font-size:34px}
+.S1 .row .ttl{font-size:14px;margin-top:4px}
+.S1 .top{display:inline-block;background:var(--sun);color:var(--on-sun);font-size:11px;font-weight:700;padding:1px 6px;border-radius:5px;letter-spacing:.04em;margin-bottom:4px}
+.S1 .gal{position:relative}
+.S1 .gal img{width:100%;height:300px;object-fit:cover}
+.S1 .gal .btns{position:absolute;inset:44px 10px auto;display:flex;justify-content:space-between}
+.S1 .gal .btns span{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.94);color:#0D0D0D;display:grid;place-items:center}
+.S1 .gal .n{position:absolute;right:10px;bottom:10px;background:#0D0D0D;color:#fff;font-size:12px;padding:3px 8px;border-radius:8px}
+.S1 .pblock{background:var(--sun);color:var(--on-sun);padding:12px 18px 12px;display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.S1 .pblock .cond{font-size:68px}
+.S1 .pblock small{white-space:nowrap;font-size:13px;font-weight:500;text-align:right;line-height:1.25;padding-bottom:6px}
+.S1 .adb{padding:14px 18px}
+.S1 .adb h3{font-size:22px;font-weight:700;letter-spacing:-.01em;line-height:1.15}
+.S1 .adb .meta{font-size:13px}
+.S1 dl.specs{display:grid;grid-template-columns:1fr 1fr;margin:14px 0;border-top:1px solid var(--line)}
+.S1 dl.specs div{padding:9px 0;border-bottom:1px solid var(--line)}
+.S1 dl.specs dt{font-size:12px;color:var(--mut)}
+.S1 dl.specs dd{font-size:15px;font-weight:500}
+.S1 .seller{display:flex;align-items:center;gap:12px;padding:12px 0;font-size:13px}
+.S1 .ava{width:46px;height:46px;border-radius:12px;background:var(--sun);color:var(--on-sun);display:grid;place-items:center;font-weight:700;font-size:18px}
+.S1 .cta{display:grid;grid-template-columns:52px 52px 1fr;gap:8px;padding:10px 12px 22px;border-top:1px solid var(--line);flex:0 0 auto;background:var(--bg)}
+.S1 .btn{height:52px;border-radius:12px;display:grid;place-items:center;font-weight:700;font-size:16px;border:1.5px solid var(--fg)}
+.S1 .btn.fill{background:var(--sun);color:var(--on-sun);border-color:var(--sun)}
+.S1 .chat-h{background:var(--sun);color:var(--on-sun);padding-bottom:10px}
+.S1 .chat-h .row2{display:flex;gap:8px;align-items:center;padding:2px 10px 0 4px}
+.S1 .chat-h img{width:46px;height:46px;border-radius:10px;object-fit:cover}
+.S1 .msgs{display:flex;flex-direction:column;gap:8px;padding:12px}
+.S1 .day{align-self:center;font-size:12px;color:var(--mut)}
+.S1 .warn{background:var(--soft);border-radius:12px;padding:10px 12px;font-size:12.5px;line-height:1.4;color:var(--fg)}
+.S1 .warn b{font-weight:700}
+.S1 .m{max-width:80%;padding:9px 12px;font-size:15px;line-height:1.4;background:var(--soft);border-radius:16px 16px 16px 4px}
+.S1 .m.me{align-self:flex-end;background:var(--sun);color:var(--on-sun);border-radius:16px 16px 4px 16px}
+.S1 .m small{display:block;font-size:11px;opacity:.6;margin-top:2px;text-align:right}
+.S1 .quick{display:flex;gap:6px;padding:0 12px 8px;overflow:hidden;white-space:nowrap}
+.S1 .quick span{border:1.5px solid var(--fg);border-radius:10px;padding:7px 11px;font-size:13px;font-weight:500}
+.S1 .input{display:flex;gap:6px;align-items:center;padding:6px 10px 22px;border-top:1px solid var(--line)}
+.S1 .input div.f{flex:1;background:var(--soft);border-radius:12px;height:46px;display:flex;align-items:center;padding:0 14px;color:var(--mut);font-size:16px}
+.S1 .send{width:46px;height:46px;border-radius:12px;background:var(--sun);color:var(--on-sun);display:grid;place-items:center}
+.S1.lap{height:100%;display:flex;flex-direction:column}
+.S1 .l-head{background:var(--sun);color:var(--on-sun);padding:14px 40px 0}
+.S1 .l-head .brand{padding:0}
+.S1 .l-head nav{display:flex;gap:22px;align-items:center;font-size:15px}
+.S1 .l-hero{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:end;margin-top:8px}
+.S1 .l-hero .cond{font-size:150px}
+.S1 .l-hero .search{margin:0 0 18px;height:58px;font-size:17px}
+.S1 .l-hero p{font-size:17px;font-weight:500;margin-bottom:10px}
+.S1 .l-head .catline{padding:4px 0 16px;gap:26px;font-size:16px}
+.S1 .l-body{padding:0 26px;overflow:hidden}
+.S1 .l-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.S1 .l-grid .card{padding:0 14px 22px}
+.S1 .l-grid .price{font-size:36px}
+
+/* =====================================================================
+   S2 — МЯГКОЕ: Rubik, rounded, 2-column grid, stickers
+   ===================================================================== */
+.S2{--bg:#FFFBEF;--fg:#1D1A12;--mut:#6F6857;--sun:#FFD43B;--on-sun:#1D1A12;--soft:#FFF3C9;--card:#FFFFFF;--ink:#1D1A12;--on-ink:#FFFBEF;--line:#F0E6C8;font-family:"Rubik",sans-serif;background:var(--bg);color:var(--fg)}
+.dark .S2,.S2.dark{--bg:#15130D;--fg:#F6F1E1;--mut:#A39C88;--soft:#2A2617;--card:#1F1C14;--ink:#FFD43B;--on-ink:#15130D;--line:#2E2A1C}
+.S2 .head{background:var(--sun);color:var(--on-sun);border-radius:0 0 28px 28px;padding-bottom:16px}
+.S2 .brand{display:flex;justify-content:space-between;align-items:center;padding:2px 12px 0 18px;font-size:14px;font-weight:500}
+.S2 .brand b{font-size:22px;font-weight:700;letter-spacing:-.02em}
+.S2 .pill{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.55);padding:0 12px;border-radius:999px;height:36px}
+.S2 h3.hero{font-size:26px;line-height:1.05;font-weight:700;letter-spacing:-.025em;padding:10px 18px 12px;text-wrap:balance}
+.S2 h3.hero span{display:block;font-size:15px;font-weight:400;letter-spacing:0;margin-top:6px;opacity:.8}
+.S2 .search{margin:0 14px;height:52px;border-radius:20px;background:#fff;color:#6F6857;display:flex;align-items:center;gap:10px;padding:0 16px;font-size:16px}
+.S2 .search .ico{color:#1D1A12}
+.S2 .cats{display:flex;gap:8px;padding:14px 14px 2px;overflow:hidden}
+.S2 .cat{flex:0 0 auto;display:flex;align-items:center;gap:8px;background:var(--card);border-radius:20px;padding:5px 14px 5px 5px;font-size:14px;font-weight:500;min-height:46px;box-shadow:0 0 0 1px var(--line)}
+.S2 .cat img{width:36px;height:36px;border-radius:14px;object-fit:cover}
+.S2 .sec{display:flex;justify-content:space-between;align-items:baseline;padding:18px 18px 10px}
+.S2 .sec h4{font-size:20px;font-weight:700;letter-spacing:-.02em}
+.S2 .sec a{font-size:14px}
+.S2 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px 16px}
+.S2 .card{background:var(--card);border-radius:20px;overflow:hidden;box-shadow:0 0 0 1px var(--line)}
+.S2 .ph{position:relative;padding:6px 6px 0}
+.S2 .ph img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:15px}
+.S2 .stk{position:absolute;left:12px;bottom:-12px;background:var(--sun);color:var(--on-sun);font-weight:700;font-size:15px;padding:5px 11px;border-radius:12px;transform:rotate(-2deg);box-shadow:0 2px 0 rgba(0,0,0,.12)}
+.S2 .stk.free{background:#1D1A12;color:#FFD43B}
+.S2 .fav{position:absolute;right:12px;top:12px;width:34px;height:34px;border-radius:12px;background:rgba(255,255,255,.92);color:#1D1A12;display:grid;place-items:center}
+.S2 .fav .ico{width:18px;height:18px}
+.S2 .info{padding:18px 12px 12px}
+.S2 .ttl{font-size:14px;line-height:1.3}
+.S2 .meta{font-size:12px;color:var(--mut);margin-top:4px}
+.S2 .up{display:inline-block;font-size:11px;font-weight:700;background:var(--soft);color:var(--fg);padding:2px 8px;border-radius:8px;margin-bottom:5px}
+.S2 .card.promo{box-shadow:0 0 0 2px var(--sun)}
+.S2 .tabs{display:flex;justify-content:space-around;align-items:center;padding:6px 8px 20px;background:var(--card);flex:0 0 auto;color:var(--mut);font-size:11px;border-radius:24px 24px 0 0;box-shadow:0 -1px 0 var(--line)}
+.S2 .tabs div{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:52px;min-height:46px;justify-content:center}
+.S2 .tabs .on{color:var(--fg);font-weight:500}
+.S2 .tabs .post{width:56px;height:46px;border-radius:18px;background:var(--sun);color:var(--on-sun)}
+.S2 .sbar{background:var(--sun);color:var(--on-sun);border-radius:0 0 24px 24px;padding-bottom:12px}
+.S2 .sbar .row{display:flex;gap:6px;align-items:center;padding:2px 10px 0 4px}
+.S2 .sbar .search{margin:0;flex:1;height:46px;color:#1D1A12;font-weight:500}
+.S2 .fbtn{width:46px;height:46px;border-radius:16px;background:#1D1A12;color:#FFD43B;display:grid;place-items:center;position:relative;flex:0 0 auto}
+.S2 .fbtn b{position:absolute;top:-5px;right:-5px;background:#fff;color:#1D1A12;font-size:11px;width:19px;height:19px;border-radius:50%;display:grid;place-items:center}
+.S2 .chips{display:flex;gap:6px;padding:10px 12px 0;overflow:hidden;white-space:nowrap}
+.S2 .chip{background:rgba(255,255,255,.6);padding:8px 13px;border-radius:14px;font-size:13px;font-weight:500}
+.S2 .chip.on{background:#1D1A12;color:#FFD43B}
+.S2 .count{padding:14px 18px 10px;font-size:13px;color:var(--mut);display:flex;justify-content:space-between}
+.S2 .count b{color:var(--fg)}
+.S2 .count button{color:var(--fg)}
+.S2 .gal{position:relative;padding:0}
+.S2 .gal img{width:100%;height:330px;object-fit:cover}
+.S2 .gal .btns{position:absolute;inset:44px 12px auto;display:flex;justify-content:space-between}
+.S2 .gal .btns span{width:44px;height:44px;border-radius:16px;background:rgba(255,255,255,.94);color:#1D1A12;display:grid;place-items:center}
+.S2 .thumbs{position:absolute;left:12px;bottom:34px;display:flex;gap:6px}
+.S2 .thumbs i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.6)}
+.S2 .thumbs i:first-child{background:#fff;width:22px;border-radius:4px}
+.S2 .sheet{background:var(--bg);border-radius:26px 26px 0 0;margin-top:-24px;position:relative;padding:18px 18px 10px}
+.S2 .sheet .stk{position:static;display:inline-block;font-size:26px;padding:6px 14px;border-radius:14px}
+.S2 .sheet h3{font-size:21px;margin-top:12px;line-height:1.2;font-weight:700;letter-spacing:-.015em}
+.S2 .sheet .meta{font-size:13px}
+.S2 .specs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}
+.S2 .specs div{background:var(--card);border-radius:16px;padding:10px 12px;font-size:14px;font-weight:500;box-shadow:0 0 0 1px var(--line)}
+.S2 .specs span{display:block;font-size:12px;color:var(--mut);font-weight:400}
+.S2 .seller{display:flex;gap:12px;align-items:center;background:var(--card);border-radius:20px;padding:12px;font-size:13px;box-shadow:0 0 0 1px var(--line)}
+.S2 .ava{width:46px;height:46px;border-radius:16px;background:var(--sun);color:var(--on-sun);display:grid;place-items:center;font-weight:700;font-size:18px}
+.S2 .cta{display:grid;grid-template-columns:52px 52px 1fr;gap:8px;padding:10px 12px 22px;background:var(--card);flex:0 0 auto;border-radius:24px 24px 0 0;box-shadow:0 -1px 0 var(--line)}
+.S2 .btn{height:52px;border-radius:18px;display:grid;place-items:center;font-weight:700;font-size:16px;background:var(--soft);color:var(--fg)}
+.S2 .btn.fill{background:var(--sun);color:var(--on-sun)}
+.S2 .chat-h{background:var(--sun);color:var(--on-sun);border-radius:0 0 24px 24px;padding-bottom:12px}
+.S2 .chat-h .row2{display:flex;gap:8px;align-items:center;padding:2px 10px 0 4px}
+.S2 .chat-h img{width:46px;height:46px;border-radius:14px;object-fit:cover}
+.S2 .msgs{display:flex;flex-direction:column;gap:8px;padding:12px}
+.S2 .day{align-self:center;font-size:12px;color:var(--mut)}
+.S2 .warn{background:var(--soft);border-radius:18px;padding:10px 14px;font-size:12.5px;line-height:1.4}
+.S2 .m{max-width:80%;padding:10px 14px;font-size:15px;line-height:1.4;background:var(--card);border-radius:20px 20px 20px 6px;box-shadow:0 0 0 1px var(--line)}
+.S2 .m.me{align-self:flex-end;background:var(--sun);color:var(--on-sun);border-radius:20px 20px 6px 20px;box-shadow:none}
+.S2 .m small{display:block;font-size:11px;opacity:.6;margin-top:2px;text-align:right}
+.S2 .quick{display:flex;gap:6px;padding:0 12px 8px;overflow:hidden;white-space:nowrap}
+.S2 .quick span{background:var(--card);box-shadow:0 0 0 1px var(--line);border-radius:14px;padding:8px 12px;font-size:13px}
+.S2 .input{display:flex;gap:6px;align-items:center;padding:8px 10px 22px;background:var(--card);border-radius:24px 24px 0 0}
+.S2 .input div.f{flex:1;background:var(--bg);border-radius:18px;height:46px;display:flex;align-items:center;padding:0 14px;color:var(--mut);font-size:16px}
+.S2 .send{width:46px;height:46px;border-radius:16px;background:var(--sun);color:var(--on-sun);display:grid;place-items:center}
+.S2.lap{height:100%;display:flex;flex-direction:column}
+.S2 .l-head{background:var(--sun);color:var(--on-sun);padding:14px 40px 22px;border-radius:0 0 36px 36px}
+.S2 .l-head .brand{padding:0}
+.S2 .l-head nav{display:flex;gap:10px;align-items:center}
+.S2 .l-hero{display:grid;grid-template-columns:1fr 560px;gap:40px;align-items:center;margin-top:16px}
+.S2 .l-hero h3.hero{font-size:46px;padding:0}
+.S2 .l-hero .search{margin:0;height:58px;font-size:17px}
+.S2 .l-cats{display:flex;gap:8px;padding:16px 40px 4px;flex-wrap:wrap}
+.S2 .l-body{padding:0 28px;overflow:hidden}
+.S2 .l-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;padding:0 12px}
+
+/* =====================================================================
+   S3 — СТРОГОЕ: Commissioner, black/white, yellow as highlighter
+   ===================================================================== */
+.S3{--bg:#FFFFFF;--fg:#0B0B0B;--mut:#676767;--sun:#FFD21F;--on-sun:#0B0B0B;--soft:#F4F4F2;--line:#E3E3E0;--ink:#0B0B0B;--on-ink:#FFFFFF;font-family:"Commissioner",sans-serif;background:var(--bg);color:var(--fg)}
+.dark .S3,.S3.dark{--bg:#0A0A0A;--fg:#F3F3F1;--mut:#959592;--soft:#171716;--line:#262625;--ink:#F3F3F1;--on-ink:#0A0A0A}
+.S3 .mark{background:linear-gradient(transparent 12%,var(--sun) 12%,var(--sun) 92%,transparent 92%);color:var(--on-sun);padding:0 4px;margin:0 -4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.S3 .strip{height:6px;background:var(--sun);flex:0 0 auto}
+.S3 .brand{display:flex;justify-content:space-between;align-items:center;padding:4px 10px 6px 16px;font-size:14px}
+.S3 .brand b{font-size:21px;font-weight:700;letter-spacing:-.03em}
+.S3 .brand b i{font-style:normal;background:var(--sun);color:var(--on-sun);border-radius:4px;padding:0 3px;margin-left:1px}
+.S3 .search{margin:0 12px;height:48px;border-radius:8px;background:var(--soft);display:flex;align-items:center;gap:10px;padding:0 12px;font-size:16px;color:var(--mut)}
+.S3 .search .ico{color:var(--fg)}
+.S3 .today{display:flex;justify-content:space-between;align-items:baseline;padding:14px 16px 8px;font-size:13px;color:var(--mut)}
+.S3 .today b{font-size:24px;font-weight:700;color:var(--fg);letter-spacing:-.02em;margin-right:4px}
+.S3 .cats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-block:1px solid var(--line)}
+.S3 .cat{background:var(--bg);padding:10px 8px;font-size:12px;line-height:1.2;min-height:64px;display:flex;flex-direction:column;justify-content:space-between}
+.S3 .cat b{font-weight:500;font-size:12px;white-space:nowrap}
+.S3 .cat span{color:var(--mut);font-size:11px}
+.S3 .sec{display:flex;justify-content:space-between;align-items:baseline;padding:16px 16px 8px}
+.S3 .sec h4{font-size:18px;font-weight:700;letter-spacing:-.01em}
+.S3 .sec a{font-size:13px}
+.S3 .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 10px;padding:0 12px 16px}
+.S3 .card img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px}
+.S3 .card .p{font-size:17px;font-weight:700;margin-top:8px;letter-spacing:-.01em;display:inline-block}
+.S3 .card .ttl{font-size:13px;line-height:1.3;margin-top:3px}
+.S3 .card .meta{font-size:11.5px;color:var(--mut);margin-top:3px}
+.S3 .tabs{display:flex;justify-content:space-around;align-items:center;padding:4px 8px 20px;background:var(--bg);border-top:1px solid var(--line);flex:0 0 auto;color:var(--mut);font-size:11px}
+.S3 .tabs div{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:52px;min-height:46px;justify-content:center}
+.S3 .tabs .on{color:var(--fg);font-weight:500}
+.S3 .tabs .on .ico{stroke-width:2.2}
+.S3 .tabs .post{background:var(--ink);color:var(--on-ink);border-radius:8px;min-width:58px}
+.S3 .bar{display:flex;gap:4px;align-items:center;padding:2px 10px 8px 4px;border-bottom:1px solid var(--line)}
+.S3 .bar .search{margin:0;flex:1;height:44px;color:var(--fg)}
+.S3 .chips{display:flex;gap:6px;padding:10px 12px;overflow:hidden;white-space:nowrap}
+.S3 .chip{border:1px solid var(--line);padding:7px 12px;border-radius:8px;font-size:13px;min-height:36px}
+.S3 .chip.on{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
+.S3 .count{display:flex;justify-content:space-between;padding:0 14px 8px;font-size:13px;color:var(--mut)}
+.S3 .count b{color:var(--fg)}
+.S3 .count button{color:var(--fg)}
+.S3 .row{display:grid;grid-template-columns:108px 1fr;gap:12px;padding:12px 14px;border-top:1px solid var(--line)}
+.S3 .row img{width:108px;height:108px;object-fit:cover;border-radius:8px}
+.S3 .row .p{font-size:20px;font-weight:700;letter-spacing:-.015em}
+.S3 .row .ttl{font-size:14px;margin-top:3px;line-height:1.3}
+.S3 .row .meta{font-size:12px;color:var(--mut);margin-top:4px}
+.S3 .row .top{font-size:10.5px;font-weight:700;letter-spacing:.05em;color:var(--mut);margin-bottom:3px}
+.S3 .gal{position:relative}
+.S3 .gal img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.S3 .gal .btns{position:absolute;inset:10px 10px auto;display:flex;justify-content:space-between}
+.S3 .gal .btns span{width:44px;height:44px;border-radius:8px;background:rgba(255,255,255,.94);color:#0B0B0B;display:grid;place-items:center}
+.S3 .gal .n{position:absolute;right:10px;bottom:10px;background:rgba(11,11,11,.8);color:#fff;font-size:12px;padding:3px 8px;border-radius:6px}
+.S3 .adb{padding:14px 16px}
+.S3 .adb .p{font-size:36px;font-weight:700;letter-spacing:-.03em;line-height:1.1}
+.S3 .adb .som{font-size:13px;color:var(--mut);margin-top:4px}
+.S3 .adb h3{font-size:19px;font-weight:500;margin-top:10px;line-height:1.25}
+.S3 .adb .meta{font-size:12.5px;color:var(--mut);margin-top:3px}
+.S3 table{width:100%;border-collapse:collapse;font-size:14px;margin:12px 0}
+.S3 td{border-top:1px solid var(--line);padding:8px 0}
+.S3 td:first-child{color:var(--mut);width:44%}
+.S3 .seller{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line);font-size:13px}
+.S3 .ava{width:44px;height:44px;border-radius:8px;background:var(--ink);color:var(--on-ink);display:grid;place-items:center;font-weight:700}
+.S3 .cta{display:grid;grid-template-columns:52px 52px 1fr;gap:8px;padding:10px 12px 22px;border-top:1px solid var(--line);flex:0 0 auto;background:var(--bg)}
+.S3 .btn{height:52px;border-radius:8px;display:grid;place-items:center;font-weight:700;font-size:16px;border:1px solid var(--line)}
+.S3 .btn.fill{background:var(--sun);color:var(--on-sun);border-color:var(--sun)}
+.S3 .chat-h{display:flex;gap:8px;align-items:center;padding:2px 10px 8px 4px;border-bottom:1px solid var(--line)}
+.S3 .chat-h img{width:44px;height:44px;border-radius:8px;object-fit:cover}
+.S3 .msgs{display:flex;flex-direction:column;gap:8px;padding:12px}
+.S3 .day{align-self:center;font-size:12px;color:var(--mut)}
+.S3 .warn{border-left:3px solid var(--sun);background:var(--soft);padding:9px 12px;font-size:12.5px;line-height:1.4;border-radius:0 8px 8px 0}
+.S3 .m{max-width:80%;padding:9px 12px;font-size:15px;line-height:1.4;background:var(--soft);border-radius:12px 12px 12px 3px}
+.S3 .m.me{align-self:flex-end;background:var(--ink);color:var(--on-ink);border-radius:12px 12px 3px 12px}
+.S3 .m small{display:block;font-size:11px;opacity:.55;margin-top:2px;text-align:right}
+.S3 .quick{display:flex;gap:6px;padding:0 12px 8px;overflow:hidden;white-space:nowrap}
+.S3 .quick span{border:1px solid var(--line);border-radius:8px;padding:7px 11px;font-size:13px}
+.S3 .input{display:flex;gap:6px;align-items:center;padding:6px 10px 22px;border-top:1px solid var(--line)}
+.S3 .input div.f{flex:1;background:var(--soft);border-radius:8px;height:46px;display:flex;align-items:center;padding:0 12px;color:var(--mut);font-size:16px}
+.S3 .send{width:46px;height:46px;border-radius:8px;background:var(--sun);color:var(--on-sun);display:grid;place-items:center}
+.S3.lap{height:100%;display:flex;flex-direction:column}
+.S3 .l-top{display:flex;align-items:center;gap:24px;padding:14px 40px;border-bottom:1px solid var(--line)}
+.S3 .l-top .search{flex:1;margin:0;height:48px}
+.S3 .l-top nav{display:flex;gap:18px;font-size:14px;align-items:center}
+.S3 .l-top .btn{height:46px;padding:0 20px}
+.S3 .l-body{display:grid;grid-template-columns:250px 1fr;flex:1;min-height:0}
+.S3 .l-side{border-right:1px solid var(--line);padding:18px 0}
+.S3 .l-side div{display:flex;justify-content:space-between;padding:7px 24px 7px 40px;font-size:14px}
+.S3 .l-side div span{color:var(--mut);font-size:12px}
+.S3 .l-side div.on b{font-weight:500}
+.S3 .l-main{padding:0 28px;overflow:hidden}
+.S3 .l-main .today{padding:18px 0 12px}
+.S3 .l-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px 16px}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="intro">
+    <div>
+      <h1>Табыл «Солнце»: три варианта</h1>
+      <p style="margin-top:10px">Вы&nbsp;выбрали «Солнце». Вот три его версии&nbsp;— каждая со&nbsp;своим шрифтом и&nbsp;своим главным приёмом. Экраны те&nbsp;же: главная, поиск, объявление, чат и&nbsp;главная на&nbsp;ноутбуке. Телефоны листаются внутри.</p>
+    </div>
+    <div style="display:grid;gap:14px;justify-items:start">
+      <div class="controls">
+        <span style="font-size:13px;color:var(--mut)">Тема макетов</span>
+        <div class="seg" role="group" aria-label="Тема макетов">
+          <button data-mode="light" aria-pressed="true">Светлая</button>
+          <button data-mode="dark" aria-pressed="false">Тёмная</button>
+        </div>
+      </div>
+      <nav class="jump" aria-label="Варианты">
+        <a href="#s1">В1&nbsp;— Афиша</a><a href="#s2">В2&nbsp;— Мягкое</a><a href="#s3">В3&nbsp;— Строгое</a>
+      </nav>
+    </div>
+  </header>
+
+  <ul class="changes">
+    <h3>Что улучшено во&nbsp;всех трёх по&nbsp;сравнению с&nbsp;первым «Солнцем»</h3>
+    <li>Вместо слогана&nbsp;— живые цифры: сколько новых объявлений сегодня. Это повод заходить каждый день.</li>
+    <li>Первые объявления видно сразу, без прокрутки: шапка стала ниже.</li>
+    <li>Ссылки подчёркнуты, сортировка&nbsp;— пунктиром (действие на&nbsp;месте), как велит «Ководство».</li>
+    <li>Все кнопки и&nbsp;вкладки&nbsp;— от&nbsp;44&nbsp;пикселей, поле ввода&nbsp;— 16&nbsp;пикселей, чтобы iPhone не&nbsp;зумил.</li>
+    <li>Рядом со&nbsp;звонком&nbsp;— WhatsApp: в&nbsp;Кыргызстане им&nbsp;пользуются чаще, чем звонками.</li>
+    <li>В&nbsp;чате&nbsp;— короткое предупреждение о&nbsp;предоплате: главная боль досок объявлений.</li>
+    <li>Типографика: неразрывные пробелы в&nbsp;ценах и&nbsp;после предлогов, «ёлочки», тире.</li>
+    <li>Жёлтый&nbsp;— только для цен и&nbsp;главного действия, чтобы глаз сразу находил важное.</li>
+  </ul>
+
+  <section class="dir" id="s1">
+    <div class="dir-head">
+      <h2><small>Вариант В1</small>Афиша</h2>
+      <p>Плакатный характер: огромные узкие цифры для цен и&nbsp;счётчиков, крупные фото в&nbsp;ленте, цена&nbsp;— жёлтой плашкой в&nbsp;углу снимка. Узкий шрифт помещает «2&nbsp;130&nbsp;000&nbsp;сом» в&nbsp;одну строку даже на&nbsp;маленьком экране.</p>
+      <dl><div><dt>Шрифт </dt><dd>Sofia Sans Extra Condensed + Sofia Sans</dd></div><div><dt>Жёлтый </dt><dd>#FFCC1A</dd></div><div><dt>Углы </dt><dd>12 px</dd></div><div><dt>Приём </dt><dd>гигантские цифры</dd></div></dl>
+      <div class="fontsample" style="font-family:'Sofia Sans Extra Condensed';font-weight:800">24&nbsp;500&nbsp;$ · Ёжик, Щука, Жёлтый</div>
+    </div>
+    <div class="phones" data-dir="S1"></div>
+    <div class="laptop-cap">Главная на&nbsp;ноутбуке</div>
+    <div class="laptop"><div class="laptop-view"><div class="laptop-inner" data-lap="S1"></div></div></div>
+  </section>
+
+  <section class="dir" id="s2">
+    <div class="dir-head">
+      <h2><small>Вариант В2</small>Мягкое</h2>
+      <p>Дружелюбное и&nbsp;тёплое: сливочный фон, круглые углы, сетка в&nbsp;две колонки, цена&nbsp;— жёлтой наклейкой, чуть наклонённой, будто её&nbsp;приклеили руками. Больше всего похоже на&nbsp;привычное приложение, но&nbsp;заметно аккуратнее.</p>
+      <dl><div><dt>Шрифт </dt><dd>Rubik</dd></div><div><dt>Жёлтый </dt><dd>#FFD43B</dd></div><div><dt>Углы </dt><dd>20 px</dd></div><div><dt>Приём </dt><dd>наклейка-ценник</dd></div></dl>
+      <div class="fontsample" style="font-family:Rubik;font-weight:700">24&nbsp;500&nbsp;$ · Ёжик, Щука, Жёлтый</div>
+    </div>
+    <div class="phones" data-dir="S2"></div>
+    <div class="laptop-cap">Главная на&nbsp;ноутбуке</div>
+    <div class="laptop"><div class="laptop-view"><div class="laptop-inner" data-lap="S2"></div></div></div>
+  </section>
+
+  <section class="dir" id="s3">
+    <div class="dir-head">
+      <h2><small>Вариант В3</small>Строгое</h2>
+      <p>Спокойное и&nbsp;деловое: чёрно-белое, тонкие линии, плотные списки. Солнце&nbsp;— тонкая полоса сверху и&nbsp;жёлтый маркер под ценой, как выделение текстовыделителем. Лучше всего для тех, кто ищет быстро и&nbsp;много.</p>
+      <dl><div><dt>Шрифт </dt><dd>Commissioner</dd></div><div><dt>Жёлтый </dt><dd>#FFD21F</dd></div><div><dt>Углы </dt><dd>8 px</dd></div><div><dt>Приём </dt><dd>маркер под ценой</dd></div></dl>
+      <div class="fontsample" style="font-family:Commissioner;font-weight:700">24&nbsp;500&nbsp;$ · Ёжик, Щука, Жёлтый</div>
+    </div>
+    <div class="phones" data-dir="S3"></div>
+    <div class="laptop-cap">Главная на&nbsp;ноутбуке</div>
+    <div class="laptop"><div class="laptop-view"><div class="laptop-inner" data-lap="S3"></div></div></div>
+  </section>
+
+  <footer class="credits">
+    <p>Фото&nbsp;— Wikimedia Commons, только для макета. Авторы и&nbsp;лицензии:</p>
+    <ul id="credits"><li><a href="https://commons.wikimedia.org/wiki/File:Toyota_Camry_(XV70)_IMG_9081.jpg">Toyota Camry (XV70) IMG 9081.jpg</a> — CC BY-SA 4.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Apple_iPhone_15_Pro.jpg">Apple iPhone 15 Pro.jpg</a> — CC BY-SA 4.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Living_room_in_apartment_of_Condom%C3%ADnio_do_Edif%C3%ADcio_Zaher,_Le_Blond,_Rio_de_Janeiro,_Brazil.jpg">Living room in apartment of Condomínio do Edifício Zaher, Le Blond, Rio de Janeiro, Brazil.jpg</a> — CC0</li><li><a href="https://commons.wikimedia.org/wiki/File:Cozy_living_room_with_a_gray_sofa.jpg">Cozy living room with a gray sofa.jpg</a> — CC BY 2.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Cube,_Cyclingworld_Europe_2024,_Meerbusch_(P1180003).jpg">Cube, Cyclingworld Europe 2024, Meerbusch (P1180003).jpg</a> — CC BY-SA 4.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Professional_Sneakers_-_Sneakers_for_hostesses,_pilots_and_other_professionals._Comfortable_sneakers_produced_in_leather_inside_and_outside.jpg">Professional Sneakers - Sneakers for hostesses, pilots and other professionals. Comfortable sneakers produced in leather inside and outside.jpg</a> — CC BY-SA 4.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Six_weeks_old_cat_(aka).jpg">Six weeks old cat (aka).jpg</a> — CC BY-SA 2.5</li><li><a href="https://commons.wikimedia.org/wiki/File:Macbook_Air.png">Macbook Air.png</a> — Public domain</li><li><a href="https://commons.wikimedia.org/wiki/File:Polo_Ralph_Lauren_winter_jacket,_red_and_black_plaid.jpg">Polo Ralph Lauren winter jacket, red and black plaid.jpg</a> — CC BY 2.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Freezer_door_open_on_refrigerator_in_home_kitchen_in_New_Orleans,_March_2025.jpg">Freezer door open on refrigerator in home kitchen in New Orleans, March 2025.jpg</a> — CC BY-SA 2.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Lexus_RX_450h%2B_(AALH16)_1X7A1930.jpg">Lexus RX 450h+ (AALH16) 1X7A1930.jpg</a> — CC BY-SA 4.0</li></ul>
+  </footer>
+</div>
+
+<script>
+const N = " ";
+/* Russian typography: no-break spaces in numbers/units and after short words */
+const ty = s => s
+  .replace(/(\d) (?=\d)/g, "$1" + N)
+  .replace(/ (сом|\$|км|м²|ГБ|р\.|мин|ч|%)(?=$|[\s,.·)])/g, N + "$1")
+  .replace(/(^|[\s(«])(в|к|с|о|у|и|а|на|по|за|из|от|до|не|без|для|под) /gi, "$1$2" + N);
+const I = {
+  search:'<path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Zm10 3-5-5"/>',
+  heart:'<path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10Z"/>',
+  home:'<path d="M4 10.5 12 4l8 6.5V20h-5.5v-6h-5v6H4z"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  chat:'<path d="M5 18.5V6.5A1.5 1.5 0 0 1 6.5 5h11A1.5 1.5 0 0 1 19 6.5v8a1.5 1.5 0 0 1-1.5 1.5H8z"/>',
+  user:'<path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8a7 7 0 0 1 14 0"/>',
+  back:'<path d="m14.5 5-7 7 7 7"/>',
+  filter:'<path d="M4 7h10m4 0h2M4 17h4m4 0h8M16 5v4M10 15v4"/>',
+  phone:'<path d="M6.6 4h2.6l1.3 4-1.9 1.2a11 11 0 0 0 6.2 6.2l1.2-1.9 4 1.3v2.6A1.6 1.6 0 0 1 18.4 19 14.4 14.4 0 0 1 5 5.6 1.6 1.6 0 0 1 6.6 4Z"/>',
+  wa:'<path d="M4.5 19.5 5.6 16A8 8 0 1 1 8.4 18.6z"/><path d="M9.2 8.6c.3 2.9 2.4 5.3 5.6 6l1-1.4-1.9-1-.9.8a4.6 4.6 0 0 1-2.3-2.3l.8-.9-1-1.9z"/>',
+  bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15zM10 20.5h4"/>',
+  send:'<path d="m4 12 16-8-6 16-2.5-6.5z"/>',
+  clip:'<path d="m19 11-7.2 7.2a4.5 4.5 0 0 1-6.4-6.4l7.5-7.5a3 3 0 0 1 4.3 4.3l-7.3 7.3a1.5 1.5 0 0 1-2.1-2.1L14.5 7"/>',
+  down:'<path d="m7 10 5 5 5-5"/>',
+  shield:'<path d="M12 3.5 5 6v5.5c0 4.2 3 7.6 7 9 4-1.4 7-4.8 7-9V6z"/>',
+};
+const ic = (n, cls = "") => `<svg class="ico ${cls}" viewBox="0 0 24 24" aria-hidden="true">${I[n]}</svg>`;
+const img = k => `img/${k}.webp`;
+const sb = (c = "") => `<div class="sb" style="${c}"><span>9:41</span><svg width="58" height="12" viewBox="0 0 58 12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y=".5" width="3" height="11.5" rx="1"/><path d="M28 3.2a9 9 0 0 1 11 0l-1.4 1.6a6.8 6.8 0 0 0-8.2 0zm2.6 3a4.7 4.7 0 0 1 5.8 0L33.5 9.5z"/><rect x="43.5" y="1" width="12" height="10" rx="2.5" fill="none" stroke="currentColor" opacity=".5"/><rect x="45" y="2.5" width="8.5" height="7" rx="1.3"/></svg></div>`;
+
+const L = {
+  camry:   {t:"Toyota Camry 70, 2019", d:"2.5 AT · 86 000 км · белый", p:"24 500 $", c:"Бишкек, Джал", tm:"14:20"},
+  iphone:  {t:"iPhone 15 Pro, 256 ГБ, натуральный титан", d:"Как новый · батарея 96 %", p:"92 000 сом", c:"Бишкек, ЦУМ", tm:"12 мин назад"},
+  apartment:{t:"2-комн. квартира, 64 м², 7/12 эт.", d:"Элитка · евроремонт", p:"78 000 $", c:"Бишкек, Асанбай", tm:"вчера"},
+  sofa:    {t:"Угловой диван, серый, почти новый", d:"Б/у · самовывоз", p:"28 000 сом", c:"Бишкек, Восток-5", tm:"13:02"},
+  bike:    {t:"Велосипед Cube Stereo, рама L", d:"Б/у · 1 сезон", p:"115 000 сом", c:"Каракол", tm:"11:47"},
+  fridge:  {t:"Холодильник Samsung No Frost", d:"Б/у · 185 см", p:"21 500 сом", c:"Ош", tm:"10:15"},
+  jacket:  {t:"Куртка Polo Ralph Lauren, M", d:"Новая с биркой", p:"6 500 сом", c:"Бишкек, Дордой", tm:"09:30"},
+  kitten:  {t:"Котёнок, 2 месяца, в добрые руки", d:"Приучен к лотку", p:"Даром", c:"Бишкек, Кок-Жар", tm:"08:55"},
+  laptop:  {t:"MacBook Air M2, 8/256", d:"Б/у · 41 цикл", p:"68 000 сом", c:"Бишкек, Филармония", tm:"вчера"},
+  lexus:   {t:"Lexus RX 450h+, 2023", d:"Гибрид · 12 000 км", p:"71 000 $", c:"Бишкек", tm:"вчера"},
+  sneakers:{t:"Кеды кожаные, 41 р.", d:"Новые · 2 пары", p:"2 900 сом", c:"Ош", tm:"07:40"},
+};
+const CATS = [["Транспорт","38 214","camry"],["Недвижимость","27 905","apartment"],["Электроника","41 377","iphone"],["Дом и сад","22 610","sofa"],["Одежда","18 756","jacket"],["Хобби","6 190","bike"],["Животные","4 318","kitten"],["Работа","9 482",null],["Услуги","15 033",null],["Детям","11 204",null]];
+const FEED = ["iphone","camry","kitten","sofa","bike","jacket","fridge","laptop"];
+const SEARCH = [
+  {k:"iphone", promo:true},
+  {k:"iphone", t:"iPhone 15 Pro, 128 ГБ, чёрный", d:"Б/у · коробка, чек", p:"79 500 сом", c:"Бишкек, Аламедин", tm:"34 мин назад"},
+  {k:"iphone", t:"iPhone 15 Pro Max, 512 ГБ", d:"Новый · запечатан", p:"124 000 сом", c:"Ош", tm:"1 ч назад"},
+  {k:"iphone", t:"iPhone 15 Pro, 256 ГБ, синий", d:"Б/у · царапина на рамке", p:"74 000 сом", c:"Бишкек, 7 мкр", tm:"2 ч назад"},
+  {k:"laptop"},
+];
+const it = (k, o = {}) => { const x = {...L[k], k, ...o}; return {...x, t: ty(x.t), d: ty(x.d), p: ty(x.p)}; };
+const MSG = [
+  ["me","Здравствуйте! Машина ещё продаётся?","14:31"],
+  ["","Да, продаётся. Можно посмотреть сегодня после 18:00 на Джале.","14:33"],
+  ["me","Отлично. Торг возможен?","14:34"],
+  ["","Небольшой — у машины. Скину видео двигателя.","14:35"],
+  ["me","Договорились, буду в 18:30.","14:36"],
+];
+const msgs = () => MSG.map(([w,t,tm]) => `<div class="m ${w}">${ty(t).replace(" —", N+"—")}<small>${tm}</small></div>`).join("");
+const WARN = `Не переводите предоплату незнакомым продавцам. Встречайтесь в${N}людных местах и${N}проверяйте товар до${N}оплаты.`;
+const DESC = ty("Один хозяин, обслуживание у официального дилера, все чеки есть. Не бита, не крашена. Торг у машины.");
+const QUICK = ["Где можно посмотреть?","Пришлите VIN","Ещё актуально?"];
+
+/* ---------------- S1 — Афиша ---------------- */
+const S1 = {
+  tabs(on){const t=[["home","Главная"],["search","Поиск"],["plus","Подать"],["chat","Чаты"],["user","Профиль"]];
+    return `<nav class="tabs">${t.map(([i,l])=>`<div class="${i===on?'on':''} ${i==='plus'?'post':''}">${ic(i)}${l}</div>`).join("")}</nav>`},
+  card(k,o={}){const x=it(k,o);return `<article class="card"><div class="ph"><img src="${img(k)}" alt="" loading="lazy"><span class="price cond num ${x.p==='Даром'?'free':''}">${x.p}</span><span class="heart t44">${ic("heart")}</span></div><div class="ttl clamp2">${x.t}</div><div class="meta">${x.c} · ${x.tm}</div></article>`},
+  home(){return `<div class="scroll"><div class="head">${sb()}<div class="brand"><b>табыл</b><span class="t44" style="display:flex;gap:2px;padding:0 6px"><span class="dash">Бишкек</span></span></div>
+    <div class="big"><span class="cond num">1${N}240</span><span>новых объявлений<br>сегодня в${N}Бишкеке</span></div>
+    <div class="search">${ic("search")}Что ищете?</div>
+    <div class="catline">${CATS.slice(0,6).map(([n],i)=>`<span class="${i===0?'on':''}">${n}</span>`).join("")}</div></div>
+    <div class="sec"><h4 class="cond">Свежее</h4><a href="#">Все 1${N}240</a></div>
+    <div class="feed">${FEED.slice(0,5).map(k=>this.card(k)).join("")}</div></div>${this.tabs("home")}`},
+  search(){return `<div class="sbar">${sb()}<div class="row"><span class="t44">${ic("back")}</span><div class="search">${ic("search")}айфон 15 про</div><span class="fbtn">${ic("filter")}<b>3</b></span></div>
+    <div class="chips"><span class="chip on">Бишкек</span><span class="chip">до${N}100${N}000 сом</span><span class="chip">Б/у</span><span class="chip">С фото</span></div></div>
+    <div class="count"><span><span class="cond num">348</span>объявлений</span><button class="dash">сначала новые</button></div>
+    <div class="scroll">${SEARCH.map(o=>{const x=it(o.k,o);return `<div class="row"><img src="${img(x.k)}" alt=""><div>${o.promo?'<span class="top">ТОП</span>':''}<div class="cond num">${x.p}</div><div class="ttl clamp2">${x.t}</div><div class="meta">${x.c} · ${x.tm}</div></div></div>`}).join("")}</div>${this.tabs("search")}`},
+  ad(){return `<div class="scroll"><div class="gal"><img src="${img("camry")}" alt="Белая Toyota Camry"><div style="position:absolute;inset:0 0 auto;color:#fff">${sb()}</div><div class="btns"><span>${ic("back")}</span><span>${ic("heart")}</span></div><span class="n num">1 / 14</span></div>
+    <div class="pblock"><span class="cond num">24${N}500${N}$</span><small>≈${N}2${N}130${N}000 сом<br>торг у${N}машины</small></div>
+    <div class="adb"><h3>Toyota Camry 70, 2019</h3><div class="meta">Бишкек, Джал · сегодня в${N}14:20 · 312 просмотров</div>
+    <dl class="specs"><div><dt>Пробег</dt><dd class="num">86${N}000 км</dd></div><div><dt>Двигатель</dt><dd>2,5 бензин</dd></div><div><dt>Коробка</dt><dd>Автомат</dd></div><div><dt>Растаможен</dt><dd>Да</dd></div></dl>
+    <p style="font-size:15px">${DESC}</p>
+    <div class="seller"><div class="ava">Н</div><div style="flex:1"><b>Нурлан</b><div style="color:var(--mut)">★${N}4,9 · <a href="#">37 отзывов</a> · отвечает за${N}час</div></div></div></div></div>
+    <div class="cta"><div class="btn" aria-label="Позвонить">${ic("phone")}</div><div class="btn" aria-label="WhatsApp">${ic("wa")}</div><div class="btn fill">Написать</div></div>`},
+  chat(){return `<div class="chat-h">${sb()}<div class="row2"><span class="t44">${ic("back")}</span><img src="${img("camry")}" alt=""><div style="flex:1;font-size:14px;line-height:1.3"><b>Нурлан</b><div>Camry 70 · <span class="num">24${N}500${N}$</span></div></div><span class="t44">${ic("phone")}</span></div></div>
+    <div class="scroll"><div class="msgs"><div class="warn"><b>Без предоплаты.</b> ${WARN.replace("Не переводите предоплату незнакомым продавцам. ","")}</div><span class="day">Сегодня</span>${msgs()}</div></div>
+    <div class="quick">${QUICK.map(q=>`<span>${q}</span>`).join("")}</div>
+    <div class="input"><span class="t44">${ic("clip")}</span><div class="f">Сообщение</div><span class="send">${ic("send")}</span></div>`},
+  lap(){return `<div class="S1 lap"><div class="l-head"><div class="brand"><b style="font-size:26px">табыл</b><nav><span class="dash">Бишкек</span><span>Избранное</span><span>Чаты</span><span>Войти</span><span style="background:#0D0D0D;color:var(--sun);padding:9px 16px;border-radius:12px;font-weight:700">Подать объявление</span></nav></div>
+    <div class="l-hero"><span class="cond num">1${N}240</span><div><p>новых объявлений сегодня в${N}Бишкеке. Всего —${N}214${N}380.</p><div class="search">${ic("search")}Что ищете? Например, «Camry 2019» или «диван»</div></div></div>
+    <div class="catline">${CATS.map(([n],i)=>`<span class="${i===0?'on':''}">${n}</span>`).join("")}</div></div>
+    <div class="l-body"><div class="sec" style="padding:18px 14px 12px"><h4 class="cond" style="font-size:44px">Свежее</h4><a href="#">Все 1${N}240</a></div><div class="l-grid">${["iphone","camry","kitten","sofa","bike","jacket","fridge","laptop"].map(k=>this.card(k)).join("")}</div></div></div>`},
+};
+
+/* ---------------- S2 — Мягкое ---------------- */
+const S2 = {
+  tabs(on){const t=[["home","Главная"],["heart","Избранное"],["plus",""],["chat","Чаты"],["user","Профиль"]];
+    return `<nav class="tabs">${t.map(([i,l])=>i==='plus'?`<div class="post" aria-label="Подать объявление">${ic(i)}</div>`:`<div class="${i===on?'on':''}">${ic(i)}${l}</div>`).join("")}</nav>`},
+  card(k,o={}){const x=it(k,o);return `<article class="card ${o.promo?'promo':''}"><div class="ph"><img src="${img(k)}" alt="" loading="lazy"><span class="stk num ${x.p==='Даром'?'free':''}">${x.p}</span><span class="fav">${ic("heart")}</span></div><div class="info">${o.promo?'<span class="up">ТОП</span>':''}<div class="ttl clamp2">${x.t}</div><div class="meta">${x.c} · ${x.tm}</div></div></article>`},
+  cats(n){return CATS.slice(0,n).map(([name,,k])=>`<div class="cat">${k?`<img src="${img(k)}" alt="">`:''}${name}</div>`).join("")},
+  home(){return `<div class="scroll"><div class="head">${sb()}<div class="brand"><b>табыл</b><span class="pill"><span class="dash">Бишкек</span>${ic("down")}</span></div>
+    <h3 class="hero">Найдётся всё. Даже котёнок даром<span>Сегодня 1${N}240 новых объявлений в${N}Бишкеке</span></h3>
+    <div class="search">${ic("search")}Что ищете?</div></div>
+    <div class="cats">${this.cats(4)}</div>
+    <div class="sec"><h4>Свежее рядом</h4><a href="#">Все 1${N}240</a></div>
+    <div class="grid">${FEED.map(k=>this.card(k)).join("")}</div></div>${this.tabs("home")}`},
+  search(){return `<div class="sbar">${sb()}<div class="row"><span class="t44">${ic("back")}</span><div class="search">${ic("search")}айфон 15 про</div><span class="fbtn">${ic("filter")}<b>3</b></span></div>
+    <div class="chips"><span class="chip on">Бишкек</span><span class="chip">до${N}100${N}000 сом</span><span class="chip">Б/у</span><span class="chip">С фото</span></div></div>
+    <div class="count"><span><b>348</b> объявлений</span><button class="dash">сначала новые</button></div>
+    <div class="scroll"><div class="grid">${SEARCH.map(o=>this.card(o.k,o)).join("")}${this.card("sneakers")}</div></div>${this.tabs("search")}`},
+  ad(){return `<div class="scroll"><div class="gal"><img src="${img("camry")}" alt="Белая Toyota Camry"><div style="position:absolute;inset:0 0 auto;color:#fff">${sb()}</div><div class="btns"><span>${ic("back")}</span><span>${ic("heart")}</span></div><div class="thumbs"><i></i><i></i><i></i><i></i><i></i></div></div>
+    <div class="sheet"><span class="stk num">24${N}500${N}$</span><span style="font-size:13px;color:var(--mut);margin-left:10px">≈${N}2${N}130${N}000 сом</span>
+    <h3>Toyota Camry 70, 2019</h3><div class="meta" style="color:var(--mut)">Бишкек, Джал · сегодня в${N}14:20</div>
+    <div class="specs"><div><span>Пробег</span>86${N}000 км</div><div><span>Двигатель</span>2,5 бензин</div><div><span>Коробка</span>Автомат</div><div><span>Растаможен</span>Да</div></div>
+    <p style="font-size:15px;margin-bottom:14px">${DESC}</p>
+    <div class="seller"><div class="ava">Н</div><div style="flex:1"><b style="font-weight:500">Нурлан</b><div style="color:var(--mut);font-size:12.5px">★${N}4,9 · <a href="#">37 отзывов</a> · отвечает за${N}час</div></div></div></div></div>
+    <div class="cta"><div class="btn" aria-label="Позвонить">${ic("phone")}</div><div class="btn" aria-label="WhatsApp">${ic("wa")}</div><div class="btn fill">Написать</div></div>`},
+  chat(){return `<div class="chat-h">${sb()}<div class="row2"><span class="t44">${ic("back")}</span><img src="${img("camry")}" alt=""><div style="flex:1;font-size:14px;line-height:1.3"><b style="font-weight:500">Нурлан</b><div style="opacity:.75">Camry 70 · <span class="num">24${N}500${N}$</span></div></div><span class="t44">${ic("phone")}</span></div></div>
+    <div class="scroll"><div class="msgs"><div class="warn">${WARN}</div><span class="day">Сегодня</span>${msgs()}</div></div>
+    <div class="quick">${QUICK.map(q=>`<span>${q}</span>`).join("")}</div>
+    <div class="input"><span class="t44">${ic("clip")}</span><div class="f">Сообщение</div><span class="send">${ic("send")}</span></div>`},
+  lap(){return `<div class="S2 lap"><div class="l-head"><div class="brand"><b style="font-size:26px">табыл</b><nav><span class="pill"><span class="dash">Бишкек</span>${ic("down")}</span><span class="pill">${ic("heart")}Избранное</span><span class="pill">${ic("chat")}Чаты</span><span style="background:#1D1A12;color:#FFD43B;padding:9px 18px;border-radius:16px;font-weight:700">Подать объявление</span></nav></div>
+    <div class="l-hero"><h3 class="hero">Найдётся всё. Даже котёнок даром<span>Сегодня 1${N}240 новых объявлений в${N}Бишкеке</span></h3><div class="search">${ic("search")}Что ищете? Например, «Camry 2019» или «диван»</div></div></div>
+    <div class="l-cats">${this.cats(7)}</div>
+    <div class="l-body"><div class="sec"><h4>Свежее рядом</h4><a href="#">Все 1${N}240</a></div><div class="l-grid">${["iphone","camry","kitten","sofa","bike","jacket","fridge","laptop","lexus","sneakers","apartment","iphone"].map(k=>this.card(k)).join("")}</div></div></div>`},
+};
+
+/* ---------------- S3 — Строгое ---------------- */
+const S3 = {
+  tabs(on){const t=[["home","Главная"],["search","Поиск"],["plus","Подать"],["chat","Чаты"],["user","Профиль"]];
+    return `<nav class="tabs">${t.map(([i,l])=>`<div class="${i===on?'on':''} ${i==='plus'?'post':''}">${ic(i)}${i==='plus'?'':l}</div>`).join("")}</nav>`},
+  card(k){const x=it(k);return `<article class="card"><img src="${img(k)}" alt="" loading="lazy"><span class="p num"><span class="mark">${x.p}</span></span><div class="ttl clamp2">${x.t}</div><div class="meta">${x.c} · ${x.tm}</div></article>`},
+  home(){return `<div class="strip"></div>${sb()}<div class="scroll"><div class="brand"><b>табыл<i>.</i></b><span class="t44" style="padding:0 6px"><span class="dash">Бишкек</span></span></div>
+    <div class="search">${ic("search")}Что ищете?</div>
+    <div class="today"><span><b class="num">1${N}240</b>новых сегодня</span><a href="#">Смотреть все</a></div>
+    <div class="cats">${CATS.slice(0,8).map(([n,c])=>`<div class="cat"><b>${n}</b><span class="num">${ty(c)}</span></div>`).join("")}</div>
+    <div class="sec"><h4>Свежее</h4><a href="#">Все</a></div>
+    <div class="grid">${FEED.map(k=>this.card(k)).join("")}</div></div>${this.tabs("home")}`},
+  search(){return `<div class="strip"></div>${sb()}<div class="bar"><span class="t44">${ic("back")}</span><div class="search">${ic("search")}айфон 15 про</div><span class="t44">${ic("filter")}</span></div>
+    <div class="chips"><span class="chip on">Бишкек</span><span class="chip">до${N}100${N}000 сом</span><span class="chip">Б/у</span><span class="chip">С фото</span></div>
+    <div class="count"><span><b>348</b> объявлений</span><button class="dash">сначала новые</button></div>
+    <div class="scroll">${SEARCH.map(o=>{const x=it(o.k,o);return `<div class="row"><img src="${img(x.k)}" alt=""><div>${o.promo?'<div class="top">ТОП</div>':''}<div class="p num"><span class="mark">${x.p}</span></div><div class="ttl clamp2">${x.t}</div><div class="meta">${x.c} · ${x.tm}</div></div></div>`}).join("")}</div>${this.tabs("search")}`},
+  ad(){return `<div class="strip"></div>${sb()}<div class="scroll"><div class="gal"><img src="${img("camry")}" alt="Белая Toyota Camry"><div class="btns"><span>${ic("back")}</span><span>${ic("heart")}</span></div><span class="n num">1 / 14</span></div>
+    <div class="adb"><div class="p num"><span class="mark">24${N}500${N}$</span></div><div class="som">≈${N}2${N}130${N}000 сом · торг у${N}машины</div>
+    <h3>Toyota Camry 70, 2019</h3><div class="meta">Бишкек, Джал · сегодня в${N}14:20 · 312 просмотров</div>
+    <table><tr><td>Пробег</td><td class="num">86${N}000 км</td></tr><tr><td>Двигатель</td><td>2,5 бензин</td></tr><tr><td>Коробка</td><td>автомат</td></tr><tr><td>Руль</td><td>левый</td></tr><tr><td>Растаможен</td><td>да</td></tr></table>
+    <p style="font-size:15px;margin-bottom:8px">${DESC}</p>
+    <div class="seller"><div class="ava">Н</div><div style="flex:1"><b style="font-weight:500">Нурлан</b><div style="color:var(--mut)">★${N}4,9 · <a href="#">37 отзывов</a> · отвечает за${N}час</div></div></div></div></div>
+    <div class="cta"><div class="btn" aria-label="Позвонить">${ic("phone")}</div><div class="btn" aria-label="WhatsApp">${ic("wa")}</div><div class="btn fill">Написать</div></div>`},
+  chat(){return `<div class="strip"></div>${sb()}<div class="chat-h"><span class="t44">${ic("back")}</span><img src="${img("camry")}" alt=""><div style="flex:1;font-size:14px;line-height:1.3"><b style="font-weight:500">Нурлан</b><div style="color:var(--mut)">Camry 70 · <span class="num">24${N}500${N}$</span></div></div><span class="t44">${ic("phone")}</span></div>
+    <div class="scroll"><div class="msgs"><div class="warn">${WARN}</div><span class="day">Сегодня</span>${msgs()}</div></div>
+    <div class="quick">${QUICK.map(q=>`<span>${q}</span>`).join("")}</div>
+    <div class="input"><span class="t44">${ic("clip")}</span><div class="f">Сообщение</div><span class="send">${ic("send")}</span></div>`},
+  lap(){return `<div class="S3 lap"><div class="strip"></div><div class="l-top"><div class="brand" style="padding:0"><b style="font-size:24px">табыл<i>.</i></b></div><span class="dash">Бишкек</span><div class="search">${ic("search")}Что ищете? Например, «Camry 2019» или «диван»</div><nav><span>Избранное</span><span>Чаты</span><span>Войти</span><div class="btn fill">Подать объявление</div></nav></div>
+    <div class="l-body"><aside class="l-side">${CATS.map(([n,c],i)=>`<div class="${i===0?'on':''}"><b style="font-weight:400">${n}</b><span class="num">${ty(c)}</span></div>`).join("")}</aside>
+    <main class="l-main"><div class="today"><span><b class="num">1${N}240</b>новых сегодня в${N}Бишкеке</span><a href="#">Смотреть все</a></div><div class="l-grid">${["iphone","camry","kitten","sofa","bike","jacket","fridge","laptop","lexus","sneakers"].map(k=>this.card(k)).join("")}</div></main></div></div>`},
+};
+
+const DIRS = {S1, S2, S3};
+const SCREENS = [["home","Главная"],["search","Поиск: «айфон 15 про»"],["ad","Объявление"],["chat","Чат с продавцом"]];
+for (const [key, D] of Object.entries(DIRS)) {
+  document.querySelector(`.phones[data-dir="${key}"]`).innerHTML = SCREENS.map(([s, cap]) =>
+    `<div class="phone-wrap"><p class="phone-cap">${cap}</p><div class="phone"><div class="screen ${key}">${D[s]()}</div></div></div>`).join("");
+  document.querySelector(`[data-lap="${key}"]`).innerHTML = D.lap();
+}
+function fitLaptops(){
+  document.querySelectorAll(".laptop-view").forEach(v=>{
+    const s = v.clientWidth / 1280;
+    v.style.setProperty("--lh", Math.round(780 * s));
+    v.firstElementChild.style.transform = `scale(${s})`;
+  });
+}
+addEventListener("resize", fitLaptops); fitLaptops();
+let mode = "light";
+try { mode = new URLSearchParams(location.search).get("mode") || localStorage.getItem("tabyl-mode") || "light"; } catch (e) {}
+function setMode(m){
+  document.querySelectorAll(".screen, .lap").forEach(el => el.classList.toggle("dark", m === "dark"));
+  document.querySelectorAll(".seg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.mode === m));
+  try { localStorage.setItem("tabyl-mode", m); } catch (e) {}
+}
+document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => setMode(b.dataset.mode)));
+setMode(mode);
+</script>
+</body>
+</html>
