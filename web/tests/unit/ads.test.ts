@@ -84,10 +84,10 @@ describe("search", () => {
     expect(p3.nextCursor).toBeNull();
   });
 
-  it("puts promoted ads in fixed slots without duplicates", () => {
+  it("puts promoted ads in fixed slots, removing their organic copies", () => {
     const mk = (id: string, promoted = false) => ({ id, promoted }) as never;
     const out = mixPromoted([mk("a"), mk("b"), mk("c"), mk("d")], [mk("x", true), mk("b", true)]);
-    expect(out.map((a: { id: string }) => a.id)).toEqual(["a", "b", "x", "c", "d"]);
+    expect(out.map((a: { id: string }) => a.id)).toEqual(["a", "c", "x", "d", "b"]);
   });
 });
 

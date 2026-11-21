@@ -9,7 +9,7 @@ export async function reviewAction(sellerId: string, _: string, form: FormData):
   if (!user) return "Войдите снова";
   try {
     await addReview(await getDb(), user.id, sellerId, Number(form.get("rating")), String(form.get("text") ?? ""));
-    refresh();
+    // no refresh here: the form would unmount (a review now exists) and swallow the thank-you
     return "ok";
   } catch (e) {
     if (e instanceof ReviewError) return e.message;

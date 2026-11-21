@@ -312,15 +312,13 @@ export async function promotedAds(db: DB, f: Filters, n = 2, now = new Date()): 
   return rows.map((a) => ({ ...a, photo: photos.get(a.id)?.[0] ?? null, promoted: true }));
 }
 
-/** Put promoted cards at positions 2 and 9, never duplicating an organic card. */
+/** Put promoted cards at positions 2 and 9; a promoted ad leaves its organic spot. */
 export function mixPromoted(items: CardAd[], promoted: CardAd[]): CardAd[] {
-  const ids = new Set(items.map((i) => i.id));
-  const extra = promoted.filter((p) => !ids.has(p.id));
-  const out = [...items];
+  const ids = new Set(promoted.map((p) => p.id));
+  const out = items.filter((i) => !ids.has(i.id));
   const slots = [2, 9];
-  extra.forEach((p, i) => {
-    const at = Math.min(slots[i] ?? out.length, out.length);
-    out.splice(at, 0, p);
+  promoted.forEach((p, i) => {
+    out.splice(Math.min(slots[i] ?? out.length, out.length), 0, p);
   });
   return out;
 }
