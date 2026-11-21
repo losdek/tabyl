@@ -59,7 +59,7 @@ a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-und
 /* header */
 .M .hdr{background:var(--bg);flex:0 0 auto;padding-bottom:10px;border-bottom:1px solid transparent}
 .M .hdr.stuck{border-bottom-color:var(--line)}
-.M .hrow{display:flex;align-items:center;gap:4px;padding:2px 6px 6px 16px}
+.M .hrow{display:flex;align-items:center;gap:4px;padding:2px 6px 6px 16px;min-height:52px}
 .M .logo{display:flex;align-items:center;gap:7px;font-weight:700;font-size:21px;letter-spacing:-.02em;margin-right:auto}
 .M .sun{width:18px;height:18px;border-radius:50%;background:var(--sun);}
 .M .city{display:flex;align-items:center;gap:2px;font-size:14px;min-height:44px;padding:0 8px;color:var(--fg)}
@@ -251,7 +251,7 @@ const M = {
     return `<nav class="tabs">${t.map(([i,l])=>i==='plus'?`<div class="post" aria-label="Подать объявление">${ic(i)}</div>`:`<div class="${i===on?'on':''}">${ic(i)}${l}</div>`).join("")}</nav>`},
   card(k,o={}){const x=it(k,o);return `<article class="card"><div class="ph"><img src="${img(k)}" alt="" loading="lazy" style="aspect-ratio:${x.r}"><span class="stk num ${x.p==='Даром'?'free':''}">${x.p}</span></div>${o.promo?'<div class="ad-mark">Реклама</div>':''}<div class="ttl clamp2" style="${o.promo?'margin-top:2px':''}">${x.t}</div><div class="meta"><span>${x.c} · ${x.tm}</span>${ic("heart")}</div></article>`},
   header(q){return `<div class="hdr">${sb()}
-    <div class="hrow"><span class="logo"><span class="sun" aria-hidden="true"></span>табыл</span><span class="city"><span class="dash">Бишкек</span></span><span class="t44 bell">${ic("bell")}</span></div>
+    <div class="hrow"><span class="logo"><span class="sun" aria-hidden="true"></span>табыл</span></div>
     <div class="search">${ic("search")}${q?`<span class="q">${q}</span>`:'Что ищете?'}<span class="t44 fb">${ic("filter")}${q?'<b>3</b>':''}</span></div></div>`},
   home(){return `${this.header()}<div class="scroll">
     <nav class="cats">${CATS.slice(0,5).map(n=>`<span>${n}</span>`).join("")}</nav>
@@ -282,7 +282,7 @@ const M = {
       <div class="grp me"><div class="b">Хорошо, буду в${N}18:30</div><span class="tm">14:36 · прочитано</span></div>
     </div></div>
     <div class="input"><span class="t44">${ic("clip")}</span><div class="f">Сообщение</div><span class="send">${ic("send")}</span></div>`},
-  lap(){return `<div class="M lap"><div class="l-top"><span class="logo"><span class="sun" aria-hidden="true"></span>табыл</span><span class="city"><span class="dash">Бишкек</span></span><div class="search">${ic("search")}Найти среди 214${N}380 объявлений<span class="t44 fb">${ic("filter")}</span></div>
+  lap(){return `<div class="M lap"><div class="l-top"><span class="logo"><span class="sun" aria-hidden="true"></span>табыл</span><div class="search">${ic("search")}Найти среди 214${N}380 объявлений<span class="t44 fb">${ic("filter")}</span></div>
     <nav><span>${ic("heart")}Избранное</span><span>${ic("chat")}Чаты</span><span>${ic("user")}Войти</span><span class="post">${ic("plus")}Подать объявление</span></nav></div>
     <nav class="cats" style="padding:14px 40px 0;gap:26px">${CATS.map(n=>`<span>${n}</span>`).join("")}<span class="all dash">все категории</span></nav>
     <div class="l-body"><div class="sec"><h4>Новые в${N}Бишкеке<span>сегодня 1${N}240</span></h4><a href="#">Все</a></div>
