@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tabyl Soft design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Onest:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EEEDEA;--fg:#141414;--mut:#666;--line:#D6D4CF;--card:#FFFFFF}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121212;--fg:#EDEDED;--mut:#9A9A9A;--line:#2C2C2C;--card:#1C1C1C}}
+:root[data-theme="dark"]{--bg:#121212;--fg:#EDEDED;--mut:#9A9A9A;--line:#2C2C2C;--card:#1C1C1C}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font:15px/1.5 "Onest",system-ui,sans-serif;overflow-x:hidden}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent)}
+.page{max-width:1480px;margin:0 auto;padding:32px 16px 80px}
+.intro{display:grid;gap:20px;grid-template-columns:1fr;margin-bottom:24px;border-bottom:1px solid var(--line);padding-bottom:28px}
+@media(min-width:900px){.intro{grid-template-columns:1.2fr 1fr;align-items:end}}
+.intro h1{font-size:clamp(28px,4vw,44px);line-height:1.08;letter-spacing:-.02em;font-weight:700;text-wrap:balance}
+.intro p{color:var(--mut);max-width:62ch;text-wrap:pretty}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--card)}
+.seg button{padding:7px 14px;border-radius:999px;font-size:14px;min-height:38px}
+.seg button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.changes{font-size:14px;color:var(--mut);display:grid;gap:4px 28px;grid-template-columns:1fr;margin-bottom:36px}
+@media(min-width:900px){.changes{grid-template-columns:1fr 1fr}}
+.changes h3{font-size:13px;color:var(--fg);font-weight:500;grid-column:1/-1;margin-bottom:4px}
+.changes li{list-style:none;padding-left:14px;position:relative}
+.changes li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:#FFC800}
+.phones{display:flex;gap:18px;overflow-x:auto;padding:4px 2px 18px;scroll-snap-type:x mandatory}
+.phone-wrap{flex:0 0 auto;scroll-snap-align:start}
+.phone-cap{font-size:13px;color:var(--mut);margin:0 0 8px 4px}
+.phone{width:346px;height:730px;border-radius:44px;padding:10px;background:#0b0b0b;box-shadow:0 1px 0 rgba(255,255,255,.08) inset,0 20px 40px -24px rgba(0,0,0,.45)}
+.screen{width:100%;height:100%;border-radius:34px;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.scroll{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+.scroll::-webkit-scrollbar{display:none}
+.laptop-cap{font-size:13px;color:var(--mut);margin:24px 0 8px 4px}
+.laptop{border-radius:14px;background:#0b0b0b;padding:12px 12px 22px;max-width:1240px}
+.laptop-view{border-radius:6px;overflow:hidden;position:relative;height:calc(var(--lh) * 1px)}
+.laptop-inner{width:1280px;height:780px;transform-origin:0 0;overflow:hidden;position:absolute;left:0;top:0}
+.credits{margin-top:72px;border-top:1px solid var(--line);padding-top:20px;font-size:12px;color:var(--mut)}
+.credits li{margin:2px 0 2px 18px}
+:focus-visible{outline:2px solid #2F6BFF;outline-offset:2px}
+.sb{display:flex;justify-content:space-between;align-items:center;padding:12px 26px 6px;font:600 14px/1 system-ui,sans-serif;flex:0 0 auto}
+.ico{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.num{font-variant-numeric:tabular-nums}
+.clamp2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.t44{min-width:44px;min-height:44px;display:grid;place-items:center}
+.dash{text-decoration:underline dashed 1px;text-underline-offset:.22em}
+
+/* =====================================================================
+   M — «Мягкое 2»: Rubik, cream, calm header, masonry feed, stickers
+   ===================================================================== */
+.M{--bg:#FBF7EE;--fg:#1D1A12;--mut:#77705F;--sun:#FFD43B;--on-sun:#1D1A12;--field:#F1EBDD;--line:#E9E1CF;--ink:#1D1A12;--on-ink:#FBF7EE;--card:#FFFFFF;font-family:"Rubik",sans-serif;background:var(--bg);color:var(--fg)}
+.dark .M,.M.dark{--bg:#14120D;--fg:#F4EFE2;--mut:#A29B88;--field:#221F17;--line:#2B271D;--ink:#F4EFE2;--on-ink:#14120D;--card:#1C1A13}
+/* header */
+.M .hdr{background:var(--bg);flex:0 0 auto;padding-bottom:10px;border-bottom:1px solid transparent}
+.M .hdr.stuck{border-bottom-color:var(--line)}
+.M .hrow{display:flex;align-items:center;gap:4px;padding:2px 6px 6px 16px}
+.M .logo{display:flex;align-items:center;gap:7px;font-weight:700;font-size:21px;letter-spacing:-.02em;margin-right:auto}
+.M .sun{width:18px;height:18px;border-radius:50%;background:var(--sun);box-shadow:0 0 0 3px color-mix(in srgb,var(--sun) 35%,transparent)}
+.M .city{display:flex;align-items:center;gap:2px;font-size:14px;min-height:44px;padding:0 8px;color:var(--fg)}
+.M .city .ico{width:16px;height:16px;color:var(--mut)}
+.M .bell{position:relative}
+.M .bell::after{content:"";position:absolute;top:11px;right:11px;width:7px;height:7px;border-radius:50%;background:#E0562B;box-shadow:0 0 0 2px var(--bg)}
+.M .search{margin:0 12px;height:48px;border-radius:16px;background:var(--field);display:flex;align-items:center;gap:10px;padding:0 14px;font-size:16px;color:var(--mut)}
+.M .search .ico{color:var(--fg)}
+.M .search .q{color:var(--fg);flex:1}
+.M .search .fb{margin-left:auto;margin-right:-8px;color:var(--fg);position:relative}
+.M .search .fb b{position:absolute;top:6px;right:6px;background:var(--sun);color:var(--on-sun);font-size:10px;width:16px;height:16px;border-radius:50%;display:grid;place-items:center}
+/* categories */
+.M .cats{display:flex;gap:6px;padding:12px 12px 4px;overflow:hidden;white-space:nowrap}
+.M .pill{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:0 14px;border-radius:999px;font-size:14px;background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
+.M .pill.on{background:var(--ink);color:var(--on-ink);box-shadow:none}
+.M .pill.more{color:var(--mut)}
+.M .sec{display:flex;justify-content:space-between;align-items:baseline;padding:14px 16px 10px}
+.M .sec h4{font-size:19px;font-weight:500;letter-spacing:-.01em}
+.M .sec h4 span{color:var(--mut);font-weight:400;font-size:14px;margin-left:6px}
+.M .sec a{font-size:14px}
+/* masonry */
+.M .mas{columns:2;column-gap:10px;padding:0 12px 16px}
+.M .card{break-inside:avoid;margin-bottom:16px}
+.M .ph{position:relative}
+.M .ph img{width:100%;object-fit:cover;border-radius:16px}
+.M .stk{position:absolute;left:8px;bottom:8px;background:var(--sun);color:var(--on-sun);font-weight:500;font-size:14px;padding:4px 9px;border-radius:10px;transform:rotate(-2deg)}
+.M .stk.free{background:#1D1A12;color:#FFD43B}
+.M .ttl{font-size:14px;line-height:1.3;margin-top:7px}
+.M .meta{font-size:12px;color:var(--mut);margin-top:3px;display:flex;justify-content:space-between;align-items:center;gap:4px}
+.M .meta .ico{width:18px;height:18px;color:var(--fg);opacity:.75}
+.M .ad-mark{font-size:11px;color:var(--mut);margin-top:6px}
+/* tab bar */
+.M .tabs{display:flex;justify-content:space-around;align-items:center;padding:4px 8px 20px;background:var(--bg);border-top:1px solid var(--line);flex:0 0 auto;color:var(--mut);font-size:11px}
+.M .tabs div{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:52px;min-height:46px;justify-content:center}
+.M .tabs .on{color:var(--fg);font-weight:500}
+.M .tabs .post{width:52px;height:42px;border-radius:14px;background:var(--sun);color:var(--on-sun);min-height:0}
+/* search screen */
+.M .chips{display:flex;gap:6px;padding:10px 12px 0;overflow:hidden;white-space:nowrap}
+.M .count{display:flex;justify-content:space-between;padding:12px 16px 10px;font-size:13px;color:var(--mut)}
+.M .count b{color:var(--fg);font-weight:500}
+.M .count button{color:var(--fg)}
+/* ad screen */
+.M .gal{position:relative}
+.M .gal img{width:100%;height:320px;object-fit:cover}
+.M .gal .btns{position:absolute;inset:44px 12px auto;display:flex;justify-content:space-between}
+.M .gal .btns span{width:44px;height:44px;border-radius:14px;background:rgba(251,247,238,.94);color:#1D1A12;display:grid;place-items:center}
+.M .gal .n{position:absolute;right:12px;bottom:32px;background:rgba(29,26,18,.7);color:#fff;font-size:12px;padding:3px 9px;border-radius:9px}
+.M .sheet{background:var(--bg);border-radius:24px 24px 0 0;margin-top:-20px;position:relative;padding:18px 18px 10px}
+.M .sheet .stk{position:static;display:inline-block;font-size:24px;font-weight:700;padding:5px 13px;border-radius:12px}
+.M .sheet h3{font-size:20px;margin-top:12px;line-height:1.25;font-weight:500}
+.M .sheet .meta{display:block;font-size:13px}
+.M dl.specs{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;margin:16px 0;padding:14px 0;border-block:1px solid var(--line)}
+.M dl.specs dt{font-size:12px;color:var(--mut)}
+.M dl.specs dd{font-size:15px}
+.M .seller{display:flex;gap:12px;align-items:center;padding:12px 0;font-size:13px}
+.M .ava{width:46px;height:46px;border-radius:50%;background:var(--field);display:grid;place-items:center;font-weight:500;font-size:17px}
+.M .cta{display:grid;grid-template-columns:52px 52px 1fr;gap:8px;padding:10px 12px 22px;background:var(--bg);border-top:1px solid var(--line);flex:0 0 auto}
+.M .btn{height:52px;border-radius:16px;display:grid;place-items:center;font-weight:500;font-size:16px;background:var(--field);color:var(--fg)}
+.M .btn.fill{background:var(--ink);color:var(--on-ink)}
+/* chat */
+.M .chat-h{display:flex;gap:8px;align-items:center;padding:2px 8px 10px 4px;border-bottom:1px solid var(--line)}
+.M .chat-h img{width:44px;height:44px;border-radius:12px;object-fit:cover}
+.M .msgs{display:flex;flex-direction:column;gap:8px;padding:12px}
+.M .day{align-self:center;font-size:12px;color:var(--mut)}
+.M .warn{display:flex;gap:10px;font-size:12.5px;line-height:1.4;color:var(--mut);padding:2px 4px 6px}
+.M .warn .ico{width:18px;height:18px;color:var(--fg)}
+.M .m{max-width:80%;padding:9px 13px;font-size:15px;line-height:1.4;background:var(--field);border-radius:18px 18px 18px 6px}
+.M .m.me{align-self:flex-end;background:var(--ink);color:var(--on-ink);border-radius:18px 18px 6px 18px}
+.M .m small{display:block;font-size:11px;opacity:.55;margin-top:2px;text-align:right}
+.M .quick{display:flex;gap:6px;padding:0 12px 8px;overflow:hidden;white-space:nowrap}
+.M .input{display:flex;gap:6px;align-items:center;padding:6px 10px 22px;border-top:1px solid var(--line)}
+.M .input div.f{flex:1;background:var(--field);border-radius:16px;height:46px;display:flex;align-items:center;padding:0 14px;color:var(--mut);font-size:16px}
+.M .send{width:46px;height:46px;border-radius:14px;background:var(--sun);color:var(--on-sun);display:grid;place-items:center}
+/* laptop */
+.M.lap{height:100%;display:flex;flex-direction:column}
+.M .l-top{display:flex;align-items:center;gap:18px;padding:16px 40px 14px;border-bottom:1px solid var(--line)}
+.M .l-top .logo{margin-right:0;font-size:24px}
+.M .l-top .search{flex:1;margin:0;height:50px;max-width:640px}
+.M .l-top nav{display:flex;gap:4px;align-items:center;margin-left:auto;font-size:14px}
+.M .l-top nav span{display:flex;align-items:center;gap:6px;padding:0 12px;min-height:44px}
+.M .l-top .post{background:var(--sun);color:var(--on-sun);border-radius:14px;font-weight:500;padding:0 18px}
+.M .l-cats{display:flex;gap:6px;padding:16px 40px 2px}
+.M .l-body{padding:0 28px;overflow:hidden}
+.M .l-body .sec{padding:18px 12px 12px}
+.M .l-mas{columns:6;column-gap:16px;padding:0 12px}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="intro">
+    <div>
+      <h1>Табыл: «Мягкое», вторая версия</h1>
+      <p style="margin-top:10px">Основа&nbsp;— вариант В2, но&nbsp;спокойнее и&nbsp;дальше от&nbsp;Лалафо. Экраны те&nbsp;же: главная, поиск, объявление, чат и&nbsp;главная на&nbsp;ноутбуке. Телефоны листаются внутри.</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span style="font-size:13px;color:var(--mut)">Тема макетов</span>
+      <div class="seg" role="group" aria-label="Тема макетов">
+        <button data-mode="light" aria-pressed="true">Светлая</button>
+        <button data-mode="dark" aria-pressed="false">Тёмная</button>
+      </div>
+    </div>
+  </header>
+
+  <ul class="changes">
+    <h3>Что изменилось по&nbsp;сравнению с&nbsp;В2</h3>
+    <li><b>Шапка.</b> Вместо большого жёлтого блока со&nbsp;слоганом&nbsp;— тихая строка: логотип с&nbsp;солнцем, город, уведомления и&nbsp;поиск. Экран сразу начинается с&nbsp;объявлений.</li>
+    <li><b>Не&nbsp;как у&nbsp;Лалафо.</b> У&nbsp;них&nbsp;— одинаковые квадратные карточки в&nbsp;белых рамках и&nbsp;категории картинками. Здесь&nbsp;— лента «кирпичиками»: фото в&nbsp;своих пропорциях, без рамок, прямо на&nbsp;сливочном фоне.</li>
+    <li><b>Меньше жёлтого.</b> Он&nbsp;остался только в&nbsp;солнце логотипа, ценниках и&nbsp;кнопке «+». Главные кнопки&nbsp;— тёмные, спокойные.</li>
+    <li><b>Категории&nbsp;— словами.</b> Короткие «таблетки» без фото: меньше шума, быстрее грузится.</li>
+    <li><b>Фильтр&nbsp;— внутри поиска.</b> Одна строка вместо двух, число активных фильтров&nbsp;— на&nbsp;значке.</li>
+    <li><b>Чат.</b> Предупреждение о&nbsp;предоплате&nbsp;— одной тихой строкой, а&nbsp;не&nbsp;плашкой.</li>
+  </ul>
+
+  <div class="phones" id="phones"></div>
+  <div class="laptop-cap">Главная на&nbsp;ноутбуке</div>
+  <div class="laptop"><div class="laptop-view"><div class="laptop-inner" id="lap"></div></div></div>
+
+  <footer class="credits">
+    <p>Фото&nbsp;— Wikimedia Commons, только для макета. Авторы и&nbsp;лицензии:</p>
+    <ul id="credits"><li><a href="https://commons.wikimedia.org/wiki/File:Toyota_Camry_(XV70)_IMG_9081.jpg">Toyota Camry (XV70) IMG 9081.jpg</a> — CC BY-SA 4.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Apple_iPhone_15_Pro.jpg">Apple iPhone 15 Pro.jpg</a> — CC BY-SA 4.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Living_room_in_apartment_of_Condom%C3%ADnio_do_Edif%C3%ADcio_Zaher,_Le_Blond,_Rio_de_Janeiro,_Brazil.jpg">Living room in apartment of Condomínio do Edifício Zaher, Le Blond, Rio de Janeiro, Brazil.jpg</a> — CC0</li><li><a href="https://commons.wikimedia.org/wiki/File:Cozy_living_room_with_a_gray_sofa.jpg">Cozy living room with a gray sofa.jpg</a> — CC BY 2.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Cube,_Cyclingworld_Europe_2024,_Meerbusch_(P1180003).jpg">Cube, Cyclingworld Europe 2024, Meerbusch (P1180003).jpg</a> — CC BY-SA 4.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Professional_Sneakers_-_Sneakers_for_hostesses,_pilots_and_other_professionals._Comfortable_sneakers_produced_in_leather_inside_and_outside.jpg">Professional Sneakers - Sneakers for hostesses, pilots and other professionals. Comfortable sneakers produced in leather inside and outside.jpg</a> — CC BY-SA 4.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Six_weeks_old_cat_(aka).jpg">Six weeks old cat (aka).jpg</a> — CC BY-SA 2.5</li><li><a href="https://commons.wikimedia.org/wiki/File:Macbook_Air.png">Macbook Air.png</a> — Public domain</li><li><a href="https://commons.wikimedia.org/wiki/File:Polo_Ralph_Lauren_winter_jacket,_red_and_black_plaid.jpg">Polo Ralph Lauren winter jacket, red and black plaid.jpg</a> — CC BY 2.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Freezer_door_open_on_refrigerator_in_home_kitchen_in_New_Orleans,_March_2025.jpg">Freezer door open on refrigerator in home kitchen in New Orleans, March 2025.jpg</a> — CC BY-SA 2.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Lexus_RX_450h%2B_(AALH16)_1X7A1930.jpg">Lexus RX 450h+ (AALH16) 1X7A1930.jpg</a> — CC BY-SA 4.0</li></ul>
+  </footer>
+</div>
+
+<script>
+const N = " ";
+const ty = s => s
+  .replace(/(\d) (?=\d)/g, "$1" + N)
+  .replace(/ (сом|\$|км|м²|ГБ|р\.|мин|ч|%)(?=$|[\s,.·)])/g, N + "$1")
+  .replace(/(^|[\s(«])(в|к|с|о|у|и|а|на|по|за|из|от|до|не|без|для|под) /gi, "$1$2" + N);
+const I = {
+  search:'<path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Zm10 3-5-5"/>',
+  heart:'<path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10Z"/>',
+  home:'<path d="M4 10.5 12 4l8 6.5V20h-5.5v-6h-5v6H4z"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  chat:'<path d="M5 18.5V6.5A1.5 1.5 0 0 1 6.5 5h11A1.5 1.5 0 0 1 19 6.5v8a1.5 1.5 0 0 1-1.5 1.5H8z"/>',
+  user:'<path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8a7 7 0 0 1 14 0"/>',
+  back:'<path d="m14.5 5-7 7 7 7"/>',
+  filter:'<path d="M4 7h10m4 0h2M4 17h4m4 0h8M16 5v4M10 15v4"/>',
+  phone:'<path d="M6.6 4h2.6l1.3 4-1.9 1.2a11 11 0 0 0 6.2 6.2l1.2-1.9 4 1.3v2.6A1.6 1.6 0 0 1 18.4 19 14.4 14.4 0 0 1 5 5.6 1.6 1.6 0 0 1 6.6 4Z"/>',
+  wa:'<path d="M4.5 19.5 5.6 16A8 8 0 1 1 8.4 18.6z"/><path d="M9.2 8.6c.3 2.9 2.4 5.3 5.6 6l1-1.4-1.9-1-.9.8a4.6 4.6 0 0 1-2.3-2.3l.8-.9-1-1.9z"/>',
+  bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15zM10 20.5h4"/>',
+  send:'<path d="m4 12 16-8-6 16-2.5-6.5z"/>',
+  clip:'<path d="m19 11-7.2 7.2a4.5 4.5 0 0 1-6.4-6.4l7.5-7.5a3 3 0 0 1 4.3 4.3l-7.3 7.3a1.5 1.5 0 0 1-2.1-2.1L14.5 7"/>',
+  down:'<path d="m7 10 5 5 5-5"/>',
+  shield:'<path d="M12 3.5 5 6v5.5c0 4.2 3 7.6 7 9 4-1.4 7-4.8 7-9V6z"/><path d="m9 12 2 2 4-4"/>',
+  grid:'<path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/>',
+};
+const ic = (n, cls = "") => `<svg class="ico ${cls}" viewBox="0 0 24 24" aria-hidden="true">${I[n]}</svg>`;
+const img = k => `img/${k}.webp`;
+const sb = (c = "") => `<div class="sb" style="${c}"><span>9:41</span><svg width="58" height="12" viewBox="0 0 58 12" fill="currentColor" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y=".5" width="3" height="11.5" rx="1"/><path d="M28 3.2a9 9 0 0 1 11 0l-1.4 1.6a6.8 6.8 0 0 0-8.2 0zm2.6 3a4.7 4.7 0 0 1 5.8 0L33.5 9.5z"/><rect x="43.5" y="1" width="12" height="10" rx="2.5" fill="none" stroke="currentColor" opacity=".5"/><rect x="45" y="2.5" width="8.5" height="7" rx="1.3"/></svg></div>`;
+
+/* r = photo aspect ratio, so the feed gets a natural rhythm */
+const L = {
+  camry:   {t:"Toyota Camry 70, 2019", p:"24 500 $", c:"Бишкек, Джал", tm:"14:20", r:"4/3"},
+  iphone:  {t:"iPhone 15 Pro, 256 ГБ, натуральный титан", p:"92 000 сом", c:"Бишкек, ЦУМ", tm:"12 мин назад", r:"4/5"},
+  apartment:{t:"2-комн. квартира, 64 м², 7/12 эт.", p:"78 000 $", c:"Бишкек, Асанбай", tm:"вчера", r:"4/3"},
+  sofa:    {t:"Угловой диван, серый, почти новый", p:"28 000 сом", c:"Бишкек, Восток-5", tm:"13:02", r:"1/1"},
+  bike:    {t:"Велосипед Cube Stereo, рама L", p:"115 000 сом", c:"Каракол", tm:"11:47", r:"3/4"},
+  fridge:  {t:"Холодильник Samsung No Frost", p:"21 500 сом", c:"Ош", tm:"10:15", r:"1/1"},
+  jacket:  {t:"Куртка Polo Ralph Lauren, M", p:"6 500 сом", c:"Бишкек, Дордой", tm:"09:30", r:"4/5"},
+  kitten:  {t:"Котёнок, 2 месяца, в добрые руки", p:"Даром", c:"Бишкек, Кок-Жар", tm:"08:55", r:"1/1"},
+  laptop:  {t:"MacBook Air M2, 8/256", p:"68 000 сом", c:"Бишкек, Филармония", tm:"вчера", r:"4/3"},
+  lexus:   {t:"Lexus RX 450h+, 2023", p:"71 000 $", c:"Бишкек", tm:"вчера", r:"4/3"},
+  sneakers:{t:"Кеды кожаные, 41 р.", p:"2 900 сом", c:"Ош", tm:"07:40", r:"1/1"},
+};
+const CATS = ["Транспорт","Недвижимость","Электроника","Дом и сад","Одежда","Работа","Услуги","Детям","Животные","Хобби"];
+const FEED = ["iphone","camry","kitten","bike","sofa","jacket","laptop","fridge"];
+const it = (k, o = {}) => { const x = {...L[k], k, ...o}; return {...x, t: ty(x.t), p: ty(x.p)}; };
+const MSG = [
+  ["me","Здравствуйте! Машина ещё продаётся?","14:31"],
+  ["","Да, продаётся. Можно посмотреть сегодня после 18:00 на Джале.","14:33"],
+  ["me","Отлично. Торг возможен?","14:34"],
+  ["","Небольшой — у машины. Скину видео двигателя.","14:35"],
+  ["me","Договорились, буду в 18:30.","14:36"],
+];
+const msgs = () => MSG.map(([w,t,tm]) => `<div class="m ${w}">${ty(t).replace(" —", N+"—")}<small>${tm}</small></div>`).join("");
+const DESC = ty("Один хозяин, обслуживание у официального дилера, все чеки есть. Не бита, не крашена. Торг у машины.");
+
+const M = {
+  tabs(on){const t=[["home","Главная"],["heart","Избранное"],["plus",""],["chat","Чаты"],["user","Профиль"]];
+    return `<nav class="tabs">${t.map(([i,l])=>i==='plus'?`<div class="post" aria-label="Подать объявление">${ic(i)}</div>`:`<div class="${i===on?'on':''}">${ic(i)}${l}</div>`).join("")}</nav>`},
+  card(k,o={}){const x=it(k,o);return `<article class="card"><div class="ph"><img src="${img(k)}" alt="" loading="lazy" style="aspect-ratio:${x.r}"><span class="stk num ${x.p==='Даром'?'free':''}">${x.p}</span></div>${o.promo?'<div class="ad-mark">Продвигается</div>':''}<div class="ttl clamp2" style="${o.promo?'margin-top:2px':''}">${x.t}</div><div class="meta"><span>${x.c} · ${x.tm}</span>${ic("heart")}</div></article>`},
+  header(q){return `<div class="hdr">${sb()}
+    <div class="hrow"><span class="logo"><span class="sun" aria-hidden="true"></span>табыл</span><span class="city"><span class="dash">Бишкек</span></span><span class="t44 bell">${ic("bell")}</span></div>
+    <div class="search">${ic("search")}${q?`<span class="q">${q}</span>`:'Что ищете?'}<span class="t44 fb">${ic("filter")}${q?'<b>3</b>':''}</span></div></div>`},
+  home(){return `${this.header()}<div class="scroll">
+    <div class="cats">${CATS.slice(0,4).map((n,i)=>`<span class="pill">${n}</span>`).join("")}</div>
+    <div class="sec"><h4>Свежее<span>1${N}240 за${N}сегодня</span></h4><a href="#">Все</a></div>
+    <div class="mas">${FEED.map(k=>this.card(k)).join("")}</div></div>${this.tabs("home")}`},
+  search(){return `${this.header("айфон 15 про")}
+    <div class="cats" style="padding-top:2px"><span class="pill on">Бишкек</span><span class="pill on">до${N}100${N}000 сом</span><span class="pill on">Б/у</span><span class="pill more">Ещё</span></div>
+    <div class="count"><span><b>348</b> объявлений</span><button class="dash">сначала новые</button></div>
+    <div class="scroll"><div class="mas">${[
+      this.card("iphone",{promo:true}),
+      this.card("iphone",{t:"iPhone 15 Pro, 128 ГБ, чёрный",p:"79 500 сом",c:"Бишкек, Аламедин",tm:"34 мин назад",r:"1/1"}),
+      this.card("iphone",{t:"iPhone 15 Pro Max, 512 ГБ",p:"124 000 сом",c:"Ош",tm:"1 ч назад",r:"4/3"}),
+      this.card("iphone",{t:"iPhone 15 Pro, 256 ГБ, синий",p:"74 000 сом",c:"Бишкек, 7 мкр",tm:"2 ч назад",r:"4/5"}),
+      this.card("laptop")].join("")}</div></div>${this.tabs("")}`},
+  ad(){return `<div class="scroll"><div class="gal"><img src="${img("camry")}" alt="Белая Toyota Camry"><div style="position:absolute;inset:0 0 auto;color:#fff">${sb()}</div><div class="btns"><span>${ic("back")}</span><span>${ic("heart")}</span></div><span class="n num">1 / 14</span></div>
+    <div class="sheet"><span class="stk num">24${N}500${N}$</span><span style="font-size:13px;color:var(--mut);margin-left:10px">≈${N}2${N}130${N}000 сом</span>
+    <h3>Toyota Camry 70, 2019</h3><div class="meta">Бишкек, Джал · сегодня в${N}14:20 · 312 просмотров</div>
+    <dl class="specs"><div><dt>Пробег</dt><dd class="num">86${N}000 км</dd></div><div><dt>Двигатель</dt><dd>2,5 бензин</dd></div><div><dt>Коробка</dt><dd>Автомат</dd></div><div><dt>Растаможен</dt><dd>Да</dd></div></dl>
+    <p style="font-size:15px">${DESC}</p>
+    <div class="seller"><div class="ava">Н</div><div style="flex:1"><b style="font-weight:500">Нурлан</b><div style="color:var(--mut);font-size:12.5px">★${N}4,9 · <a href="#">37 отзывов</a> · отвечает за${N}час</div></div></div></div></div>
+    <div class="cta"><div class="btn" aria-label="Позвонить">${ic("phone")}</div><div class="btn" aria-label="WhatsApp">${ic("wa")}</div><div class="btn fill">Написать</div></div>`},
+  chat(){return `${sb()}<div class="chat-h"><span class="t44">${ic("back")}</span><img src="${img("camry")}" alt=""><div style="flex:1;font-size:14px;line-height:1.3"><b style="font-weight:500">Нурлан</b><div style="color:var(--mut)">Camry 70 · <span class="num">24${N}500${N}$</span></div></div><span class="t44">${ic("phone")}</span></div>
+    <div class="scroll"><div class="msgs"><div class="warn">${ic("shield")}<span>Не${N}переводите предоплату. Встречайтесь в${N}людных местах.</span></div><span class="day">Сегодня</span>${msgs()}</div></div>
+    <div class="quick"><span class="pill">Где посмотреть?</span><span class="pill">Пришлите VIN</span><span class="pill">Ещё актуально?</span></div>
+    <div class="input"><span class="t44">${ic("clip")}</span><div class="f">Сообщение</div><span class="send">${ic("send")}</span></div>`},
+  lap(){return `<div class="M lap"><div class="l-top"><span class="logo"><span class="sun" aria-hidden="true"></span>табыл</span><span class="city"><span class="dash">Бишкек</span></span><div class="search">${ic("search")}Найти среди 214${N}380 объявлений<span class="t44 fb">${ic("filter")}</span></div>
+    <nav><span>${ic("heart")}Избранное</span><span>${ic("chat")}Чаты</span><span>${ic("user")}Войти</span><span class="post">${ic("plus")}Подать объявление</span></nav></div>
+    <div class="l-cats">${CATS.map(n=>`<span class="pill">${n}</span>`).join("")}</div>
+    <div class="l-body"><div class="sec"><h4>Свежее<span>1${N}240 за${N}сегодня в${N}Бишкеке</span></h4><a href="#">Все</a></div>
+    <div class="l-mas">${["iphone","camry","kitten","bike","sofa","jacket","laptop","fridge","lexus","sneakers","apartment","iphone"].map(k=>this.card(k)).join("")}</div></div></div>`},
+};
+
+const SCREENS = [["home","Главная"],["search","Поиск: «айфон 15 про»"],["ad","Объявление"],["chat","Чат с продавцом"]];
+document.getElementById("phones").innerHTML = SCREENS.map(([s, cap]) =>
+  `<div class="phone-wrap"><p class="phone-cap">${cap}</p><div class="phone"><div class="screen M">${M[s]()}</div></div></div>`).join("");
+document.getElementById("lap").innerHTML = M.lap();
+function fitLaptops(){
+  document.querySelectorAll(".laptop-view").forEach(v=>{
+    const s = v.clientWidth / 1280;
+    v.style.setProperty("--lh", Math.round(780 * s));
+    v.firstElementChild.style.transform = `scale(${s})`;
+  });
+}
+addEventListener("resize", fitLaptops); fitLaptops();
+document.querySelectorAll(".scroll").forEach(sc => sc.addEventListener("scroll", () => {
+  const h = sc.previousElementSibling; if (h && h.classList.contains("hdr")) h.classList.toggle("stuck", sc.scrollTop > 4);
+}));
+let mode = "light";
+try { mode = new URLSearchParams(location.search).get("mode") || localStorage.getItem("tabyl-mode") || "light"; } catch (e) {}
+function setMode(m){
+  document.querySelectorAll(".screen, .lap").forEach(el => el.classList.toggle("dark", m === "dark"));
+  document.querySelectorAll(".seg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.mode === m));
+  try { localStorage.setItem("tabyl-mode", m); } catch (e) {}
+}
+document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => setMode(b.dataset.mode)));
+setMode(mode);
+</script>
+</body>
+</html>
