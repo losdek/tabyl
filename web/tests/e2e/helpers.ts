@@ -9,7 +9,7 @@ export async function signIn(page: Page, phone: string, next = "/") {
   await page.goto(`/login?next=${encodeURIComponent(next)}`);
   await page.getByLabel("Номер телефона").fill(phone);
   await page.getByRole("button", { name: "Получить код" }).click();
-  await expect(page.getByText(/Отправили код/)).toBeVisible();
+  await expect(page.getByText(/Отправили на/)).toBeVisible();
   const r = await page.request.get(`/api/dev/last-code?phone=${encodeURIComponent(phone)}`);
   const { code } = await r.json();
   await page.getByLabel("Код из СМС").fill(code);

@@ -1,5 +1,6 @@
 import { and, desc, eq, inArray, ne, sql } from "drizzle-orm";
 import type { DB } from "@/db/client";
+import { invalidateSearch } from "./search-cache";
 import { adPhotos, ads, auditLog, messages, reports, sessions, users } from "@/db/schema";
 import { uuid } from "@/lib/ids";
 
@@ -49,6 +50,7 @@ export async function autoCheckAd(db: DB, adId: string): Promise<Flag[]> {
   }
   if (flags.some((f) => f.hold) && ad.status === "active") {
     await db.update(ads).set({ status: "pending" }).where(eq(ads.id, adId));
+    invalidateSearch();
   }
   return flags;
 }
@@ -70,7 +72,10 @@ export async function report(
       .select({ n: sql<number>`count(distinct ${reports.reporterId})::int` })
       .from(reports)
       .where(and(eq(reports.targetType, "ad"), eq(reports.targetId, targetId), eq(reports.reason, "Мошенничество"), eq(reports.status, "open")));
-    if (n >= 3) await db.update(ads).set({ status: "pending" }).where(and(eq(ads.id, targetId), eq(ads.status, "active")));
+    if (n >= 3) {
+      await db.update(ads).set({ status: "pending" }).where(and(eq(ads.id, targetId), eq(ads.status, "active")));
+      invalidateSearch();
+    }
   }
 }
 
@@ -85,20 +90,24 @@ export async function queue(db: DB) {
 }
 
 export async function approveAd(db: DB, adminId: string, adId: string) {
+  invalidateSearch();
   await db.update(ads).set({ status: "active", rejectReason: null }).where(eq(ads.id, adId));
   await db
     .update(reports)
     .set({ status: "dismissed", resolution: "Объявление одобрено", resolvedBy: adminId, resolvedAt: new Date() })
     .where(and(eq(reports.targetType, "ad"), eq(reports.targetId, adId), eq(reports.status, "open")));
+  invalidateSearch();
   await audit(db, adminId, "ad.approve", "ad", adId);
 }
 
 export async function rejectAd(db: DB, adminId: string, adId: string, reason: string) {
+  invalidateSearch();
   await db.update(ads).set({ status: "rejected", rejectReason: reason.slice(0, 300) }).where(eq(ads.id, adId));
   await db
     .update(reports)
     .set({ status: "resolved", resolution: `Отклонено: ${reason}`, resolvedBy: adminId, resolvedAt: new Date() })
     .where(and(eq(reports.targetType, "ad"), eq(reports.targetId, adId), eq(reports.status, "open")));
+  invalidateSearch();
   await audit(db, adminId, "ad.reject", "ad", adId, { reason });
 }
 
@@ -111,9 +120,11 @@ export async function dismissReport(db: DB, adminId: string, reportId: string) {
 }
 
 export async function banUser(db: DB, adminId: string, userId: string, reason: string) {
+  invalidateSearch();
   await db.update(users).set({ bannedAt: new Date(), banReason: reason.slice(0, 300) }).where(eq(users.id, userId));
   await db.delete(sessions).where(eq(sessions.userId, userId));
   await db.update(ads).set({ status: "closed" }).where(and(eq(ads.userId, userId), eq(ads.status, "active")));
+  invalidateSearch();
   await audit(db, adminId, "user.ban", "user", userId, { reason });
 }
 

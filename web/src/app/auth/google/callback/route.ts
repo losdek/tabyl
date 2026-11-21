@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { getDb } from "@/db/client";
 import { AuthError, createSession, userForGoogle } from "@/server/auth-core";
 import { google, googleEnabled } from "@/server/google";
+import { mergeGuestFavs } from "@/server/guest-favs";
 import { currentUser, setSessionCookie } from "@/server/session";
 
 export async function GET(req: Request) {
@@ -21,6 +22,7 @@ export async function GET(req: Request) {
     const user = await userForGoogle(db, claims, await currentUser());
     const s = await createSession(db, user.id);
     await setSessionCookie(s.token);
+    await mergeGuestFavs(db, user.id);
   } catch (e) {
     return Response.redirect(`${origin}/login?error=${e instanceof AuthError && e.code === "banned" ? "banned" : "google"}`, 302);
   } finally {

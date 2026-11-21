@@ -1,9 +1,10 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { getDb } from "@/db/client";
+import { favSet } from "@/server/guest-favs";
 import { CATEGORIES, categoryBySlug } from "@/domain/categories";
 import { count } from "@/lib/format";
-import { countAds, countNewToday, favoriteIds, mixPromoted, promotedAds, searchAds } from "@/server/ads";
+import { countAds, countNewToday, mixPromoted, promotedAds, searchAds } from "@/server/ads";
 import { activeFilterCount, describeFilters, filtersToQuery, parseFilters } from "@/server/filters";
 import { cardJSON } from "@/server/serialize";
 import { currentUser } from "@/server/session";
@@ -30,7 +31,7 @@ export async function SearchView({ sp, mode, category }: { sp: SP; mode: "home" 
     mode === "home" ? countNewToday(db, f.city) : Promise.resolve(0),
   ]);
   const items = mixPromoted(page.items, promoted);
-  const favs = await favoriteIds(db, user?.id, items.map((a) => a.id));
+  const favs = await favSet(db, user, items.map((a) => a.id));
   const query = filtersToQuery(f);
   const cat = categoryBySlug(f.category);
   const city = f.city === "all" ? "по всему Кыргызстану" : cityBySlug(f.city)?.in ?? "";
@@ -43,8 +44,9 @@ export async function SearchView({ sp, mode, category }: { sp: SP; mode: "home" 
         signedIn={!!user}
         filtersHref={`/search?${query}#filters`}
         activeFilters={activeFilterCount(f)}
+        live={mode !== "home"}
       />
-      <main className="mx-auto max-w-[1280px] px-3 md:px-8">
+      <main id="results" className="mx-auto max-w-[1280px] px-3 transition-opacity duration-200 md:px-8">
         {mode === "home" ? (
           <nav aria-label="Категории" className="no-scrollbar -mx-3 flex gap-5 overflow-x-auto px-4 pt-2.5 pb-1 text-[15px] whitespace-nowrap md:mx-0 md:gap-7 md:px-0">
             {CATEGORIES.map((c) => (
@@ -81,7 +83,7 @@ export async function SearchView({ sp, mode, category }: { sp: SP; mode: "home" 
         </div>
 
         {items.length ? (
-          <Feed initial={items.map(cardJSON)} favs={[...favs]} nextCursor={page.nextCursor} query={query} />
+          <Feed key={`${query}|${cursor ?? ""}`} initial={items.map(cardJSON)} favs={[...favs]} nextCursor={page.nextCursor} query={query} />
         ) : (
           <div className="mx-auto max-w-md py-16 text-center">
             <p className="text-lg">Ничего не нашлось</p>

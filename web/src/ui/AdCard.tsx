@@ -25,9 +25,9 @@ export function PriceSticker({ price, currency, big = false }: { price: number |
   );
 }
 
-export function AdCard({ ad, fav, priority = false, now }: { ad: CardAd; fav?: boolean; priority?: boolean; now?: Date }) {
+export function AdCard({ ad, fav, priority = false, now, index = 0 }: { ad: CardAd; fav?: boolean; priority?: boolean; now?: Date; index?: number }) {
   return (
-    <article className="mb-4 break-inside-avoid">
+    <article className="card-in mb-4 break-inside-avoid" style={{ "--i": index } as React.CSSProperties}>
       <Link href={`/ad/${ad.id}`} className="group block">
         <div className="relative overflow-hidden rounded-[10px]">
           {ad.photo ? (
@@ -36,7 +36,7 @@ export function AdCard({ ad, fav, priority = false, now }: { ad: CardAd; fav?: b
               sizes="(min-width: 1280px) 210px, (min-width: 768px) 25vw, 50vw"
               priority={priority}
               aspect={aspect(ad.photo.width, ad.photo.height)}
-              className="transition-transform duration-300 group-hover:scale-[1.02]"
+              className="transition-transform duration-500 ease-out group-hover:scale-[1.03] group-active:scale-[0.99]"
             />
           ) : (
             <div className="grid aspect-[4/3] place-items-center bg-field text-mut">

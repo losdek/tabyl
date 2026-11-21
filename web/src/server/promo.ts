@@ -1,5 +1,6 @@
 import { and, desc, eq } from "drizzle-orm";
 import type { DB } from "@/db/client";
+import { invalidateSearch } from "./search-cache";
 import { ads, orders, promotions } from "@/db/schema";
 import { uuid } from "@/lib/ids";
 
@@ -30,6 +31,7 @@ export async function createOrder(db: DB, userId: string, adId: string, tier: Ti
  * Returns false when the order was already settled.
  */
 export async function markPaid(db: DB, orderId: string, providerPaymentId: string | null, raw: Record<string, unknown>, now = new Date()) {
+  invalidateSearch();
   const [o] = await db.select().from(orders).where(eq(orders.id, orderId)).limit(1);
   if (!o) throw new PromoError("Заказ не найден");
   if (o.status === "paid") return false;
@@ -50,6 +52,7 @@ export async function markPaid(db: DB, orderId: string, providerPaymentId: strin
     await db.update(ads).set({ promotedUntil: until, bumpedAt: now }).where(eq(ads.id, ad.id));
     await db.insert(promotions).values({ id: uuid(), adId: ad.id, orderId, tier: o.tier, startsAt: now, endsAt: until });
   }
+  invalidateSearch();
   return true;
 }
 

@@ -1,5 +1,6 @@
 import { sql } from "drizzle-orm";
 import { openTestDb, type DB } from "@/db/client";
+import { invalidateSearch } from "@/server/search-cache";
 
 let shared: Promise<DB> | undefined;
 
@@ -11,5 +12,6 @@ export async function freshDb(): Promise<DB> {
     sql`select tablename from pg_tables where schemaname = 'public'`,
   );
   if (rows.length) await db.execute(sql.raw(`truncate ${rows.map((r) => `"${r.tablename}"`).join(", ")} cascade`));
+  invalidateSearch();
   return db;
 }

@@ -2,12 +2,14 @@
 import { cookies } from "next/headers";
 import { getDb } from "@/db/client";
 import { toggleFavorite } from "@/server/ads";
+import { toggleGuestFav } from "@/server/guest-favs";
 import { currentUser } from "@/server/session";
 import { isCity } from "@/domain/places";
 
-export async function toggleFavoriteAction(adId: string): Promise<"on" | "off" | "login"> {
+export async function toggleFavoriteAction(adId: string): Promise<"on" | "off"> {
   const user = await currentUser();
-  if (!user) return "login";
+  // visitors who have not signed in keep favourites in a cookie
+  if (!user) return (await toggleGuestFav(adId)) ? "on" : "off";
   return (await toggleFavorite(await getDb(), user.id, adId)) ? "on" : "off";
 }
 

@@ -7,6 +7,7 @@ import { isCity } from "@/domain/places";
 import { queryVariants } from "@/domain/synonyms";
 import { shortId } from "@/lib/ids";
 import { autoCheckAd } from "./moderation";
+import { cached, invalidateSearch } from "./search-cache";
 
 export type Ad = typeof ads.$inferSelect;
 export type Photo = typeof adPhotos.$inferSelect;
@@ -103,6 +104,7 @@ async function attachPhotos(db: DB, userId: string, adId: string, photoIds: stri
 }
 
 export async function createAd(db: DB, userId: string, input: AdInput, now = new Date()) {
+  invalidateSearch();
   const data = validateAd(input);
   const id = shortId();
   await db.insert(ads).values({
@@ -125,10 +127,12 @@ export async function createAd(db: DB, userId: string, input: AdInput, now = new
   });
   await attachPhotos(db, userId, id, data.photoIds);
   const flags = await autoCheckAd(db, id);
+  invalidateSearch();
   return { id, status: flags.some((f) => f.hold) ? ("pending" as const) : ("active" as const), flags };
 }
 
 export async function updateAd(db: DB, userId: string, id: string, input: AdInput, now = new Date()) {
+  invalidateSearch();
   const [ad] = await db.select().from(ads).where(eq(ads.id, id)).limit(1);
   if (!ad || ad.userId !== userId) throw new Error("not_found");
   const data = validateAd(input);
@@ -153,18 +157,23 @@ export async function updateAd(db: DB, userId: string, id: string, input: AdInpu
     .where(eq(ads.id, id));
   await attachPhotos(db, userId, id, data.photoIds);
   const flags = await autoCheckAd(db, id);
+  invalidateSearch();
   return { id, flags };
 }
 
 export async function setAdStatus(db: DB, userId: string, id: string, status: "active" | "sold" | "closed") {
+  invalidateSearch();
   const [ad] = await db.select().from(ads).where(eq(ads.id, id)).limit(1);
   if (!ad || ad.userId !== userId) throw new Error("not_found");
   if (ad.status === "rejected" || ad.status === "pending") throw new Error("under_moderation");
   await db.update(ads).set({ status, updatedAt: new Date() }).where(eq(ads.id, id));
+  invalidateSearch();
 }
 
 export async function deleteAd(db: DB, userId: string, id: string) {
+  invalidateSearch();
   await db.delete(ads).where(and(eq(ads.id, id), eq(ads.userId, userId)));
+  invalidateSearch();
 }
 
 export async function countView(db: DB, id: string, field: "views" | "phoneViews" = "views") {
@@ -251,6 +260,11 @@ function where(f: Filters, now: Date): SQL[] {
  * price sorts and relevance use an offset cursor.
  */
 export async function searchAds(db: DB, f: Filters, opts: { cursor?: string; limit?: number; now?: Date } = {}) {
+  if (opts.now) return searchAdsUncached(db, f, opts);
+  return cached(`s:${JSON.stringify(f)}:${opts.cursor ?? ""}:${opts.limit ?? ""}`, () => searchAdsUncached(db, f, opts));
+}
+
+async function searchAdsUncached(db: DB, f: Filters, opts: { cursor?: string; limit?: number; now?: Date } = {}) {
   const now = opts.now ?? new Date();
   const limit = Math.min(opts.limit ?? 24, 60);
   const w = where(f, now);
@@ -288,6 +302,10 @@ export async function searchAds(db: DB, f: Filters, opts: { cursor?: string; lim
 }
 
 export async function countAds(db: DB, f: Filters, now = new Date()) {
+  return cached(`c:${JSON.stringify(f)}`, () => countAdsUncached(db, f, now));
+}
+
+async function countAdsUncached(db: DB, f: Filters, now: Date) {
   const [{ n }] = await db.select({ n: sql<number>`count(*)::int` }).from(ads).where(and(...where(f, now)));
   return n;
 }

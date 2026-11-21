@@ -36,6 +36,7 @@ export default async function ProfilePage(props: PageProps<"/profile">) {
             {" · "}<Link href={`/u/${user.id}`} className="link">как вас видят покупатели</Link>
           </p>
           {sp.deleted === "1" && <p role="status" className="mt-3 text-sm text-ok">Объявление удалено</p>}
+          {sp.welcome === "1" && <p role="status" className="animate-rise mt-3 rounded-[10px] bg-field px-3 py-2.5 text-sm">Добро пожаловать! Укажите имя ниже — его увидят покупатели.</p>}
         </section>
 
         <section>

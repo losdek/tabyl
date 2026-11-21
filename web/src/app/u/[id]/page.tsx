@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { eq } from "drizzle-orm";
 import { getDb } from "@/db/client";
+import { favSet } from "@/server/guest-favs";
 import { users } from "@/db/schema";
 import { cityName } from "@/domain/places";
 import { count, lastSeen, memberSince, NBSP, relativeTime } from "@/lib/format";
-import { favoriteIds, searchAds } from "@/server/ads";
+import { searchAds } from "@/server/ads";
 import { canReview, reviewsFor, sellerRating } from "@/server/reviews";
 import { currentUser } from "@/server/session";
 import { AdCard, Masonry } from "@/ui/AdCard";
@@ -31,7 +32,7 @@ export default async function SellerPage(props: PageProps<"/u/[id]">) {
     reviewsFor(db, id),
     me ? canReview(db, me.id, id) : Promise.resolve(null),
   ]);
-  const favs = await favoriteIds(db, me?.id, page.items.map((a) => a.id));
+  const favs = await favSet(db, me, page.items.map((a) => a.id));
   return (
     <>
       <Header signedIn={!!me} />

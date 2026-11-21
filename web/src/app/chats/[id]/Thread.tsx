@@ -48,6 +48,8 @@ export function Thread({ id, me, initial, city, blocked }: { id: string; me: str
   const [error, setError] = useState("");
   const [pending, start] = useTransition();
   const bottom = useRef<HTMLDivElement>(null);
+  // only messages that arrive while the chat is open animate in
+  const [seen] = useState(() => new Set(initial.map((m) => m.id)));
 
   useEffect(() => {
     readAction(id);
@@ -111,7 +113,7 @@ export function Thread({ id, me, initial, city, blocked }: { id: string; me: str
                   if (m.kind === "photo") {
                     const p = m.payload as { photoId: string; width: number; height: number; blur: string };
                     return (
-                      <a key={m.id} href={photoUrl(p.photoId, 1280)} target="_blank" className={`block w-[220px] overflow-hidden ${r}`}>
+                      <a key={m.id} href={photoUrl(p.photoId, 1280)} target="_blank" className={`${seen.has(m.id) ? "" : "bubble-in"} block w-[220px] overflow-hidden ${r}`}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={photoUrl(p.photoId, 640)} alt="Фото в чате" width={p.width} height={p.height} className="aspect-[4/3] w-full object-cover" style={{ backgroundImage: `url(${p.blur})`, backgroundSize: "cover" }} />
                       </a>
@@ -120,7 +122,7 @@ export function Thread({ id, me, initial, city, blocked }: { id: string; me: str
                   if (m.kind === "place") {
                     const p = m.payload as { address: string; note?: string };
                     return (
-                      <div key={m.id} className={`${bg} ${r} grid w-[230px] gap-0.5 px-3 py-2.5`}>
+                      <div key={m.id} className={`${seen.has(m.id) ? "" : "bubble-in"} ${bg} ${r} grid w-[230px] gap-0.5 px-3 py-2.5`}>
                         <span className="flex items-center gap-1.5 font-medium"><Icon name="pin" size={16} />{p.address}</span>
                         {p.note && <span className="text-sm text-mut">{p.note}</span>}
                         <a href={twoGis(p.address, city)} target="_blank" rel="noopener" className="link mt-1.5 text-sm">Открыть в 2ГИС</a>
@@ -128,7 +130,7 @@ export function Thread({ id, me, initial, city, blocked }: { id: string; me: str
                     );
                   }
                   return (
-                    <p key={m.id} className={`${bg} ${r} px-3 py-2 text-[15px] leading-snug break-words whitespace-pre-wrap`}>{m.body}</p>
+                    <p key={m.id} className={`${seen.has(m.id) ? "" : "bubble-in"} ${bg} ${r} px-3 py-2 text-[15px] leading-snug break-words whitespace-pre-wrap`}>{m.body}</p>
                   );
                 })}
                 <span className="px-1 pt-0.5 text-[11px] text-mut">

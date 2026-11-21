@@ -6,13 +6,15 @@
 import { cookies } from "next/headers";
 import { and, eq } from "drizzle-orm";
 import { getDb, type DB } from "@/db/client";
+import { favSet } from "@/server/guest-favs";
 import { users } from "@/db/schema";
 import { CATEGORIES } from "@/domain/categories";
 import { CITIES, isCity } from "@/domain/places";
 import {
-  AdValidationError, countView, createAd, favoriteIds, getAd, listFavorites, mixPromoted, myAds, promotedAds, searchAds,
-  setAdStatus, toggleFavorite, updateAd, type AdInput,
+  AdValidationError, countView, createAd, getAd, listFavorites, mixPromoted, myAds, promotedAds, searchAds,
+  setAdStatus, suggest, toggleFavorite, updateAd, type AdInput,
 } from "@/server/ads";
+import { cached } from "@/server/search-cache";
 import { AuthError, endSession, requestCode, verifyCode, type User } from "@/server/auth-core";
 import { ChatError, inbox, markRead, sendMessage, startConversation, thread, unreadCount } from "@/server/chat";
 import { parseFilters } from "@/server/filters";
@@ -46,6 +48,14 @@ const routes: [string, string, Handler][] = [
   ["GET", "meta", async () =>
     json({ categories: CATEGORIES, cities: CITIES, tiers: TIERS, payments: freedomConfig() ? "freedom" : "test" })],
 
+  ["GET", "suggest", async ({ db, req }) => {
+    const q = (new URL(req.url).searchParams.get("q") ?? "").trim().slice(0, 60);
+    if (q.length < 2) return json({ categories: [], titles: [] });
+    const low = q.toLowerCase();
+    const categories = CATEGORIES.filter((c) => c.name.toLowerCase().startsWith(low)).map((c) => ({ slug: c.slug, name: c.name }));
+    const titles = await cached(`sg:${low}`, () => suggest(db, q, 6));
+    return Response.json({ categories, titles }, { headers: { "cache-control": "public, max-age=30" } });
+  }],
   ["POST", "auth/code", async ({ db, body }) => {
     await requestCode(db, String(body.phone ?? ""));
     return json({ ok: true });
@@ -83,7 +93,7 @@ const routes: [string, string, Handler][] = [
     const cursor = url.searchParams.get("cursor") ?? undefined;
     const page = await searchAds(db, f, { cursor, limit: Math.min(Number(url.searchParams.get("limit")) || 24, 60) });
     const items = cursor ? page.items : mixPromoted(page.items, await promotedAds(db, f));
-    const favs = await favoriteIds(db, user?.id, items.map((a) => a.id));
+    const favs = await favSet(db, user, items.map((a) => a.id));
     return json({ items: items.map(cardJSON), nextCursor: page.nextCursor, favorites: [...favs] });
   }],
   ["POST", "ads", async (c) => {
@@ -96,7 +106,7 @@ const routes: [string, string, Handler][] = [
     const mine = user?.id === d.ad.userId;
     if (d.ad.status !== "active" && d.ad.status !== "sold" && !mine) return fail(404, "Объявление не найдено");
     if (!mine) await countView(db, id);
-    const fav = (await favoriteIds(db, user?.id, [id])).has(id);
+    const fav = (await favSet(db, user, [id])).has(id);
     const { search: _s, ...ad } = d.ad;
     void _s;
     return json({

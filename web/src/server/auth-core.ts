@@ -81,9 +81,10 @@ export async function verifyCode(db: DB, rawPhone: string, code: string, kind: "
   await db.update(loginCodes).set({ usedAt: now }).where(eq(loginCodes.id, row.id));
 
   let [user] = await db.select().from(users).where(eq(users.phone, phone)).limit(1);
+  const isNew = !user;
   if (!user) [user] = await db.insert(users).values({ id: uuid(), phone }).returning();
   if (user.bannedAt) throw new AuthError("banned", "Аккаунт заблокирован модератором");
-  return createSession(db, user.id, kind, now);
+  return { ...(await createSession(db, user.id, kind, now)), isNew, hasName: !!user.name };
 }
 
 export async function createSession(db: DB, userId: string, kind: "web" | "app" = "web", now = new Date()) {

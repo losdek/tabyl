@@ -2,30 +2,33 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { currentUser } from "@/server/session";
-import { googleEnabled } from "@/server/google";
 import { Logo } from "@/ui/Logo";
+import { BackButton } from "./BackButton";
 import { LoginForm } from "./LoginForm";
 
-export const metadata: Metadata = { title: "Вход", robots: { index: false } };
+export const metadata: Metadata = { title: "Вход и регистрация", robots: { index: false } };
+
+const ERRORS: Record<string, string> = {
+  google: "Не удалось войти через Google. Попробуйте ещё раз",
+  google_off: "Вход через Google пока не работает. Войдите по номеру телефона",
+  banned: "Аккаунт заблокирован модератором",
+};
 
 export default async function LoginPage(props: PageProps<"/login">) {
   const sp = await props.searchParams;
   const next = typeof sp.next === "string" ? sp.next : "/";
   if (await currentUser()) redirect(next);
-  const error = sp.error === "google" ? "Не удалось войти через Google. Попробуйте ещё раз" : sp.error === "banned" ? "Аккаунт заблокирован модератором" : null;
+  const error = typeof sp.error === "string" ? ERRORS[sp.error] : undefined;
   return (
-    <main className="mx-auto flex min-h-dvh max-w-sm flex-col px-4 pt-6 pb-10">
-      <Link href="/" aria-label="Табыл — на главную" className="self-start">
-        <Logo className="h-6 w-auto" />
-      </Link>
-      <h1 className="mt-10 text-2xl font-medium tracking-tight">Вход</h1>
-      <p className="mt-1 mb-6 text-sm text-mut">Чтобы писать продавцам, сохранять объявления и подавать свои.</p>
-      {error && <p role="alert" className="mb-4 text-sm text-danger">{error}</p>}
-      <LoginForm next={next} google={googleEnabled()} />
-      <p className="mt-auto pt-10 text-xs text-mut">
-        Входя, вы соглашаетесь с <Link href="/rules" className="link">правилами Табыла</Link> и{" "}
-        <Link href="/privacy" className="link">обработкой персональных данных</Link>.
-      </p>
+    <main className="mx-auto flex min-h-dvh max-w-sm flex-col px-4 pt-2 pb-8">
+      <div className="flex items-center justify-between">
+        <BackButton fallback={next} />
+        <Link href="/" aria-label="Табыл — на главную"><Logo className="h-[22px] w-auto" /></Link>
+      </div>
+      <div className="mt-8">
+        {error && <p role="alert" className="animate-rise mb-4 rounded-[10px] bg-field px-3 py-2.5 text-sm">{error}</p>}
+        <LoginForm next={next} initialMode={sp.mode === "register" ? "register" : "login"} />
+      </div>
     </main>
   );
 }

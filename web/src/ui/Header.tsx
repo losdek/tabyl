@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { Suspense } from "react";
+import { SearchBox } from "./SearchBox";
 import { Icon } from "./icons";
 import { Logo } from "./Logo";
 
@@ -14,6 +16,7 @@ export function Header({
   unread = 0,
   filtersHref,
   activeFilters = 0,
+  live = false,
 }: {
   q?: string;
   isHome?: boolean;
@@ -21,6 +24,7 @@ export function Header({
   unread?: number;
   filtersHref?: string;
   activeFilters?: number;
+  live?: boolean;
 }) {
   const logo = <Logo className="h-[22px] w-auto md:h-[26px]" />;
   return (
@@ -29,29 +33,9 @@ export function Header({
         <div className="flex min-h-11 items-center px-1 md:px-0">
           {isHome ? <h1 className="m-0">{logo}</h1> : <Link href="/" aria-label="Табыл — на главную">{logo}</Link>}
         </div>
-        <form action="/search" role="search" className="flex h-12 flex-1 items-center gap-2.5 rounded-[12px] bg-field pl-3.5 pr-1 focus-within:outline-2 focus-within:outline-fg md:max-w-[640px]">
-          <Icon name="search" />
-          <input
-            name="q"
-            defaultValue={q}
-            type="search"
-            enterKeyHint="search"
-            autoComplete="off"
-            placeholder="Что ищете?"
-            aria-label="Поиск по объявлениям"
-            className="h-full min-w-0 flex-1 bg-transparent text-base text-fg outline-none placeholder:text-mut focus-visible:outline-none"
-          />
-          {filtersHref ? (
-            <Link href={filtersHref} className="relative grid size-11 place-items-center" aria-label="Фильтры">
-              <Icon name="filter" />
-              {activeFilters > 0 && (
-                <span className="absolute top-1.5 right-1.5 grid size-4 place-items-center rounded-full bg-sun text-[10px] font-medium text-on-sun">
-                  {activeFilters}
-                </span>
-              )}
-            </Link>
-          ) : null}
-        </form>
+        <Suspense fallback={<div className="h-12 flex-1 rounded-[12px] bg-field md:max-w-[640px]" />}>
+          <SearchBox q={q} live={live} filtersHref={filtersHref} activeFilters={activeFilters} />
+        </Suspense>
         <nav className="ml-auto hidden items-center gap-1 text-sm md:flex" aria-label="Разделы">
           <Link href="/favorites" className="flex min-h-11 items-center gap-1.5 px-3"><Icon name="heart" size={20} />Избранное</Link>
           <Link href="/chats" className="relative flex min-h-11 items-center gap-1.5 px-3">

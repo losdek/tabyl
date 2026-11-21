@@ -3,11 +3,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { and, desc, eq, ne } from "drizzle-orm";
 import { getDb } from "@/db/client";
+import { favSet } from "@/server/guest-favs";
 import { ads } from "@/db/schema";
 import { attrSummary } from "@/domain/categories";
 import { cityName } from "@/domain/places";
 import { count, formatNumber, formatPrice, lastSeen, memberSince, NBSP, relativeTime, somHint } from "@/lib/format";
-import { countView, favoriteIds, getAd, photosFor } from "@/server/ads";
+import { countView, getAd, photosFor } from "@/server/ads";
 import { sellerRating } from "@/server/reviews";
 import { currentUser, isAdmin } from "@/server/session";
 import { AdCard, Masonry, PriceSticker } from "@/ui/AdCard";
@@ -60,11 +61,11 @@ export default async function AdPage(props: PageProps<"/ad/[id]">) {
       .where(and(eq(ads.status, "active"), eq(ads.category, ad.category), eq(ads.city, ad.city), ne(ads.id, ad.id)))
       .orderBy(desc(ads.bumpedAt))
       .limit(12),
-    favoriteIds(db, user?.id, [ad.id]),
+    favSet(db, user, [ad.id]),
   ]);
   const simPhotos = await photosFor(db, similarRows.map((a) => a.id));
   const similar = similarRows.map((a) => ({ ...a, photo: simPhotos.get(a.id)?.[0] ?? null, promoted: false }));
-  const simFavs = await favoriteIds(db, user?.id, similar.map((a) => a.id));
+  const simFavs = await favSet(db, user, similar.map((a) => a.id));
   const hint = somHint(ad.price, ad.currency);
   const promotedNow = !!ad.promotedUntil && ad.promotedUntil > new Date();
   const jsonLd = {

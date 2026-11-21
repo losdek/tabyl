@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { google, googleEnabled } from "@/server/google";
 
 export async function GET(req: Request) {
-  if (!googleEnabled()) return new Response("Google sign-in is not configured", { status: 404 });
+  if (!googleEnabled()) return Response.redirect(new URL("/login?error=google_off", req.url), 302);
   const next = new URL(req.url).searchParams.get("next") ?? "/";
   const state = generateState();
   const verifier = generateCodeVerifier();

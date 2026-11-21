@@ -2,22 +2,29 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getDb } from "@/db/client";
 import { listFavorites } from "@/server/ads";
-import { requireUser } from "@/server/session";
+import { currentUser } from "@/server/session";
+import { guestFavoriteAds } from "@/server/guest-favs";
 import { AdCard, Masonry } from "@/ui/AdCard";
 import { Header } from "@/ui/Header";
 
 export const metadata: Metadata = { title: "Избранное", robots: { index: false } };
 
 export default async function FavoritesPage() {
-  const user = await requireUser("/favorites");
-  const list = await listFavorites(await getDb(), user.id);
+  const user = await currentUser();
+  const db = await getDb();
+  const list = user ? await listFavorites(db, user.id) : await guestFavoriteAds(db);
   const active = list.filter((a) => a.status === "active");
   const gone = list.filter((a) => a.status !== "active");
   return (
     <>
-      <Header signedIn />
+      <Header signedIn={!!user} />
       <main className="mx-auto max-w-[1280px] px-3 pt-3 md:px-8">
         <h1 className="px-1 pb-3 text-xl font-medium">Избранное</h1>
+        {!user && list.length > 0 && (
+          <p className="mb-4 px-1 text-sm text-mut">
+            Сохранено в этом браузере. <Link href="/login?next=/favorites" className="link text-fg">Войдите</Link>, чтобы избранное было на всех устройствах.
+          </p>
+        )}
         {list.length === 0 ? (
           <div className="py-12 text-center">
             <p>Нажмите на сердечко у объявления, и оно появится здесь</p>
