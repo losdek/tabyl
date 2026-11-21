@@ -29,7 +29,7 @@ export function Header({
         <div className="flex min-h-11 items-center px-1 md:px-0">
           {isHome ? <h1 className="m-0">{logo}</h1> : <Link href="/" aria-label="Табыл — на главную">{logo}</Link>}
         </div>
-        <form action="/search" role="search" className="flex h-12 flex-1 items-center gap-2.5 rounded-[12px] bg-field pl-3.5 pr-1 md:max-w-[640px]">
+        <form action="/search" role="search" className="flex h-12 flex-1 items-center gap-2.5 rounded-[12px] bg-field pl-3.5 pr-1 focus-within:outline-2 focus-within:outline-fg md:max-w-[640px]">
           <Icon name="search" />
           <input
             name="q"
@@ -39,7 +39,7 @@ export function Header({
             autoComplete="off"
             placeholder="Что ищете?"
             aria-label="Поиск по объявлениям"
-            className="h-full min-w-0 flex-1 bg-transparent text-base text-fg outline-none placeholder:text-mut"
+            className="h-full min-w-0 flex-1 bg-transparent text-base text-fg outline-none placeholder:text-mut focus-visible:outline-none"
           />
           {filtersHref ? (
             <Link href={filtersHref} className="relative grid size-11 place-items-center" aria-label="Фильтры">

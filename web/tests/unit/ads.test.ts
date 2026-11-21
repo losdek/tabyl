@@ -60,6 +60,10 @@ describe("search", () => {
     await createAd(db, "s", phone());
     await createAd(db, "s", phone({ title: "Айфон 13", price: 40000, city: "osh" }));
 
+    const cyr = await searchAds(db, { q: "айфон 15" });
+    expect(cyr.items.map((a) => a.title)).toContain("iPhone 15 Pro, 256 ГБ");
+    const lat = await searchAds(db, { q: "toyota" });
+    expect(lat.items).toHaveLength(1);
     const byTypo = await searchAds(db, { q: "айфн" });
     expect(byTypo.items.map((a) => a.title)).toContain("Айфон 13");
     const cheap = await searchAds(db, { category: "transport", priceMax: 30000 });

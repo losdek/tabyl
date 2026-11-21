@@ -41,9 +41,9 @@ export function FilterForm({ f, action = "/search" }: { f: Filters; action?: str
       <fieldset className="grid gap-1 text-sm">
         <legend className="mb-1 text-mut">Цена</legend>
         <div className="flex gap-2">
-          <input name="pmin" inputMode="numeric" placeholder="от" defaultValue={f.priceMin} className={field} aria-label="Цена от" />
-          <input name="pmax" inputMode="numeric" placeholder="до" defaultValue={f.priceMax} className={field} aria-label="Цена до" />
-          <select name="cur" defaultValue={f.currency ?? ""} className={`${field} w-24 shrink-0`} aria-label="Валюта">
+          <input name="pmin" inputMode="numeric" placeholder="от" defaultValue={f.priceMin} className={`${field} min-w-0 flex-1`} aria-label="Цена от" />
+          <input name="pmax" inputMode="numeric" placeholder="до" defaultValue={f.priceMax} className={`${field} min-w-0 flex-1`} aria-label="Цена до" />
+          <select name="cur" defaultValue={f.currency ?? ""} className={`${field} !w-24 shrink-0`} aria-label="Валюта">
             <option value="">сом</option>
             <option value="USD">$</option>
           </select>

@@ -27,7 +27,7 @@ export default async function ProfilePage(props: PageProps<"/profile">) {
   return (
     <>
       <Header signedIn />
-      <main className="mx-auto grid max-w-3xl gap-10 px-4 pt-4 pb-10">
+      <main className="mx-auto grid max-w-3xl grid-cols-[minmax(0,1fr)] gap-10 px-4 pt-4 pb-10">
         <section>
           <h1 className="text-xl font-medium">{user.name || "Профиль"}</h1>
           <p className="mt-1 text-sm text-mut">

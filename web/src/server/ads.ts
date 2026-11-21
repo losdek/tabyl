@@ -4,6 +4,7 @@ import type { DB } from "@/db/client";
 import { adPhotos, ads, favorites, users } from "@/db/schema";
 import { categoryBySlug, type Category } from "@/domain/categories";
 import { isCity } from "@/domain/places";
+import { queryVariants } from "@/domain/synonyms";
 import { shortId } from "@/lib/ids";
 import { autoCheckAd } from "./moderation";
 
@@ -236,9 +237,10 @@ function where(f: Filters, now: Date): SQL[] {
   }
   const q = f.q?.trim();
   if (q) {
-    w.push(
-      sql`(${ads.search} @@ websearch_to_tsquery('russian', ${q}) or word_similarity(${q}, ${ads.title}) > 0.45)`,
+    const any = queryVariants(q).map(
+      (v) => sql`(${ads.search} @@ websearch_to_tsquery('russian', ${v}) or ${ads.search} @@ websearch_to_tsquery('simple', ${v}) or word_similarity(${v}, ${ads.title}) > 0.45)`,
     );
+    w.push(sql`(${sql.join(any, sql` or `)})`);
   }
   void now;
   return w;
@@ -260,7 +262,7 @@ export async function searchAds(db: DB, f: Filters, opts: { cursor?: string; lim
   let order: SQL[];
   if (sort === "cheap") order = [sql`${ads.price} asc nulls last`, desc(ads.bumpedAt), desc(ads.id)];
   else if (sort === "expensive") order = [sql`${ads.price} desc nulls last`, desc(ads.bumpedAt), desc(ads.id)];
-  else if (q) order = [sql`(${ads.search} @@ websearch_to_tsquery('russian', ${q})) desc`, desc(ads.bumpedAt), desc(ads.id)];
+  else if (q) order = [sql`(${sql.join(queryVariants(q).map((v) => sql`${ads.search} @@ websearch_to_tsquery('russian', ${v})`), sql` or `)}) desc`, desc(ads.bumpedAt), desc(ads.id)];
   else order = [desc(ads.bumpedAt), desc(ads.id)];
   let offset = 0;
   if (opts.cursor && useOffset) offset = Number(opts.cursor.replace(/^o/, "")) || 0;

@@ -25,7 +25,7 @@ export function LoginForm({ next, google }: { next: string; google: boolean }) {
                 autoFocus
                 aria-invalid={!!state.error}
                 aria-describedby={state.error ? "login-error" : undefined}
-                className="h-full min-w-0 flex-1 bg-transparent outline-none"
+                className="h-full min-w-0 flex-1 bg-transparent outline-none focus-visible:outline-none"
               />
             </span>
           </label>

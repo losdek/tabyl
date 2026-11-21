@@ -228,8 +228,8 @@ export function AdForm({ adId, initial }: { adId: string | null; initial: FormVa
         {v.priceMode === "price" && (
           <>
             <div className="flex gap-2">
-              <input value={v.price} onChange={(e) => set("price", e.target.value.replace(/[^\d\s]/g, ""))} inputMode="numeric" placeholder="0" className={`${field} num`} aria-label="Цена" {...inv("price")} />
-              <select value={v.currency} onChange={(e) => set("currency", e.target.value as "KGS" | "USD")} className={`${field} w-28 shrink-0`} aria-label="Валюта">
+              <input value={v.price} onChange={(e) => set("price", e.target.value.replace(/[^\d\s]/g, ""))} inputMode="numeric" placeholder="0" className={`${field} num min-w-0 flex-1`} aria-label="Цена" {...inv("price")} />
+              <select value={v.currency} onChange={(e) => set("currency", e.target.value as "KGS" | "USD")} className={`${field} !w-28 shrink-0`} aria-label="Валюта">
                 <option value="KGS">сом</option>
                 <option value="USD">$</option>
               </select>

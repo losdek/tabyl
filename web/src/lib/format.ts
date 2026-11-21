@@ -88,6 +88,10 @@ export function lastSeen(date: Date, now: Date = new Date()): string {
   return `был ${relativeTime(date, now)}`;
 }
 
+const MONTHS_GEN = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+
+/** «на Табыле с ноября 2026» */
 export function memberSince(date: Date): string {
-  return `на Табыле с${NBSP}${date.toLocaleDateString("ru-RU", { timeZone: TZ, month: "long", year: "numeric" }).replace(" г.", "")}`;
+  const [y, m] = date.toLocaleDateString("en-CA", { timeZone: TZ }).split("-").map(Number);
+  return `на Табыле с${NBSP}${MONTHS_GEN[m - 1]} ${y}`;
 }

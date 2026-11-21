@@ -65,7 +65,9 @@ export function Thread({ id, me, initial, city, blocked }: { id: string; me: str
     return () => es.close();
   }, [id, me]);
 
-  useEffect(() => bottom.current?.scrollIntoView({ block: "end" }), [list.length]);
+  useEffect(() => {
+    bottom.current?.scrollIntoView({ block: "end" });
+  }, [list.length]);
 
   const send = (m: Parameters<typeof sendAction>[1], after?: () => void) =>
     start(async () => {
