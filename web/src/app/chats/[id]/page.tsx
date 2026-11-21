@@ -9,7 +9,7 @@ import { canReview } from "@/server/reviews";
 import { requireUser } from "@/server/session";
 import { Icon } from "@/ui/icons";
 import { photoUrl } from "@/ui/Photo";
-import { blockAction } from "../actions";
+import { blockAction, reportUserAction } from "../actions";
 import { Thread } from "./Thread";
 
 export const metadata: Metadata = { title: "Чат", robots: { index: false } };
@@ -37,6 +37,10 @@ export default async function ChatPage(props: PageProps<"/chats/[id]">) {
           <summary className="grid size-11 cursor-pointer list-none place-items-center [&::-webkit-details-marker]:hidden" aria-label="Ещё"><Icon name="more" /></summary>
           <div className="absolute right-1 z-10 mt-1 grid w-56 gap-1 rounded-[12px] border border-line bg-card p-2 text-sm shadow-sm">
             {reviewable && <Link href={`/u/${other.id}?review=1`} className="rounded-[8px] px-3 py-2.5 hover:bg-field">Оставить отзыв</Link>}
+            <form action={reportUserAction.bind(null, id)}>
+              <input type="hidden" name="reason" value="Мошенник" />
+              <button className="w-full rounded-[8px] px-3 py-2.5 text-left hover:bg-field">Пожаловаться на мошенника</button>
+            </form>
             <form action={blockAction.bind(null, id, !blocked)}>
               <button className="w-full rounded-[8px] px-3 py-2.5 text-left hover:bg-field">{blocked ? "Снять ограничение" : "Ограничить переписку"}</button>
             </form>

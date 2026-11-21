@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { formatPhone } from "@/lib/format";
 import { Icon } from "@/ui/icons";
@@ -8,11 +9,12 @@ import { revealPhone, writeToSeller } from "./actions";
 export function ContactBar({ adId, hasPhone }: { adId: string; hasPhone: boolean }) {
   const [phone, setPhone] = useState<string | null>(null);
   const [pending, start] = useTransition();
+  const router = useRouter();
 
   const reveal = (then?: (p: string) => void) =>
     start(async () => {
       const r = await revealPhone(adId);
-      if ("login" in r) location.href = `/login?next=/ad/${adId}`;
+      if ("login" in r) router.push(`/login?next=/ad/${adId}`);
       else if ("phone" in r) {
         setPhone(r.phone);
         then?.(r.phone);

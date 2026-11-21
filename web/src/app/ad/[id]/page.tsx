@@ -9,7 +9,7 @@ import { cityName } from "@/domain/places";
 import { count, formatNumber, formatPrice, lastSeen, memberSince, NBSP, relativeTime, somHint } from "@/lib/format";
 import { countView, favoriteIds, getAd, photosFor } from "@/server/ads";
 import { sellerRating } from "@/server/reviews";
-import { currentUser } from "@/server/session";
+import { currentUser, isAdmin } from "@/server/session";
 import { AdCard, Masonry, PriceSticker } from "@/ui/AdCard";
 import { FavButton } from "@/ui/FavButton";
 import { Header } from "@/ui/Header";
@@ -48,7 +48,7 @@ export default async function AdPage(props: PageProps<"/ad/[id]">) {
   const { ad, seller, photos, category } = data;
   const user = await currentUser();
   const mine = user?.id === ad.userId;
-  const admin = user?.role === "admin";
+  const admin = isAdmin(user);
   if (ad.status !== "active" && ad.status !== "sold" && !mine && !admin) notFound();
   if (!mine) await countView(db, id);
 

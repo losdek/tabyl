@@ -1,10 +1,12 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useOptimistic, useTransition } from "react";
 import { toggleFavoriteAction } from "@/app/actions";
 
 export function FavButton({ adId, on, large = false }: { adId: string; on: boolean; large?: boolean }) {
   const [state, setState] = useOptimistic(on);
   const [, start] = useTransition();
+  const router = useRouter();
   return (
     <button
       type="button"
@@ -14,7 +16,7 @@ export function FavButton({ adId, on, large = false }: { adId: string; on: boole
         start(async () => {
           setState(!state);
           const res = await toggleFavoriteAction(adId);
-          if (res === "login") location.href = `/login?next=${encodeURIComponent(location.pathname)}`;
+          if (res === "login") router.push(`/login?next=${encodeURIComponent(location.pathname)}`);
         })
       }
       className={`-mr-2 grid place-items-center ${large ? "size-11 rounded-[12px] bg-bg/90" : "size-9"} ${state ? "text-fg" : "text-fg/70"}`}

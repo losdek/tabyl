@@ -39,6 +39,8 @@ export function AdForm({ adId, initial }: { adId: string | null; initial: FormVa
     restored.current = true;
     try {
       const d = localStorage.getItem(DRAFT);
+      // one-time restore from browser storage, which does not exist during server render
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (d) setV((x) => ({ ...x, ...JSON.parse(d) }));
     } catch {}
   }, [adId]);

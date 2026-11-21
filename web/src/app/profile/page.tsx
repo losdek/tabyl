@@ -6,7 +6,7 @@ import { count, formatPhone, formatPrice, NBSP } from "@/lib/format";
 import { myAds } from "@/server/ads";
 import { sellerRating } from "@/server/reviews";
 import { savedWithNew } from "@/server/saved";
-import { requireUser } from "@/server/session";
+import { isAdmin, requireUser } from "@/server/session";
 import { Header } from "@/ui/Header";
 import { photoUrl } from "@/ui/Photo";
 import { removeSavedSearch } from "./actions";
@@ -96,7 +96,7 @@ export default async function ProfilePage(props: PageProps<"/profile">) {
         </section>
 
         <section className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
-          {user.role === "admin" && <Link href="/admin" className="link">Модерация</Link>}
+          {isAdmin(user) && <Link href="/admin" className="link">Модерация</Link>}
           <Link href="/rules" className="link">Правила</Link>
           <form action="/auth/logout" method="post"><button className="pseudo text-danger">Выйти</button></form>
         </section>

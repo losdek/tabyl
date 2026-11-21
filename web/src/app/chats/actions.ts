@@ -32,8 +32,14 @@ export async function blockAction(conversationId: string, block: boolean) {
   refresh();
 }
 
-export async function reportMessageAction(messageId: string) {
+
+export async function reportUserAction(conversationId: string, form: FormData) {
   const user = await currentUser();
   if (!user) return;
-  await report(await getDb(), user.id, "message", messageId, "Спам");
+  const db = await getDb();
+  const c = await conversationFor(db, conversationId, user.id);
+  if (!c) return;
+  const reason = String(form.get("reason") ?? "Мошенник");
+  await report(db, user.id, "user", c.buyerId === user.id ? c.sellerId : c.buyerId, ["Мошенник", "Спам", "Оскорбления"].includes(reason) ? reason : "Другое", `Из чата ${conversationId}`);
+  refresh();
 }

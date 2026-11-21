@@ -24,9 +24,16 @@ export async function requireUser(next = "/"): Promise<User> {
   return u;
 }
 
+/** Admins: role «admin», or a phone listed in TABYL_ADMIN_PHONES (comma-separated). */
+export function isAdmin(u: User | null): boolean {
+  if (!u) return false;
+  const list = (process.env.TABYL_ADMIN_PHONES ?? "").split(",").map((s) => s.trim()).filter(Boolean);
+  return u.role === "admin" || (!!u.phone && list.includes(u.phone));
+}
+
 export async function requireAdmin(): Promise<User> {
   const u = await requireUser("/admin");
-  if (u.role !== "admin") redirect("/");
+  if (!isAdmin(u)) redirect("/");
   return u;
 }
 
