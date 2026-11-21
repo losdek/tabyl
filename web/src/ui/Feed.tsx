@@ -54,7 +54,7 @@ export function Feed({
     <>
       <Masonry>
         {items.map((a, i) => (
-          <AdCard key={a.id} ad={cardFromJSON(a)} fav={fav.has(a.id)} priority={i < 4} now={now} />
+          <AdCard key={a.id} ad={cardFromJSON(a)} fav={fav.has(a.id)} priority={i < 2} now={now} />
         ))}
       </Masonry>
       <div ref={sentinel} className="flex justify-center py-6">

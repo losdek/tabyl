@@ -233,16 +233,16 @@ and test on an iPhone.
 ## Progress
 | Phase | Status |
 | --- | --- |
-| 0 Foundation | 0.3 done (Soft v3 + logo approved 2026-11-21) |
-| 1 Accounts | pending |
-| 2 Posting | pending |
-| 3 Browse + search | pending |
-| 4 Favourites | pending |
-| 5 Chat | pending |
-| 6 Reviews | pending |
-| 7 Promotion + payments | pending |
-| 8 Moderation | pending |
-| 9 Speed + polish | pending |
+| 0 Foundation | done — PGlite+Drizzle spike, Next 16 app, Soft v3 design tokens, logo kit |
+| 1 Accounts | done — phone code (tested), Google OAuth wired (needs keys), sessions; mobile API pending (1.3) |
+| 2 Posting | done — category attributes, AVIF/WebP pipeline, drafts, edit/sold/delete |
+| 3 Browse + search | done — feed, categories, filters in URL, FTS + typo + Cyrillic⇄Latin brand spelling |
+| 4 Favourites | done — favourites, seller page, saved searches with new-match counts |
+| 5 Chat | done — SSE live chat, grouped bubbles, photos, address cards with 2ГИС, block/report |
+| 6 Reviews | done — review after two-way chat, one reply |
+| 7 Promotion + payments | done — 4 tiers, Freedom Pay adapter (sig matches docs vectors), test checkout without keys |
+| 8 Moderation | done — auto-checks, reports, queue, bans, refunds, audit log |
+| 9 Speed + polish | mostly — e2e 9/9 green; Lighthouse (devtools throttling, Slow 4G): home LCP 1.5 s, search 1.4 s, ad 1.7–1.8 s (target 1.5 — add a 960 px photo size); a11y 98–100, CLS 0. Deploy guide pending |
 | 10 Android toolchain + shell | pending |
 | 11 Android browse/search | pending |
 | 12 Android posting | pending |

@@ -1,3 +1,5 @@
+import { preload } from "react-dom";
+
 type P = { id: string; width: number; height: number; blur: string };
 
 export const photoUrl = (id: string, w: 320 | 640 | 1280, ext: "webp" | "avif" = "webp") => `/media/p/${id}/${w}.${ext}`;
@@ -22,6 +24,8 @@ export function Photo({
   aspect?: string;
 }) {
   const set = (ext: "webp" | "avif") => ([320, 640, 1280] as const).map((w) => `${photoUrl(photo.id, w, ext)} ${w}w`).join(", ");
+  // the first photos on a page are the LCP element: let the browser fetch them with the HTML
+  if (priority) preload(photoUrl(photo.id, 640, "avif"), { as: "image", imageSrcSet: set("avif"), imageSizes: sizes, fetchPriority: "high", type: "image/avif" });
   return (
     <picture>
       <source type="image/avif" srcSet={set("avif")} sizes={sizes} />
