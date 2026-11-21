@@ -95,7 +95,7 @@ export function Thread({ id, me, initial, city, blocked }: { id: string; me: str
     <>
       <div className="flex flex-1 flex-col gap-3.5 overflow-y-auto px-3 py-4" aria-live="polite">
         <p className="mx-auto max-w-[30ch] text-center text-xs leading-snug text-mut">
-          Табыл никогда не{NBSP}просит предоплату и{NBSP}не{NBSP}присылает ссылки на{NBSP}оплату
+          Мы никогда не{NBSP}просим предоплату и{NBSP}не{NBSP}присылаем ссылки на{NBSP}оплату
         </p>
         {groups(list).map((g, gi) => {
           const mine = g.senderId === me;

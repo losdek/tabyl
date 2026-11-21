@@ -62,7 +62,7 @@ export async function HomeView({ sp }: { sp: Record<string, string | string[] | 
           <span className="grid size-16 shrink-0 place-items-center rounded-full bg-sun text-on-sun"><Icon name="shield" size={34} /></span>
           <div className="flex-1">
             <h2 className="text-xl font-medium tracking-tight md:text-2xl">Без предоплаты</h2>
-            <p className="mt-1.5 max-w-[60ch] text-[15px] text-mut">Встречайтесь в людных местах и проверяйте товар до оплаты. Табыл не присылает ссылки на оплату.</p>
+            <p className="mt-1.5 max-w-[60ch] text-[15px] text-mut">Встречайтесь в людных местах и проверяйте товар до оплаты. Мы не присылаем ссылки на оплату.</p>
           </div>
           <Link href="/rules" className="link shrink-0 text-sm">Как не попасться мошенникам</Link>
         </Island>
