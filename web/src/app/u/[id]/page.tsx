@@ -36,7 +36,7 @@ export default async function SellerPage(props: PageProps<"/u/[id]">) {
   return (
     <>
       <Header signedIn={!!me} />
-      <main className="mx-auto max-w-[1280px] px-3 pt-4 md:px-8">
+      <main className="island mx-auto pb-6 max-w-[1280px] px-3 pt-4 md:px-6 md:max-w-[1248px]">
         <section className="flex items-center gap-4 px-1">
           <span className="grid size-16 place-items-center rounded-full bg-field text-2xl font-medium">{(seller.name || "П").slice(0, 1).toUpperCase()}</span>
           <div>

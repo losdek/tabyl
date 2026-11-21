@@ -1,5 +1,5 @@
-import { SearchView } from "./SearchView";
+import { HomeView } from "./HomeView";
 
 export default async function Home(props: PageProps<"/">) {
-  return <SearchView sp={await props.searchParams} mode="home" />;
+  return <HomeView sp={await props.searchParams} />;
 }

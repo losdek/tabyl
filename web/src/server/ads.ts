@@ -390,3 +390,18 @@ export async function suggest(db: DB, q: string, limit = 6) {
     .slice(0, limit)
     .map((r) => r.title);
 }
+
+/** Active ads per category in a city, biggest first — which shelves the home page shows. */
+export async function countByCategory(db: DB, city: string | undefined) {
+  return cached(`cc:${city}`, async () => {
+    const w: SQL[] = [eq(ads.status, "active")];
+    if (city && city !== "all") w.push(eq(ads.city, city));
+    const rows = await db
+      .select({ category: ads.category, n: sql<number>`count(*)::int` })
+      .from(ads)
+      .where(and(...w))
+      .groupBy(ads.category)
+      .orderBy(sql`count(*) desc`);
+    return rows;
+  });
+}

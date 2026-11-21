@@ -25,17 +25,18 @@ export function PriceSticker({ price, currency, big = false }: { price: number |
   );
 }
 
-export function AdCard({ ad, fav, priority = false, now, index = 0 }: { ad: CardAd; fav?: boolean; priority?: boolean; now?: Date; index?: number }) {
+export function AdCard({ ad, fav, priority = false, now, index = 0, shelf = false }: { ad: CardAd; fav?: boolean; priority?: boolean; now?: Date; index?: number; shelf?: boolean }) {
+  const fresh = (now ?? new Date()).getTime() - ad.createdAt.getTime() < 86_400_000;
   return (
-    <article className="card-in mb-4 break-inside-avoid" style={{ "--i": index } as React.CSSProperties}>
+    <article className={`card-in ${shelf ? "w-[156px] shrink-0 snap-start md:w-[200px]" : "mb-4 break-inside-avoid"}`} style={{ "--i": index } as React.CSSProperties}>
       <Link href={`/ad/${ad.id}`} className="group block">
-        <div className="relative overflow-hidden rounded-[10px]">
+        <div className="relative overflow-hidden rounded-[14px]">
           {ad.photo ? (
             <Photo
               photo={ad.photo}
               sizes="(min-width: 1280px) 210px, (min-width: 768px) 25vw, 50vw"
               priority={priority}
-              aspect={aspect(ad.photo.width, ad.photo.height)}
+              aspect={shelf ? "1" : aspect(ad.photo.width, ad.photo.height)}
               className="transition-transform duration-500 ease-out group-hover:scale-[1.03] group-active:scale-[0.99]"
             />
           ) : (
@@ -46,6 +47,7 @@ export function AdCard({ ad, fav, priority = false, now, index = 0 }: { ad: Card
           <span className="absolute bottom-2 left-2">
             <PriceSticker price={ad.price} currency={ad.currency} />
           </span>
+          {fresh && !ad.promoted && <span className="absolute top-2 left-2 rounded-full bg-bg/90 px-2 py-0.5 text-[11px] font-medium">Новое</span>}
         </div>
         {ad.promoted && <div className="mt-1.5 text-[11px] text-mut">Реклама</div>}
         <h3 className={`line-clamp-2 text-sm leading-snug font-normal ${ad.promoted ? "mt-0.5" : "mt-2"}`}>{ad.title}</h3>

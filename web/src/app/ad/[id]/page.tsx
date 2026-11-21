@@ -84,7 +84,7 @@ export default async function AdPage(props: PageProps<"/ad/[id]">) {
       <div className="hidden md:block">
         <Header signedIn={!!user} />
       </div>
-      <main className="mx-auto max-w-[1100px] pb-28 md:grid md:grid-cols-[minmax(0,1fr)_360px] md:gap-10 md:px-8 md:pt-6 md:pb-16">
+      <main className="mx-auto max-w-[1100px] bg-bg pb-28 md:mt-4 md:grid md:grid-cols-[minmax(0,1fr)_360px] md:gap-10 md:rounded-[28px] md:px-8 md:pt-6 md:pb-10 xl:mx-auto">
         <div>
           <div className="relative">
             {photos.length ? (

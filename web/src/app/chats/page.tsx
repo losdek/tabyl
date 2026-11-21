@@ -17,7 +17,7 @@ export default async function ChatsPage() {
   return (
     <>
       <Header signedIn />
-      <main className="mx-auto max-w-2xl px-3 pt-3">
+      <main className="island mx-auto pb-6 max-w-2xl px-3 pt-3">
         <h1 className="px-1 pb-2 text-xl font-medium">Чаты</h1>
         {list.length === 0 ? (
           <div className="px-1 py-12 text-center">

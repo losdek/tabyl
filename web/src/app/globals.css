@@ -3,6 +3,7 @@
 /* «Мягкое» — Tabyl design tokens. One family (Rubik), one accent (sun yellow),
    used only for prices and the «+» action. Dark theme mirrors every token. */
 :root {
+  --page: #ede6d7;
   --bg: #fbf7ee;
   --fg: #1d1a12;
   --mut: #6f6857;
@@ -20,7 +21,8 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #14120d;
+    --page: #0b0a07;
+    --bg: #17150f;
     --fg: #f4efe2;
     --mut: #a29b88;
     --line: #2b271d;
@@ -35,7 +37,8 @@
   }
 }
 :root[data-theme="dark"] {
-  --bg: #14120d;
+  --page: #0b0a07;
+  --bg: #17150f;
   --fg: #f4efe2;
   --mut: #a29b88;
   --line: #2b271d;
@@ -50,6 +53,7 @@
 }
 
 @theme inline {
+  --color-page: var(--page);
   --color-bg: var(--bg);
   --color-fg: var(--fg);
   --color-mut: var(--mut);
@@ -72,7 +76,7 @@ html {
   text-size-adjust: 100%;
 }
 body {
-  background: var(--bg);
+  background: var(--page);
   color: var(--fg);
   font-family: var(--font-sans);
   font-size: 16px;
@@ -182,8 +186,17 @@ button:not(:disabled):active, a.press:active {
 button {
   transition: transform 120ms ease, opacity 150ms ease, background-color 150ms ease;
 }
-#results {
+#results > * {
   transition: opacity 200ms ease;
+}
+/* a content island on the tinted page */
+.island {
+  background: var(--bg);
+  border-radius: 24px;
+  margin: 10px 8px 0;
+}
+@media (min-width: 768px) {
+  .island { border-radius: 28px; margin: 16px auto 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

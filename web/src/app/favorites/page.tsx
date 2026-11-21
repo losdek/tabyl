@@ -18,7 +18,7 @@ export default async function FavoritesPage() {
   return (
     <>
       <Header signedIn={!!user} />
-      <main className="mx-auto max-w-[1280px] px-3 pt-3 md:px-8">
+      <main className="island mx-auto pb-6 max-w-[1280px] px-3 pt-3 md:px-6 md:max-w-[1248px]">
         <h1 className="px-1 pb-3 text-xl font-medium">Избранное</h1>
         {!user && list.length > 0 && (
           <p className="mb-4 px-1 text-sm text-mut">

@@ -8,7 +8,7 @@ export default async function Privacy() {
   return (
     <>
       <Header signedIn={!!(await currentUser())} />
-      <main className="prose mx-auto max-w-[65ch] px-4 pt-6 pb-16 text-[15px] leading-relaxed">
+      <main className="prose island mx-auto max-w-[70ch] px-5 pt-6 pb-10 md:px-8 text-[15px] leading-relaxed">
         <h1 className="mb-4 text-2xl font-medium">Персональные данные</h1>
         <p className="mb-3 rounded-[10px] bg-field px-3 py-2 text-sm">Черновик: текст нужно сверить с юристом по закону КР «Об информации персонального характера» перед запуском.</p>
         <p className="mb-3">Мы храним номер телефона (для входа и чтобы покупатели могли позвонить, когда вы этого хотите), имя, город, ваши объявления, переписку в чатах и отзывы.</p>

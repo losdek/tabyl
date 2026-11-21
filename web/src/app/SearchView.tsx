@@ -46,7 +46,7 @@ export async function SearchView({ sp, mode, category }: { sp: SP; mode: "home" 
         activeFilters={activeFilterCount(f)}
         live={mode !== "home"}
       />
-      <main id="results" className="mx-auto max-w-[1280px] px-3 transition-opacity duration-200 md:px-8">
+      <main id="results" className="mx-auto mt-2.5 max-w-[1280px] rounded-[24px] bg-bg px-3 pb-2 md:mx-4 md:mt-4 md:rounded-[28px] md:px-6 xl:mx-auto">
         {mode === "home" ? (
           <nav aria-label="Категории" className="no-scrollbar -mx-3 flex gap-5 overflow-x-auto px-4 pt-2.5 pb-1 text-[15px] whitespace-nowrap md:mx-0 md:gap-7 md:px-0">
             {CATEGORIES.map((c) => (
