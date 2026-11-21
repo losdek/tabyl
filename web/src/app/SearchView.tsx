@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import { getDb } from "@/db/client";
 import { favSet } from "@/server/guest-favs";
-import { CATEGORIES, categoryBySlug } from "@/domain/categories";
+import { categoryBySlug } from "@/domain/categories";
 import { count } from "@/lib/format";
 import { countAds, countNewToday, mixPromoted, promotedAds, searchAds } from "@/server/ads";
 import { activeFilterCount, describeFilters, filtersToQuery, parseFilters } from "@/server/filters";
@@ -10,6 +10,7 @@ import { cardJSON } from "@/server/serialize";
 import { currentUser } from "@/server/session";
 import { cityBySlug } from "@/domain/places";
 import { Feed } from "@/ui/Feed";
+import { CategoryPills } from "@/ui/CategoryPills";
 import { FilterForm } from "@/ui/FilterForm";
 import { Header } from "@/ui/Header";
 import { SaveSearchButton } from "@/ui/SaveSearchButton";
@@ -47,26 +48,17 @@ export async function SearchView({ sp, mode, category }: { sp: SP; mode: "home" 
         live={mode !== "home"}
       />
       <main id="results" className="mx-auto mt-2.5 max-w-[1280px] rounded-[24px] bg-bg px-3 pb-2 md:mx-4 md:mt-4 md:rounded-[28px] md:px-6 xl:mx-auto">
-        {mode === "home" ? (
-          <nav aria-label="Категории" className="no-scrollbar -mx-3 flex gap-5 overflow-x-auto px-4 pt-2.5 pb-1 text-[15px] whitespace-nowrap md:mx-0 md:gap-7 md:px-0">
-            {CATEGORIES.map((c) => (
-              <Link key={c.slug} href={`/c/${c.slug}`} className="flex min-h-9 items-center">
-                {c.name}
-              </Link>
-            ))}
-          </nav>
-        ) : (
-          <details id="filters" className="group border-b border-line" open={sp.f === "1" || undefined}>
-            <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-1 text-sm [&::-webkit-details-marker]:hidden">
-              <span className="truncate">{describeFilters(f)}</span>
-              <span className="pseudo shrink-0">
-                <span className="group-open:hidden">изменить</span>
-                <span className="hidden group-open:inline">свернуть</span>
-              </span>
-            </summary>
-            <FilterForm f={f} action={mode === "category" && cat ? `/c/${cat.slug}` : "/search"} />
-          </details>
-        )}
+        <div className="pt-3 pb-1"><CategoryPills active={f.category} q={f.q} /></div>
+        <details id="filters" className="group border-b border-line" open={sp.f === "1" || undefined}>
+          <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-1 text-sm [&::-webkit-details-marker]:hidden">
+            <span className="truncate">{describeFilters(f)}</span>
+            <span className="pseudo shrink-0">
+              <span className="group-open:hidden">изменить</span>
+              <span className="hidden group-open:inline">свернуть</span>
+            </span>
+          </summary>
+          <FilterForm f={f} action={mode === "category" && cat ? `/c/${cat.slug}` : "/search"} />
+        </details>
 
         <div className="flex items-baseline justify-between gap-3 px-1 pt-4 pb-3">
           {mode === "home" ? (

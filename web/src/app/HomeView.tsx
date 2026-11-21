@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { getDb } from "@/db/client";
-import { CATEGORIES, categoryBySlug } from "@/domain/categories";
+import { categoryBySlug } from "@/domain/categories";
 import { cityBySlug } from "@/domain/places";
 import { count, formatNumber, NBSP } from "@/lib/format";
 import { countByCategory, countNewToday, mixPromoted, myAds, promotedAds, searchAds } from "@/server/ads";
@@ -10,7 +10,6 @@ import { favSet } from "@/server/guest-favs";
 import { cardJSON } from "@/server/serialize";
 import { currentUser } from "@/server/session";
 import { AdCard } from "@/ui/AdCard";
-import { CategoryIcon } from "@/ui/CategoryIcon";
 import { Feed } from "@/ui/Feed";
 import { Header } from "@/ui/Header";
 import { Icon } from "@/ui/icons";
@@ -59,33 +58,22 @@ export async function HomeView({ sp }: { sp: Record<string, string | string[] | 
     <>
       <Header isHome signedIn={!!user} filtersHref={`/search?${filtersToQuery(f)}#filters`} />
       <main id="results" className="mx-auto grid max-w-[1280px] gap-2.5 px-2 pt-2.5 md:gap-4 md:px-4 md:pt-4">
-        <nav aria-label="Категории" className="no-scrollbar -mx-2 flex gap-2 overflow-x-auto px-2 md:mx-0 md:flex-wrap md:px-0">
-          {CATEGORIES.map((c, i) => (
-            <Link
-              key={c.slug}
-              href={`/c/${c.slug}`}
-              className="press card-in flex h-12 shrink-0 items-center gap-2.5 rounded-full bg-bg py-1 pr-4 pl-1 text-[15px] transition-colors hover:bg-card"
-              style={{ "--i": i } as React.CSSProperties}
-            >
-              <span className="grid size-10 place-items-center rounded-full bg-sun/35 text-fg"><CategoryIcon slug={c.slug} size={21} /></span>
-              {c.name}
-            </Link>
-          ))}
-        </nav>
 
         <div className="no-scrollbar -mx-2 flex snap-x gap-2.5 overflow-x-auto px-2 md:mx-0 md:grid md:grid-cols-3 md:gap-4 md:px-0">
-          <Island className="flex w-[78%] shrink-0 snap-start flex-col justify-between gap-4 md:w-auto">
+          <Island className="flex min-h-[200px] w-[86%] shrink-0 snap-start flex-col justify-between gap-5 md:min-h-[220px] md:w-auto">
             <div>
-              <h2 className="text-lg font-medium">Продайте за минуту</h2>
-              <p className="mt-1 text-sm text-mut">Фото, цена и пара слов — объявление сразу в ленте. Бесплатно.</p>
+              <span className="mb-3 grid size-16 place-items-center rounded-full bg-sun text-on-sun"><Icon name="camera" size={32} /></span>
+              <h2 className="text-xl font-medium tracking-tight md:text-2xl">Продайте за минуту</h2>
+              <p className="mt-1.5 text-[15px] text-mut">Фото, цена и пара слов — объявление сразу в ленте. Бесплатно.</p>
             </div>
             <Link href="/post" className="press flex h-11 items-center justify-center gap-1.5 self-start rounded-[12px] bg-sun px-4 font-medium text-on-sun"><Icon name="plus" size={20} />Подать объявление</Link>
           </Island>
           {user ? (
-            <Island className="flex w-[78%] shrink-0 snap-start flex-col justify-between gap-4 md:w-auto">
+            <Island className="flex min-h-[200px] w-[86%] shrink-0 snap-start flex-col justify-between gap-5 md:min-h-[220px] md:w-auto">
               <div>
-                <h2 className="text-lg font-medium">{activeMine.length ? "Ваши объявления" : `Здравствуйте${user.name ? `, ${user.name}` : ""}`}</h2>
-                <p className="mt-1 text-sm text-mut">
+                <span className="mb-3 grid size-16 place-items-center rounded-full bg-sun text-on-sun"><Icon name="user" size={32} /></span>
+                <h2 className="text-xl font-medium tracking-tight md:text-2xl">{activeMine.length ? "Ваши объявления" : `Здравствуйте${user.name ? `, ${user.name}` : ""}`}</h2>
+                <p className="mt-1.5 text-[15px] text-mut">
                   {activeMine.length
                     ? `${count(activeMine.length, ["опубликовано", "опубликовано", "опубликовано"])} · ${count(views, ["просмотр", "просмотра", "просмотров"])} всего`
                     : "Сохранённые поиски и избранное — в профиле."}
@@ -94,18 +82,20 @@ export async function HomeView({ sp }: { sp: Record<string, string | string[] | 
               <Link href="/profile" className="press flex h-11 items-center self-start rounded-[12px] bg-field px-4 font-medium">Открыть профиль</Link>
             </Island>
           ) : (
-            <Island className="flex w-[78%] shrink-0 snap-start flex-col justify-between gap-4 md:w-auto">
+            <Island className="flex min-h-[200px] w-[86%] shrink-0 snap-start flex-col justify-between gap-5 md:min-h-[220px] md:w-auto">
               <div>
-                <h2 className="text-lg font-medium">Войдите по номеру</h2>
-                <p className="mt-1 text-sm text-mut">Писать продавцам, получать новые по сохранённым поискам и видеть избранное на любом устройстве.</p>
+                <span className="mb-3 grid size-16 place-items-center rounded-full bg-sun text-on-sun"><Icon name="phone" size={30} /></span>
+                <h2 className="text-xl font-medium tracking-tight md:text-2xl">Войдите по номеру</h2>
+                <p className="mt-1.5 text-[15px] text-mut">Писать продавцам, получать новые по сохранённым поискам и видеть избранное на любом устройстве.</p>
               </div>
               <Link href="/login?mode=register" className="press flex h-11 items-center self-start rounded-[12px] bg-ink px-4 font-medium text-on-ink">Войти или зарегистрироваться</Link>
             </Island>
           )}
-          <Island className="flex w-[78%] shrink-0 snap-start flex-col justify-between gap-4 md:w-auto">
+          <Island className="flex min-h-[200px] w-[86%] shrink-0 snap-start flex-col justify-between gap-5 md:min-h-[220px] md:w-auto">
             <div>
-              <h2 className="flex items-center gap-2 text-lg font-medium"><Icon name="shield" size={20} />Без предоплаты</h2>
-              <p className="mt-1 text-sm text-mut">Встречайтесь в людных местах и проверяйте товар до оплаты. Табыл не присылает ссылки на оплату.</p>
+              <span className="mb-3 grid size-16 place-items-center rounded-full bg-sun text-on-sun"><Icon name="shield" size={34} /></span>
+              <h2 className="text-xl font-medium tracking-tight md:text-2xl">Без предоплаты</h2>
+              <p className="mt-1.5 text-[15px] text-mut">Встречайтесь в людных местах и проверяйте товар до оплаты. Табыл не присылает ссылки на оплату.</p>
             </div>
             <Link href="/rules" className="link self-start text-sm">Как не попасться мошенникам</Link>
           </Island>

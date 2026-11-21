@@ -7,6 +7,7 @@ import { myAds } from "@/server/ads";
 import { sellerRating } from "@/server/reviews";
 import { savedWithNew } from "@/server/saved";
 import { isAdmin, requireUser } from "@/server/session";
+import { CategoryPills } from "@/ui/CategoryPills";
 import { Header } from "@/ui/Header";
 import { photoUrl } from "@/ui/Photo";
 import { removeSavedSearch } from "./actions";
@@ -89,6 +90,11 @@ export default async function ProfilePage(props: PageProps<"/profile">) {
               ))}
             </ul>
           )}
+        </section>
+
+        <section>
+          <h2 className="mb-3 text-lg font-medium">Категории</h2>
+          <CategoryPills wrap />
         </section>
 
         <section>
