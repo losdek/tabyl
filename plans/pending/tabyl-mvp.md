@@ -214,7 +214,10 @@ and test on an iPhone.
 | Mobile | Kotlin Multiplatform + Compose Multiplatform | User choice; one codebase for Android now and iOS later |
 | iOS | Deferred until a Mac is available | User choice; iOS can't be compiled on Linux |
 | Repo | Private GitHub `losdek/tabyl`, auto-pushed by the user's hook | User choice |
-| UI direction | _pending — user picks at Step 0.3_ | |
+| UI direction | «Мягкое» v3 (`design/directions/soft.html`): Rubik, cream #FBF7EE, sun #FFD43B as price stickers and «+» only, masonry feed, plain-text categories and filters, grouped-bubble chat | Chosen by the user after 3 rounds |
+| Header | Logo + search only; no city switch, no bell (city lives in search filters and is remembered; notifications are a badge on «Чаты» and in «Профиль») | User request |
+| Chat | No call button in chat; seller can send an address card with a 2ГИС link | User request |
+| Logo | «б» with a sun in a crescent bowl, Rubik Bold outlines (`design/logo/kit`) | User choice |
 
 ## Not yet specified
 - Phase 7: Freedom Pay test mode may still require a merchant ID/secret; if signup is needed, the stub covers local work and live keys come from the user.
@@ -230,7 +233,7 @@ and test on an iPhone.
 ## Progress
 | Phase | Status |
 | --- | --- |
-| 0 Foundation | 0.3 done: 3 directions published, waiting for the user to pick |
+| 0 Foundation | 0.3 done (Soft v3 + logo approved 2026-11-21) |
 | 1 Accounts | pending |
 | 2 Posting | pending |
 | 3 Browse + search | pending |

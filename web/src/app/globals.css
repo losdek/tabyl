@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+/* «Мягкое» — Tabyl design tokens. One family (Rubik), one accent (sun yellow),
+   used only for prices and the «+» action. Dark theme mirrors every token. */
+:root {
+  --bg: #fbf7ee;
+  --fg: #1d1a12;
+  --mut: #6f6857;
+  --line: #e9e1cf;
+  --field: #f1ebdd;
+  --card: #ffffff;
+  --ink: #1d1a12;
+  --on-ink: #fbf7ee;
+  --sun: #ffd43b;
+  --on-sun: #1d1a12;
+  --mine: #ffeda6;
+  --danger: #b3321a;
+  --ok: #1f7a4d;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14120d;
+    --fg: #f4efe2;
+    --mut: #a29b88;
+    --line: #2b271d;
+    --field: #221f17;
+    --card: #1c1a13;
+    --ink: #f4efe2;
+    --on-ink: #14120d;
+    --mine: #3b3317;
+    --danger: #ff8a6b;
+    --ok: #5fd09a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14120d;
+  --fg: #f4efe2;
+  --mut: #a29b88;
+  --line: #2b271d;
+  --field: #221f17;
+  --card: #1c1a13;
+  --ink: #f4efe2;
+  --on-ink: #14120d;
+  --mine: #3b3317;
+  --danger: #ff8a6b;
+  --ok: #5fd09a;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-mut: var(--mut);
+  --color-line: var(--line);
+  --color-field: var(--field);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-on-ink: var(--on-ink);
+  --color-sun: var(--sun);
+  --color-on-sun: var(--on-sun);
+  --color-mine: var(--mine);
+  --color-danger: var(--danger);
+  --color-ok: var(--ok);
+  --font-sans: var(--font-rubik), system-ui, sans-serif;
+  --radius-ui: 12px;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+::selection {
+  background: var(--sun);
+  color: var(--on-sun);
+}
+
+/* Ководство §171: links are underlined, and stay underlined on hover */
+a.link,
+.prose a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+}
+a.link:hover,
+.prose a:hover {
+  text-decoration-color: currentColor;
+}
+/* a dashed underline means "do something here", never "go somewhere" */
+.pseudo {
+  text-decoration: underline dashed 1px;
+  text-underline-offset: 0.22em;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
+}
