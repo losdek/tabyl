@@ -155,7 +155,7 @@ fun HomeScreen(app: AppState) {
                                     } else {
                                         Text("Войдите по номеру", style = MaterialTheme.typography.titleMedium)
                                         Text("Писать продавцам и видеть избранное на любом устройстве.", style = MaterialTheme.typography.bodySmall)
-                                        Btn("Войти или зарегистрироваться", { app.go(Route.Login(register = true)) })
+                                        Btn("Войти", { app.go(Route.Login()) })
                                     }
                                 }
                             }

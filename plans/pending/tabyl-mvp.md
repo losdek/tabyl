@@ -243,9 +243,9 @@ and test on an iPhone.
 | 7 Promotion + payments | done — 4 tiers, Freedom Pay adapter (sig matches docs vectors), test checkout without keys |
 | 8 Moderation | done — auto-checks, reports, queue, bans, refunds, audit log |
 | 9 Speed + polish | mostly — e2e 9/9 green; Lighthouse (devtools throttling, Slow 4G): home LCP 1.5 s, search 1.4 s, ad 1.7–1.8 s (target 1.5 — add a 960 px photo size); a11y 98–100, CLS 0. Deploy guide pending |
-| 10 Android toolchain + shell | in progress — JDK 21, Android SDK (API 37, emulator image 36), Gradle 9.9.2 installed; KMP project in `mobile/` (AGP 9.5.2, Kotlin 2.4.21, Compose MP 1.12.2); minimal build was green. Written: theme, icons/logo, API client, platform code, components, App shell, Home/Search/Favorites/Seller, Ad screen. **Still to write before it compiles:** `screens/Account.kt` (LoginScreen, ProfileScreen), `screens/Post.kt` (PostScreen), `screens/Chat.kt` (ChatsScreen, ChatScreen), `screens/Promote.kt` (PromoteScreen, TestPayScreen); MainActivity must set `AndroidPlatform.context = applicationContext`. Then build, run on emulator against the preview server (10.0.2.2:3200). |
-| 11 Android browse/search | pending |
-| 12 Android posting | pending |
-| 13 Android chat/reviews/promote | pending |
+| 10 Android toolchain + shell | done — app builds and runs on the emulator against the preview server |
+| 11 Android browse/search | done — home, search, ad page, favourites, seller page checked on emulator |
+| 12 Android posting | done — posted «Merida Big Nine 29» from the app; photo picker not yet exercised on emulator |
+| 13 Android chat/reviews/promote | chat checked live on emulator (message from web arrived instantly); reviews and promote screens written, not yet clicked through |
 | 14 Android release build | pending |
 | iOS | deferred (needs a Mac) |

@@ -44,6 +44,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -110,15 +111,17 @@ fun IconBtn(icon: ImageVector, label: String, onClick: () -> Unit, modifier: Mod
 @Composable
 fun Field(
     value: String, onChange: (String) -> Unit, label: String, modifier: Modifier = Modifier, placeholder: String = "",
-    error: String? = null, keyboard: KeyboardType = KeyboardType.Text, lines: Int = 1, prefix: String? = null,
+    error: String? = null, keyboard: KeyboardType = KeyboardType.Text, lines: Int = 1, prefix: String? = null, autoFocus: Boolean = false,
 ) {
+    val focus = remember { androidx.compose.ui.focus.FocusRequester() }
+    if (autoFocus) LaunchedEffect(Unit) { focus.requestFocus() }
     Column(modifier, verticalArrangement = Arrangement.spacedBy(6.dp)) {
         if (label.isNotEmpty()) Text(label, style = MaterialTheme.typography.bodySmall)
         BasicTextField(
             value = value, onValueChange = onChange, singleLine = lines == 1, minLines = lines,
             keyboardOptions = KeyboardOptions(keyboardType = keyboard),
             textStyle = MaterialTheme.typography.bodyLarge.copy(color = T.fg),
-            modifier = Modifier.fillMaxWidth().semantics { contentDescription = label.ifEmpty { placeholder } },
+            modifier = Modifier.fillMaxWidth().focusRequester(focus).semantics { contentDescription = label.ifEmpty { placeholder } },
             decorationBox = { inner ->
                 Row(
                     Modifier.fillMaxWidth().heightIn(min = 50.dp).clip(RoundedCornerShape(12.dp)).background(T.field)
